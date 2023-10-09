@@ -4,7 +4,7 @@ import CircularDiv from "./CircularDiv";
 
 function CreateNewTodo() {
   const ref = useRef();
-  const { handleAddTask } = useTodo();
+  const { handleAddTask, darkMode } = useTodo();
   const [newTask, setNewTask] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,7 +17,9 @@ function CreateNewTodo() {
   }
   return (
     <form
-      className="flex items-center gap-6 bg-[hsl(0,0%,98%)] py-6 px-6 rounded-lg mb-4"
+      className={`${
+        darkMode ? "bg-[#25273c]" : "bg-[#fafafa]"
+      } flex items-center gap-6 py-6 px-6 rounded-lg mb-4`}
       onSubmit={handleSubmit}
     >
       <CircularDiv onClick={handleClick} />

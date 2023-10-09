@@ -9,6 +9,7 @@ function TodoProvider({ children }) {
   ]);
   const [completedTask, setCompletedTask] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
   useEffect(
     function () {
       setCompletedTask([...tasks.filter((task) => task.completed)]);
@@ -40,17 +41,23 @@ function TodoProvider({ children }) {
     function clearCompleted() {
       setTasks((tasks) => tasks.filter((task) => !task.completed));
     }
+    function toggleMode() {
+      setDarkMode((mode) => !mode);
+      console.log("working");
+    }
     return {
+      darkMode,
       tasks,
       completedTask,
       handleAddTask,
       activeIndex,
+      toggleMode,
       handleToggleCompletedTask,
       showAll,
       showCompletedTask,
       clearCompleted,
     };
-  }, [tasks, completedTask, activeIndex]);
+  }, [tasks, completedTask, activeIndex, darkMode]);
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 }
 

@@ -1,11 +1,12 @@
 import { useTodo } from "../TodoContext";
 
 function ToDoInfo() {
-  const { clearCompleted, showCompletedTask, showAll, tasks } = useTodo();
+  const { clearCompleted, showCompletedTask, showAll, tasks, activeIndex } =
+    useTodo();
   const taskLEft = tasks.filter((task) => !task.completed).length;
   return (
     <div className="flex justify-between py-4 px-6">
-      <p className="text-stone-500">
+      <p className="">
         {" "}
         {}
         {taskLEft === 0
@@ -15,13 +16,21 @@ function ToDoInfo() {
           : `${taskLEft} items left`}
       </p>
       <div className="space-x-2">
-        <button className="text-[#3a7bfd]" onClick={showAll}>
+        <button
+          className={activeIndex === 0 ? "text-[#3a7bfd]" : ""}
+          onClick={showAll}
+        >
           All
         </button>
         <button>Active</button>
-        <button onClick={showCompletedTask}>Completed</button>
+        <button
+          className={activeIndex === 2 ? "text-[#3a7bfd]" : ""}
+          onClick={showCompletedTask}
+        >
+          Completed
+        </button>
       </div>
-      <button className="text-stone-400" onClick={clearCompleted}>
+      <button className="" onClick={clearCompleted}>
         Clear Completed
       </button>
     </div>

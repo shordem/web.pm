@@ -8,11 +8,15 @@ import ToDoItem from "./ToDoItem";
 // ];
 
 function ToDoList() {
-  const { tasks: totalTasks, completedTask, activeIndex } = useTodo();
+  const { tasks: totalTasks, completedTask, activeIndex, darkMode } = useTodo();
   const tasks = activeIndex === 0 ? totalTasks : completedTask;
   console.log(tasks);
   return (
-    <ul className="bg-white divide-y-2 rounded-lg">
+    <ul
+      className={`${
+        darkMode ? "bg-[#25273c] divide-[#4d5066]" : "bg-white"
+      } divide-y rounded-lg`}
+    >
       {tasks.length === 0 ? (
         <li className="py-4 px-6">
           {" "}
