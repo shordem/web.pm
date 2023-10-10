@@ -25,7 +25,7 @@ function CreateNewTodo() {
       <CircularDiv onClick={handleClick} />
       <input
         type="text"
-        className="bg-transparent focus:outline-none grow "
+        className="bg-transparent focus:outline-none grow max-[375px]:text-red-500 "
         placeholder="Create a new todo..."
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}

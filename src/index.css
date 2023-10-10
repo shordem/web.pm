@@ -6,8 +6,21 @@
   .bg-check {
     background-image: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
   }
-  .bg-main {
-    height: 200px; /* Set the desired height */
+  .bg-mobile-light {
+    background-image: url(../public/bg-mobile-light.jpg);
+    background-color: #fafafa;
+
+    height: 230px; /* Set the desired height */
+
+    background-size: cover; /* Set the width to auto and height to 100% */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    background-position: center;
+  }
+  .bg-mobile-dark {
+    background-image: url(../public/bg-mobile-dark.jpg);
+    background-color: hsl(235, 21%, 11%);
+
+    height: 230px; /* Set the desired height */
 
     background-size: cover; /* Set the width to auto and height to 100% */
     background-repeat: no-repeat; /* Prevent the background from repeating */
@@ -16,8 +29,18 @@
   .bg-main-light {
     background-image: url(../public/bg-desktop-light.jpg);
     background-color: #fafafa;
+    height: 200px; /* Set the desired height */
+
+    background-size: cover; /* Set the width to auto and height to 100% */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    background-position: center;
   }
   .bg-main-dark {
+    height: 200px; /* Set the desired height */
+
+    background-size: cover; /* Set the width to auto and height to 100% */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    background-position: center;
     background-image: url(../public/bg-desktop-dark.jpg);
 
     background-color: hsl(235, 21%, 11%);

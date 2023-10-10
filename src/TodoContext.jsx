@@ -28,6 +28,10 @@ function TodoProvider({ children }) {
       );
       setTasks(updatedArray);
     }
+    function deleteTask(item) {
+      const newArray = tasks.filter((task) => !(task === item));
+      setTasks(newArray);
+    }
     function showCompletedTask() {
       // setTasks((tasks) => [...tasks.filter((task) => task.completed)]);
       setActiveIndex(2);
@@ -50,6 +54,7 @@ function TodoProvider({ children }) {
       tasks,
       completedTask,
       handleAddTask,
+      deleteTask,
       activeIndex,
       toggleMode,
       handleToggleCompletedTask,

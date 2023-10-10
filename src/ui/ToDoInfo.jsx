@@ -1,4 +1,5 @@
 import { useTodo } from "../TodoContext";
+import ActiveTab from "./ActiveTab";
 
 function ToDoInfo() {
   const { clearCompleted, showCompletedTask, showAll, tasks, activeIndex } =
@@ -6,7 +7,7 @@ function ToDoInfo() {
   const taskLEft = tasks.filter((task) => !task.completed).length;
   return (
     <div className="flex justify-between py-4 px-6">
-      <p className="">
+      <p className="text-[#9394a5] hover:text-inherit transition-all duration-300">
         {" "}
         {}
         {taskLEft === 0
@@ -15,22 +16,11 @@ function ToDoInfo() {
           ? "1 item left"
           : `${taskLEft} items left`}
       </p>
-      <div className="space-x-2">
-        <button
-          className={activeIndex === 0 ? "text-[#3a7bfd]" : ""}
-          onClick={showAll}
-        >
-          All
-        </button>
-        <button>Active</button>
-        <button
-          className={activeIndex === 2 ? "text-[#3a7bfd]" : ""}
-          onClick={showCompletedTask}
-        >
-          Completed
-        </button>
-      </div>
-      <button className="" onClick={clearCompleted}>
+      <ActiveTab className={"space-x-2 max-[375px]:hidden text-[#9394a5]"} />
+      <button
+        className="text-[#9394a5] hover:text-inherit transition-all duration-300"
+        onClick={clearCompleted}
+      >
         Clear Completed
       </button>
     </div>

@@ -10,7 +10,7 @@ import ToDoItem from "./ToDoItem";
 function ToDoList() {
   const { tasks: totalTasks, completedTask, activeIndex, darkMode } = useTodo();
   const tasks = activeIndex === 0 ? totalTasks : completedTask;
-  console.log(tasks);
+
   return (
     <ul
       className={`${
