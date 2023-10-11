@@ -2,8 +2,7 @@ import { useTodo } from "../TodoContext";
 import ActiveTab from "./ActiveTab";
 
 function ToDoInfo() {
-  const { clearCompleted, showCompletedTask, showAll, tasks, activeIndex } =
-    useTodo();
+  const { clearCompleted, tasks } = useTodo();
   const taskLEft = tasks.filter((task) => !task.completed).length;
   return (
     <div className="flex justify-between py-4 px-6">
