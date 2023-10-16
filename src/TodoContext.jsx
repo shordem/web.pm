@@ -1,12 +1,16 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 const TodoContext = createContext();
 
 function TodoProvider({ children }) {
-  const [tasks, setTasks] = useState([
-    { task: "Jog around the park 3x", completed: false },
-    { task: "10 minutes meditation", completed: false },
-  ]);
+  const [tasks, setTasks] = useLocalStorage(
+    [
+      { task: "Jog around the park 3x", completed: false },
+      { task: "10 minutes meditation", completed: false },
+    ],
+    "todoSTorage"
+  );
   const [completedTask, setCompletedTask] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
@@ -35,7 +39,6 @@ function TodoProvider({ children }) {
     function showCompletedTask() {
       // setTasks((tasks) => [...tasks.filter((task) => task.completed)]);
       setActiveIndex(2);
-      console.log(completedTask);
     }
     function showAll() {
       setActiveIndex(0);
@@ -47,7 +50,6 @@ function TodoProvider({ children }) {
     }
     function toggleMode() {
       setDarkMode((mode) => !mode);
-      console.log("working");
     }
     return {
       darkMode,
