@@ -8,8 +8,13 @@ function CreateNewTodo() {
   const [newTask, setNewTask] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
+    const randomId = Math.ceil(Math.random() * 10000);
     if (!newTask) return;
-    handleAddTask({ task: newTask, completed: false });
+    handleAddTask({
+      task: newTask,
+      completed: false,
+      id: newTask.split("-").at(0) + randomId,
+    });
     setNewTask("");
   }
   function handleClick() {

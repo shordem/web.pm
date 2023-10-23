@@ -4,10 +4,20 @@ import useLocalStorage from "./hooks/useLocalStorage";
 const TodoContext = createContext();
 
 function TodoProvider({ children }) {
-  const [tasks, setTasks] = useLocalStorage(
+  const [tasks, setTasks] = useState(
     [
-      { task: "Jog around the park 3x", completed: false },
-      { task: "10 minutes meditation", completed: false },
+      {
+        task: "Jog around the park 3x",
+        completed: false,
+        id: "Jog123",
+        time: "evening",
+      },
+      {
+        task: "10 minutes meditation",
+        completed: false,
+        id: "1028399",
+        time: "night",
+      },
     ],
     "todoSTorage"
   );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTodo } from "../TodoContext";
 import CircularDiv from "./CircularDiv";
 
-function ToDoItem({ task }) {
+function ToDoItem({ task, provided, innerRef }) {
   const [activeHover, setActiveHover] = useState(false);
   const { handleToggleCompletedTask, darkMode, deleteTask } = useTodo();
   function handleChange(e) {
@@ -23,6 +23,10 @@ function ToDoItem({ task }) {
       onClick={handleChange}
       onMouseEnter={handleHover}
       onMouseLeave={hanleLeave}
+      ref={innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      id={task.id}
     >
       {!task.completed ? (
         <CircularDiv />
