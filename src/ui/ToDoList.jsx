@@ -2,6 +2,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTodo } from "../TodoContext";
 import ToDoInfo from "./ToDoInfo";
 import ToDoItem from "./ToDoItem";
+import { useEffect, useState } from "react";
 
 // const TodoList = [
 //   { task: "Jog around the park 3x", completed: true },
@@ -9,12 +10,27 @@ import ToDoItem from "./ToDoItem";
 // ];
 
 function ToDoList() {
-  const { tasks: totalTasks, completedTask, activeIndex, darkMode } = useTodo();
+  const {
+    tasks: totalTasks,
+    completedTask,
+    activeIndex,
+    darkMode,
+    setTasks,
+  } = useTodo();
   const tasks = activeIndex === 0 ? totalTasks : completedTask;
 
+  function handleOnDragEnd(result) {
+    if (!result.destination) return;
+
+    const items = [...tasks];
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setTasks(items);
+  }
   return (
     <>
-      <DragDropContext>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="tasks">
           {(provided, snapshot) => (
             <ul
@@ -47,6 +63,7 @@ function ToDoList() {
                   </Draggable>
                 ))
               )}
+              {provided.placeholder}
             </ul>
           )}
         </Droppable>

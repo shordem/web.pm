@@ -5,10 +5,11 @@ import CircularDiv from "./CircularDiv";
 function ToDoItem({ task, provided, innerRef }) {
   const [activeHover, setActiveHover] = useState(false);
   const { handleToggleCompletedTask, darkMode, deleteTask } = useTodo();
-  function handleChange(e) {
+  function handleClick(e) {
     e.preventDefault();
     if (e.target.alt === "close-button") return deleteTask(task);
     handleToggleCompletedTask(task);
+    console.log("working");
   }
   function handleHover() {
     setActiveHover(true);
@@ -20,7 +21,7 @@ function ToDoItem({ task, provided, innerRef }) {
   return (
     <li
       className="flex items-center gap-6 py-6 px-6 cursor-pointer transition-all duration-300"
-      onClick={handleChange}
+      onClick={handleClick}
       onMouseEnter={handleHover}
       onMouseLeave={hanleLeave}
       ref={innerRef}

@@ -64,6 +64,7 @@ function TodoProvider({ children }) {
     return {
       darkMode,
       tasks,
+      setTasks,
       completedTask,
       handleAddTask,
       deleteTask,
