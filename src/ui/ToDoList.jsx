@@ -13,11 +13,17 @@ function ToDoList() {
   const {
     tasks: totalTasks,
     completedTask,
+    activeTasks,
     activeIndex,
     darkMode,
     setTasks,
   } = useTodo();
-  const tasks = activeIndex === 0 ? totalTasks : completedTask;
+  let tasks;
+  if (activeIndex === 0) tasks = totalTasks;
+  if (activeIndex === 1) tasks = activeTasks;
+  if (activeIndex === 2) tasks = completedTask;
+
+  // const tasks = activeIndex === 0 ? totalTasks : completedTask;
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;

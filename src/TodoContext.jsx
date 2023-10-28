@@ -22,11 +22,13 @@ function TodoProvider({ children }) {
     "todoSTorage"
   );
   const [completedTask, setCompletedTask] = useState([]);
+  const [activeTasks, setActiveTasks] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
   useEffect(
     function () {
       setCompletedTask([...tasks.filter((task) => task.completed)]);
+      setActiveTasks([...tasks.filter((task) => !task.completed)]);
     },
     [tasks]
   );
@@ -50,6 +52,9 @@ function TodoProvider({ children }) {
       // setTasks((tasks) => [...tasks.filter((task) => task.completed)]);
       setActiveIndex(2);
     }
+    function showActiveTask() {
+      setActiveIndex(1);
+    }
     function showAll() {
       setActiveIndex(0);
       setTasks(tasks);
@@ -66,6 +71,7 @@ function TodoProvider({ children }) {
       tasks,
       setTasks,
       completedTask,
+      activeTasks,
       handleAddTask,
       deleteTask,
       activeIndex,
@@ -73,9 +79,10 @@ function TodoProvider({ children }) {
       handleToggleCompletedTask,
       showAll,
       showCompletedTask,
+      showActiveTask,
       clearCompleted,
     };
-  }, [tasks, completedTask, activeIndex, darkMode]);
+  }, [tasks, completedTask, activeIndex, activeTasks, darkMode]);
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 }
 

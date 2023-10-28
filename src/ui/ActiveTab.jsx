@@ -1,7 +1,7 @@
 import { useTodo } from "../TodoContext";
 
 function ActiveTab({ className }) {
-  const { showCompletedTask, showAll, activeIndex } = useTodo();
+  const { showCompletedTask, showActiveTask, showAll, activeIndex } = useTodo();
   return (
     <div className={className}>
       <button
@@ -14,7 +14,14 @@ function ActiveTab({ className }) {
       >
         All
       </button>
-      <button className="text-[#9394a5] hover:text-[#484b6a] transition-all duration-300">
+      <button
+        onClick={showActiveTask}
+        className={
+          activeIndex === 1
+            ? "text-[#3a7bfd]"
+            : "text-[#9394a5] hover:text-[#484b6a] transition-all duration-300"
+        }
+      >
         Active
       </button>
       <button

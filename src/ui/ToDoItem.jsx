@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTodo } from "../TodoContext";
 import CircularDiv from "./CircularDiv";
 
 function ToDoItem({ task, provided, innerRef }) {
   const [activeHover, setActiveHover] = useState(false);
   const { handleToggleCompletedTask, darkMode, deleteTask } = useTodo();
+  useEffect(function () {}, []);
   function handleClick(e) {
     e.preventDefault();
     if (e.target.alt === "close-button") return deleteTask(task);
