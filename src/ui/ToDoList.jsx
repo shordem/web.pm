@@ -3,6 +3,7 @@ import { useTodo } from "../TodoContext";
 import ToDoInfo from "./ToDoInfo";
 import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
+import { getTodo } from "../services/apiTodo";
 
 // const TodoList = [
 //   { task: "Jog around the park 3x", completed: true },
@@ -24,6 +25,8 @@ function ToDoList() {
   if (activeIndex === 2) tasks = completedTask;
 
   // const tasks = activeIndex === 0 ? totalTasks : completedTask;
+
+  getTodo();
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;

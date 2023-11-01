@@ -10,7 +10,6 @@ function ToDoItem({ task, provided, innerRef }) {
     e.preventDefault();
     if (e.target.alt === "close-button") return deleteTask(task);
     handleToggleCompletedTask(task);
-    console.log("working");
   }
   function handleHover() {
     setActiveHover(true);

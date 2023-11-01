@@ -1,10 +1,15 @@
-import Header from "./ui/Header";
-import CreateNewTodo from "./ui/CreateNewTodo";
-import ToDo from "./ui/ToDo";
-import Footer from "./ui/Footer";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import { useTodo } from "./TodoContext";
 import { useEffect, useState } from "react";
-import ActiveTab from "./ui/ActiveTab";
+
+import TodoApp from "./pages/TodoApp";
+// import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import { Toaster } from "react-hot-toast";
+import LoginPage from "./pages/LoginPage";
 
 // import ToDo from ".ui/ToDo";
 
@@ -40,22 +45,45 @@ function App() {
     },
     [darkMode]
   );
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 0,
+      },
+    },
+  });
   return (
-    <div className={`${darkMode ? "text-[#777a92]" : "text-#9394a5"}`}>
-      <main className="mt-16 mx-auto max-w-2xl max-[375px]:w-[310px]">
-        <div className="shadow-md">
-          <Header />
-          <CreateNewTodo />
-          <ToDo />
-        </div>
-        <ActiveTab
-          className={`${
-            darkMode ? "bg-[#25273c]" : "bg-white"
-          } flex items-center justify-center gap-4 px-4 py-4 shadow-lg min-[375px]:hidden mt-4 text-[#9394a5] hover:text-inherit rounded-md`}
-        />
-      </main>
-      <Footer />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TodoApp />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Routes>
+      </BrowserRouter>
+      <Toaster
+        position="bottom-left"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: { duration: 5000 },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            // backgroundColor: "var(--color-grey-0)",
+            backgroundColor: "bg-red-500",
+            color: "bg-red-100",
+          },
+        }}
+      />
+    </QueryClientProvider>
   );
 }
 

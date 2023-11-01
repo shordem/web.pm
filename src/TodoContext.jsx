@@ -82,7 +82,7 @@ function TodoProvider({ children }) {
       showActiveTask,
       clearCompleted,
     };
-  }, [tasks, completedTask, activeIndex, activeTasks, darkMode]);
+  }, [tasks, completedTask, activeIndex, activeTasks, darkMode, setTasks]);
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 }
 
