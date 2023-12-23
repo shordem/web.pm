@@ -1,28 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { login as loginapi } from "../services/apiAuth";
+// import { login as loginapi } from "../services/apiAuth";
 import FormRow from "../ui/FormRow";
 import LoginButton from "../ui/LoginButton";
 import useLogin from "../featuresHook/useLogin";
 import SpinnerMini from "./SpinnerMini";
+// import { data } from "autoprefixer";
 
 function LoginForm() {
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
+  const [loginDetails, setLoginDetails] = useState({});
   const navigate = useNavigate();
   const { handleSubmit, register, formState, reset } = useForm();
   const { errors } = formState;
   const { isLoggingIn, login } = useLogin();
+
+  // useEffect(
+  //   function () {
+  //     async function Login() {
+  //       const data = await loginapi(loginDetails);
+  //       console.log(data);
+  //     }
+  //     Login();
+  //   },
+  //   [loginDetails]
+  // );
   function onSubmit({ username, password }) {
     // if (!username || !password) return;
     // console.log(username, password);
+    setLoginDetails({ username, password });
     login(
       { username, password },
       {
         onSettled: () => {
-          //   setUsername("");
-          //   setPassword("");
           reset();
         },
       }
@@ -34,7 +46,7 @@ function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onError)}
-      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100"
+      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md"
     >
       <div>
         <h3 className="text-center font-bold">Login Into Your Account</h3>

@@ -1,8 +1,13 @@
+import { AuthService } from "./auth";
+
 const API_URL = "https://api.todo-app.horlakz.com";
+
+const auth = new AuthService();
 
 export async function signup(user) {
   try {
     const res = await fetch(`${API_URL}/register`, {
+      mode: "no-cors",
       method: "POST",
       body: JSON.stringify(user),
       headers: {
@@ -19,13 +24,13 @@ export async function signup(user) {
 export async function login(logindetails) {
   try {
     const res = await fetch(`${API_URL}/login`, {
-      mode: "no-cors",
       method: "POST",
       body: JSON.stringify(logindetails),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    if (!res.ok) throw Error();
     const data = await res.json();
     return data;
   } catch (err) {
@@ -35,9 +40,9 @@ export async function login(logindetails) {
 
 export async function getUser() {
   try {
-    const res = await fetch(`${API_URL}/user`, { mode: "no-cors" });
-    const data = await res.json();
-    return data;
+    const res = await auth.user();
+
+    return res.data;
   } catch (err) {
     throw new Error(err);
   }

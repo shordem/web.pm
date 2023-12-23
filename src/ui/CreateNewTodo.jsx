@@ -1,25 +1,37 @@
 import { useRef, useState } from "react";
-import { useTodo } from "../TodoContext";
+import { useTodo } from "../TodoContext.jsx";
 import CircularDiv from "./CircularDiv";
+import { useAddTodo } from "../featuresHook/useTodo";
+import SpinnerMini from "./SpinnerMini.jsx";
 
 function CreateNewTodo() {
   const ref = useRef();
   const { handleAddTask, darkMode } = useTodo();
+  const { isAdding, addTodo } = useAddTodo();
   const [newTask, setNewTask] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
     const randomId = Math.ceil(Math.random() * 10000);
     if (!newTask) return;
-    handleAddTask({
+    // handleAddTask({
+    //   task: newTask,
+    //   completed: false,
+    //   id: newTask.split(" ").at(0) + randomId,
+    // });
+    addTodo({
+      title: newTask,
+    });
+    console.log({
       task: newTask,
       completed: false,
-      id: newTask.split("-").at(0) + randomId,
+      id: newTask.split(" ").at(0) + randomId,
     });
     setNewTask("");
   }
   function handleClick() {
     ref.current.focus();
   }
+  if (isAdding) return <SpinnerMini text="Adding task" />;
   return (
     <form
       className={`${

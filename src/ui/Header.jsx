@@ -1,4 +1,4 @@
-import { useTodo } from "../TodoContext";
+import { useTodo } from "../TodoContext.jsx";
 
 function Header() {
   const { toggleMode, darkMode } = useTodo();

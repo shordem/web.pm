@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { useTodo } from "./TodoContext";
+import { useTodo } from "./TodoContext.jsx";
 import { useEffect, useState } from "react";
 
 import TodoApp from "./pages/TodoApp";
@@ -10,6 +10,7 @@ import TodoApp from "./pages/TodoApp";
 import SignUpPage from "./pages/SignUpPage";
 import { Toaster } from "react-hot-toast";
 import LoginPage from "./pages/LoginPage";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 // import ToDo from ".ui/ToDo";
 
@@ -59,9 +60,17 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<TodoApp />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <TodoApp />{" "}
+              </ProtectedRoute>
+            }
+          />
           <Route path="login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
       <Toaster

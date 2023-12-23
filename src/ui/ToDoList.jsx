@@ -1,9 +1,9 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useTodo } from "../TodoContext";
+import { useTodo } from "../TodoContext.jsx";
 import ToDoInfo from "./ToDoInfo";
 import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
-import { getTodo } from "../services/apiTodo";
+import { useAddTodo, useGetTodos } from "../featuresHook/useTodo";
 
 // const TodoList = [
 //   { task: "Jog around the park 3x", completed: true },
@@ -11,22 +11,44 @@ import { getTodo } from "../services/apiTodo";
 // ];
 
 function ToDoList() {
-  const {
-    tasks: totalTasks,
-    completedTask,
-    activeTasks,
-    activeIndex,
-    darkMode,
-    setTasks,
-  } = useTodo();
-  let tasks;
-  if (activeIndex === 0) tasks = totalTasks;
-  if (activeIndex === 1) tasks = activeTasks;
-  if (activeIndex === 2) tasks = completedTask;
+  // const {
+  //   tasks: totalTasks,
+  //   completedTask,
+  //   activeTasks,
+  //   activeIndex,
+  //   darkMode,
+  //   setTasks,
+  // } = useTodo();
+  // const [tasks, setTasks] = useState();
+  // useEffect(function(){
+  //   setTasks()
+  // })
+  const { activeIndex, darkMode } = useTodo();
+  // const activeIndex = 1;
+  // const darkMode = false;
+  const { isLoading, todos: totalTasks } = useGetTodos();
+  const [tasks, setTasks] = useState([]);
+  // if (isLoading) return;
+  useEffect(
+    function () {
+      if (!totalTasks) return;
+      if (activeIndex === 0) setTasks(totalTasks);
+      if (activeIndex === 1) setTasks(totalTasks.filter((el) => !el.completed));
+      if (activeIndex === 2) setTasks(totalTasks.filter((el) => el.completed));
+    },
+    [activeIndex, totalTasks]
+  );
+  // if (isLoading) return <p>Loading ...</p>;
+  // console.log(totalTasks);
+
+  if (isLoading) return <p>Loading ...</p>;
+
+  // let tasks;
 
   // const tasks = activeIndex === 0 ? totalTasks : completedTask;
 
-  getTodo();
+  // getTodo();
+  console.log(tasks);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -40,6 +62,7 @@ function ToDoList() {
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
+        {/* <DragDropContext> */}
         <Droppable droppableId="tasks">
           {(provided, snapshot) => (
             <ul

@@ -1,17 +1,40 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
-// import { useAddTodo, useGetTodos } from "./featuresHook/useTodo";
 
 const TodoContext = createContext();
 
 function TodoProvider({ children }) {
-  const [tasks, setTasks] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  // if (isLoading) return;
+  const [tasks, setTasks] = useLocalStorage(
+    [
+      {
+        task: "Jog around the park 3x",
+        completed: false,
+        id: "Jog123",
+        time: "evening",
+      },
+      {
+        task: "10 minutes meditation",
+        completed: false,
+        id: "1028399",
+        time: "night",
+      },
+    ],
+    "todoSTorage"
+  );
 
+  const [completedTask, setCompletedTask] = useState([]);
+  const [activeTasks, setActiveTasks] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [darkMode, setDarkMode] = useLocalStorage(
     window.matchMedia("(prefers-color-scheme:dark)").matches,
     "dark-mode"
+  );
+  useEffect(
+    function () {
+      setCompletedTask([...tasks.filter((task) => task.completed)]);
+      setActiveTasks([...tasks.filter((task) => !task.completed)]);
+    },
+    [tasks]
   );
 
   const value = useMemo(() => {
@@ -51,6 +74,8 @@ function TodoProvider({ children }) {
       darkMode,
       tasks,
       setTasks,
+      completedTask,
+      activeTasks,
       handleAddTask,
       deleteTask,
       activeIndex,
@@ -61,15 +86,19 @@ function TodoProvider({ children }) {
       showActiveTask,
       clearCompleted,
     };
-  }, [tasks, activeIndex, darkMode, setTasks, setDarkMode]);
+  }, [
+    tasks,
+    completedTask,
+    activeIndex,
+    activeTasks,
+    darkMode,
+    setTasks,
+    setDarkMode,
+  ]);
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 }
 
 function useTodo() {
-  const todo = useContext(TodoContext);
-  if (todo === undefined) {
-    throw new Error("Context unavailable here");
-  }
   return useContext(TodoContext);
 }
 

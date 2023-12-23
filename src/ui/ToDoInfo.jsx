@@ -1,4 +1,4 @@
-import { useTodo } from "../TodoContext";
+import { useTodo } from "../TodoContext.jsx";
 import ActiveTab from "./ActiveTab";
 
 function ToDoInfo() {

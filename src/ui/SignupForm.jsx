@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import useSignUp from "../featuresHook/useSignUp";
 import FormRow from "./FormRow";
 import LoginButton from "./LoginButton";
+import { useEffect } from "react";
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -11,14 +12,21 @@ function SignupForm() {
   const { errors } = formState;
   const { isSigningUp, signup } = useSignUp();
 
-  function onSubmit({ fullname, email, username, password }) {}
+  function onSubmit({ fullname, email, username, password }) {
+    signup(
+      { fullname, email, username, password },
+      {
+        onSuccess: () => reset(),
+      }
+    );
+  }
   function onError(err) {
     console.log(err);
   }
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onError)}
-      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100"
+      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md"
     >
       <h3 className="text-center">Create your Account</h3>
       <FormRow label="Fullname" error={errors?.fullname?.message}>

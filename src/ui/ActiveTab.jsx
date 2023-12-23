@@ -1,4 +1,4 @@
-import { useTodo } from "../TodoContext";
+import { useTodo } from "../TodoContext.jsx";
 
 function ActiveTab({ className }) {
   const { showCompletedTask, showActiveTask, showAll, activeIndex } = useTodo();
