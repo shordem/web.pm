@@ -22,7 +22,7 @@ function User() {
   if (isLoading) return <p>Loading ....</p>;
   const { username } = user;
   return (
-    <div className="flex gap-3 text-white ml-auto text-2xl w-fit">
+    <div className="flex gap-3 text-white ml-auto text-base lg:text-2xl md:text-1xl w-fit">
       <p>
         {timeString}, {username || "User"}
       </p>

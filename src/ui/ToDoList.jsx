@@ -4,6 +4,7 @@ import ToDoInfo from "./ToDoInfo";
 import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
 import { useAddTodo, useGetTodos } from "../featuresHook/useTodo";
+import SpinnerMini from "./SpinnerMini.jsx";
 
 // const TodoList = [
 //   { task: "Jog around the park 3x", completed: true },
@@ -24,24 +25,26 @@ function ToDoList() {
   //   setTasks()
   // })
   const { activeIndex, darkMode } = useTodo();
-  // const activeIndex = 1;
-  // const darkMode = false;
+
   const { isLoading, todos: totalTasks } = useGetTodos();
+  console.log(totalTasks);
   const [tasks, setTasks] = useState([]);
-  // if (isLoading) return;
+
   useEffect(
     function () {
       if (!totalTasks) return;
-      if (activeIndex === 0) setTasks(totalTasks);
-      if (activeIndex === 1) setTasks(totalTasks.filter((el) => !el.completed));
-      if (activeIndex === 2) setTasks(totalTasks.filter((el) => el.completed));
+      if (activeIndex === 0) setTasks(totalTasks.reverse());
+      if (activeIndex === 1)
+        setTasks(totalTasks.filter((el) => !el.completed).reverse());
+      if (activeIndex === 2)
+        setTasks(totalTasks.filter((el) => el.completed).reverse());
     },
     [activeIndex, totalTasks]
   );
   // if (isLoading) return <p>Loading ...</p>;
   // console.log(totalTasks);
 
-  if (isLoading) return <p>Loading ...</p>;
+  if (isLoading) return <SpinnerMini text={"Loading todos..."} />;
 
   // let tasks;
 

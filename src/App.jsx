@@ -14,11 +14,6 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 
 // import ToDo from ".ui/ToDo";
 
-const tasks = [
-  { task: "ash", id: 5 },
-  { task: ";lslashhdh", id: 6 },
-  { task: "ashhdh", id: 7 },
-];
 function App() {
   const { darkMode } = useTodo();
 

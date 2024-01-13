@@ -21,7 +21,6 @@ function TodoApp() {
           <CreateNewTodo />
           <ToDo />
         </div>
-        <p>working</p>
         <ActiveTab
           className={`${
             darkMode ? "bg-[#25273c]" : "bg-white"

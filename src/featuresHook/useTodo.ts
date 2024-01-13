@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { TodoService } from "../services/todo";
 import { addTodoType, updateTodoType } from "../services/todos/todo.interface";
 import toast from "react-hot-toast";
 import {
@@ -41,8 +40,8 @@ export function useAddTodo() {
 export function useUpdateTodo() {
   const queryClient = useQueryClient();
   const { isPending: isUpdating, mutate: updateTodo } = useMutation({
-    mutationFn: ({ id, title, completed }: updateTodoType) =>
-      updateTodoApi({ id, title, completed }),
+    mutationFn: ({ id, completed }: updateTodoType) =>
+      updateTodoApi({ id, completed }),
     onSuccess: (data) => {
       toast.success("Succesfully updated task");
       queryClient.invalidateQueries({ queryKey: ["todos"] });

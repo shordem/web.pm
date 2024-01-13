@@ -20,7 +20,6 @@ export async function addTodo(todo: addTodoType) {
 
 export async function updateTodo(todo: updateTodoType) {
   const data = await apiClient.put(`todos/${todo.id}`, {
-    title: todo.title,
     completed: todo.completed,
   });
   return data;

@@ -6,18 +6,19 @@ import SpinnerMini from "./SpinnerMini.jsx";
 
 function ToDoItem({ task, provided, innerRef, id }) {
   const [activeHover, setActiveHover] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const { handleToggleCompletedTask, darkMode, deleteTask } = useTodo();
+
+  const { darkMode } = useTodo();
   const { isDeleting, deleteTodo } = useDeleteTodo();
   const { isUpdating, updateTodo } = useUpdateTodo();
 
-  function handleClick(e) {
+  function handleToggleComplete(e) {
     e.preventDefault();
     console.log(e.target);
+    updateTodo({ id, completed: !task.completed });
+  }
+  function handleDeleteTodo(e) {
+    e.preventDefault();
     if (e.target.alt === "close-button") return deleteTodo(task.id);
-    setIsCompleted((isCompleted) => !isCompleted);
-    console.log({ id, task: task.title, completed: isCompleted });
-    updateTodo({ id, task: task.title, completed: !isCompleted });
   }
   function handleHover() {
     setActiveHover(true);
@@ -34,7 +35,6 @@ function ToDoItem({ task, provided, innerRef, id }) {
       className={`${
         darkMode ? "bg-[#25273c]" : ""
       } flex items-center gap-6 py-6 px-6 cursor-pointer transition-all duration-300`}
-      onClick={handleClick}
       onMouseEnter={handleHover}
       onMouseLeave={hanleLeave}
       ref={innerRef}
@@ -43,11 +43,14 @@ function ToDoItem({ task, provided, innerRef, id }) {
       id={task.id}
     >
       {!task.completed ? (
-        <CircularDiv />
+        <CircularDiv onClick={handleToggleComplete} />
       ) : (
-        <div className="w-6 h-6 cursor-pointer rounded-full bg-check border-2  flex items-center justify-center transition-allr">
+        // <div className="w-6 h-6 cursor-pointer rounded-full bg-check border-2  flex items-center justify-center transition-allr">
+        //   <img src="/icon-check.svg" alt="Checked" />
+        // </div>
+        <CircularDiv className={"bg-check"} onClick={handleToggleComplete}>
           <img src="/icon-check.svg" alt="Checked" />
-        </div>
+        </CircularDiv>
       )}
 
       {darkMode ? (
@@ -71,13 +74,15 @@ function ToDoItem({ task, provided, innerRef, id }) {
         <img
           src="icon-cross.svg"
           alt="close-button"
-          className="ml-auto transition-all duration-300 h-4 max-[375px]:hidden"
+          className="ml-auto transition-all duration-300 h-4 max-[375px]:hidden cursor-pointer"
+          onClick={handleDeleteTodo}
         />
       )}
       <img
         src="icon-cross.svg"
         alt="close-button"
-        className="ml-auto transition-all duration-300 h-4 min-[375px]:hidden"
+        className="ml-auto transition-all duration-300 h-4 min-[375px]:hidden cursor-pointer"
+        onClick={handleDeleteTodo}
       />
     </li>
   );
