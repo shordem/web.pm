@@ -5,30 +5,39 @@ import useLocalStorage from "./hooks/useLocalStorage";
 const TodoContext = createContext();
 
 function TodoProvider({ children }) {
-  const [tasks, setTasks] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  // if (isLoading) return;
 
   const [darkMode, setDarkMode] = useLocalStorage(
     window.matchMedia("(prefers-color-scheme:dark)").matches,
     "dark-mode"
   );
 
-  const value = useMemo(() => {
-    function handleAddTask(task) {
-      setTasks((tasks) => [...tasks, task]);
-    }
+  useEffect(
+    function () {
+      if (darkMode) {
+        document.body.classList.add(
+          "max-[375px]:bg-mobile-dark",
+          "bg-main-dark"
+        );
+        document.body.classList.remove(
+          "max-[375px]:bg-mobile-light",
+          "bg-main-light"
+        );
+      } else {
+        document.body.classList.remove(
+          "max-[375px]:bg-mobile-dark",
+          "bg-main-dark"
+        );
+        document.body.classList.add(
+          "max-[375px]:bg-mobile-light",
+          "bg-main-light"
+        );
+      }
+    },
+    [darkMode]
+  );
 
-    function handleToggleCompletedTask(item) {
-      const updatedArray = tasks.map((task) =>
-        task === item ? { ...task, completed: !task.completed } : task
-      );
-      setTasks(updatedArray);
-    }
-    function deleteTask(item) {
-      const newArray = tasks.filter((task) => !(task.id === item.id));
-      setTasks(newArray);
-    }
+  const value = useMemo(() => {
     function showCompletedTask() {
       // setTasks((tasks) => [...tasks.filter((task) => task.completed)]);
       setActiveIndex(2);
@@ -38,30 +47,20 @@ function TodoProvider({ children }) {
     }
     function showAll() {
       setActiveIndex(0);
-      setTasks(tasks);
     }
 
-    function clearCompleted() {
-      setTasks((tasks) => tasks.filter((task) => !task.completed));
-    }
     function toggleMode() {
       setDarkMode((mode) => !mode);
     }
     return {
       darkMode,
-      tasks,
-      setTasks,
-      handleAddTask,
-      deleteTask,
       activeIndex,
       toggleMode,
-      handleToggleCompletedTask,
       showAll,
       showCompletedTask,
       showActiveTask,
-      clearCompleted,
     };
-  }, [tasks, activeIndex, darkMode, setTasks, setDarkMode]);
+  }, [activeIndex, darkMode, setDarkMode]);
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 }
 

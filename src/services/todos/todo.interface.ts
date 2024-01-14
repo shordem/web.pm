@@ -9,5 +9,4 @@ export interface deleteTodoType {
 export interface updateTodoType {
   id: string;
   completed: string;
-  title: string;
 }
