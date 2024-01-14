@@ -4,10 +4,6 @@ import Logout from "./Logout";
 function User() {
   const { isLoading, user } = useUser();
 
-  // const {
-  //   isLoading,
-  //   user: { username },
-  // } = data;
   const hours = new Date().getHours();
   let timeString = `${
     hours <= 11
@@ -19,7 +15,7 @@ function User() {
       : "Good Night"
   }`;
 
-  if (isLoading) return <p>Loading ....</p>;
+  if (isLoading) return <p>Loading User</p>;
   const { username } = user;
   return (
     <div className="flex gap-3 text-white ml-auto text-base lg:text-2xl md:text-1xl w-fit">

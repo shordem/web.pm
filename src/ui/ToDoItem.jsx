@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTodo } from "../TodoContext.jsx";
 import CircularDiv from "./CircularDiv";
 import { useDeleteTodo, useUpdateTodo } from "../featuresHook/useTodo";
@@ -45,9 +45,6 @@ function ToDoItem({ task, provided, innerRef, id }) {
       {!task.completed ? (
         <CircularDiv onClick={handleToggleComplete} />
       ) : (
-        // <div className="w-6 h-6 cursor-pointer rounded-full bg-check border-2  flex items-center justify-center transition-allr">
-        //   <img src="/icon-check.svg" alt="Checked" />
-        // </div>
         <CircularDiv className={"bg-check"} onClick={handleToggleComplete}>
           <img src="/icon-check.svg" alt="Checked" />
         </CircularDiv>
