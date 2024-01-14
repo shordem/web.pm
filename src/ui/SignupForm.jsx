@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import useSignUp from "../featuresHook/useSignUp";
 import FormRow from "./FormRow";
 import LoginButton from "./LoginButton";
-import { useEffect } from "react";
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -34,8 +33,6 @@ function SignupForm() {
           type="text"
           id="fullname"
           className="py-2 px-4 rounded-sm border-grey-100"
-          //   onChange={(e) => setUsername(e.target.value)}
-          //   value={username}
           disabled={isSigningUp}
           {...register("fullname", { required: "Input your fullname" })}
         />
@@ -45,8 +42,6 @@ function SignupForm() {
           type="text"
           id="username"
           className="py-2 px-4 rounded-sm border-grey-100"
-          //   onChange={(e) => setUsername(e.target.value)}
-          //   value={username}
           disabled={isSigningUp}
           {...register("username", { required: "Input your username" })}
         />

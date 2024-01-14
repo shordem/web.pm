@@ -3,31 +3,14 @@ import { useTodo } from "../TodoContext.jsx";
 import ToDoInfo from "./ToDoInfo";
 import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
-import { useAddTodo, useGetTodos } from "../featuresHook/useTodo";
+import { useGetTodos } from "../featuresHook/useTodo";
 import SpinnerMini from "./SpinnerMini.jsx";
 
-// const TodoList = [
-//   { task: "Jog around the park 3x", completed: true },
-//   { task: "10 minutes meditation", completed: false },
-// ];
-
 function ToDoList() {
-  // const {
-  //   tasks: totalTasks,
-  //   completedTask,
-  //   activeTasks,
-  //   activeIndex,
-  //   darkMode,
-  //   setTasks,
-  // } = useTodo();
-  // const [tasks, setTasks] = useState();
-  // useEffect(function(){
-  //   setTasks()
-  // })
   const { activeIndex, darkMode } = useTodo();
 
   const { isLoading, todos: totalTasks } = useGetTodos();
-  console.log(totalTasks);
+
   const [tasks, setTasks] = useState([]);
 
   useEffect(
@@ -41,17 +24,8 @@ function ToDoList() {
     },
     [activeIndex, totalTasks]
   );
-  // if (isLoading) return <p>Loading ...</p>;
-  // console.log(totalTasks);
 
   if (isLoading) return <SpinnerMini text={"Loading todos..."} />;
-
-  // let tasks;
-
-  // const tasks = activeIndex === 0 ? totalTasks : completedTask;
-
-  // getTodo();
-  console.log(tasks);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;

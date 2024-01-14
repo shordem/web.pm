@@ -4,7 +4,7 @@ import ActiveTab from "../ui/ActiveTab";
 import CreateNewTodo from "../ui/CreateNewTodo";
 import Footer from "../ui/Footer";
 import Header from "../ui/Header";
-import ToDo from "../ui/ToDo";
+import ToDoList from "../ui/ToDoList.jsx";
 import User from "../ui/User";
 
 function TodoApp() {
@@ -17,7 +17,7 @@ function TodoApp() {
         <div className="shadow-md">
           <Header />
           <CreateNewTodo />
-          <ToDo />
+          <ToDoList />
         </div>
         <ActiveTab
           className={`${
