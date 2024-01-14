@@ -12,6 +12,31 @@ function TodoProvider({ children }) {
     "dark-mode"
   );
 
+  useEffect(
+    function () {
+      if (darkMode) {
+        document.body.classList.add(
+          "max-[375px]:bg-mobile-dark",
+          "bg-main-dark"
+        );
+        document.body.classList.remove(
+          "max-[375px]:bg-mobile-light",
+          "bg-main-light"
+        );
+      } else {
+        document.body.classList.remove(
+          "max-[375px]:bg-mobile-dark",
+          "bg-main-dark"
+        );
+        document.body.classList.add(
+          "max-[375px]:bg-mobile-light",
+          "bg-main-light"
+        );
+      }
+    },
+    [darkMode]
+  );
+
   const value = useMemo(() => {
     function showCompletedTask() {
       // setTasks((tasks) => [...tasks.filter((task) => task.completed)]);

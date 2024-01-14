@@ -1,4 +1,4 @@
-import { useDeleteTodo, useGetTodos } from "../featuresHook/useTodo.js";
+import { useDeleteTodo, useGetTodos } from "../featuresHook/useTodo.ts";
 import ActiveTab from "./ActiveTab";
 import SpinnerMini from "./SpinnerMini.jsx";
 
@@ -29,7 +29,7 @@ function ToDoInfo() {
         className="text-[#9394a5] hover:text-inherit transition-all duration-300"
         onClick={() => {
           const response = window.confirm(
-            "Are you sure you want clear completed"
+            "Are you sure you want clear your completed tasks"
           );
           if (response) clearCompleted();
         }}

@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addTodoType, updateTodoType } from "../services/todos/todo.interface";
 import toast from "react-hot-toast";
 import {
   getTodo,
@@ -7,6 +6,7 @@ import {
   updateTodo as updateTodoApi,
   deleteTodo as deleteTodoApi,
 } from "../services/apiTodo";
+import { addTodoType, updateTodoType } from "../services/todos/todo.interface";
 
 export function useGetTodos() {
   const {
