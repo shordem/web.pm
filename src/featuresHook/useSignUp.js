@@ -1,15 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-// import { signup as signupapi } from "../services/apiAuth";
 import toast from "react-hot-toast";
 import { AuthService } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 
 const auth = new AuthService();
-
-// class Auth {
-// private auth = new AuthService()
-
-// }
 
 export default function useSignUp() {
   const navigate = useNavigate();
@@ -19,7 +13,6 @@ export default function useSignUp() {
     onSuccess: (data) => {
       toast.success("Successfully Signed up");
       navigate("/", { replace: true });
-      console.log(data);
     },
     onError: (err) => {
       toast.error(err.response.data.message);

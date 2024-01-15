@@ -19,12 +19,10 @@ function SignupForm() {
       }
     );
   }
-  function onError(err) {
-    console.log(err);
-  }
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit, onError)}
+      onSubmit={handleSubmit(onSubmit)}
       className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md"
     >
       <h3 className="text-center">Create your Account</h3>

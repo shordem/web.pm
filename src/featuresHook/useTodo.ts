@@ -31,7 +31,6 @@ export function useAddTodo() {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
     onError: (err) => {
-      console.log(err);
       toast.error(err.message);
     },
   });
