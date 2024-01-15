@@ -13,7 +13,6 @@ function ToDoItem({ task, provided, innerRef, id }) {
 
   function handleToggleComplete(e) {
     e.preventDefault();
-    console.log(e.target);
     updateTodo({ id, completed: !task.completed });
   }
   function handleDeleteTodo(e) {
@@ -34,7 +33,7 @@ function ToDoItem({ task, provided, innerRef, id }) {
     <li
       className={`${
         darkMode ? "bg-[#25273c]" : ""
-      } flex items-center gap-6 py-6 px-6 cursor-pointer transition-all duration-300`}
+      } grid grid-cols-[auto,1fr,auto]  items-center gap-6 py-6 px-6 cursor-pointer transition-all duration-300`}
       onMouseEnter={handleHover}
       onMouseLeave={hanleLeave}
       ref={innerRef}
@@ -50,35 +49,31 @@ function ToDoItem({ task, provided, innerRef, id }) {
         </CircularDiv>
       )}
 
-      {darkMode ? (
+      {
         <p
           className={`${
-            task.completed ? "line-through  text-[#cacde8]" : " text-[#e4e5f1]"
-          } `}
+            task.completed
+              ? `line-through  ${
+                  !darkMode ? "text-[#9394a5]" : "text-[#cacde8]"
+                }`
+              : `${!darkMode ? "text-[#484b6a]" : "text-[#e4e5f1]"} `
+          }  overflow-auto `}
         >
           {task.title}
         </p>
-      ) : (
-        <p
-          className={`${
-            task.completed ? "line-through text-[#9394a5]" : "text-[#484b6a]"
-          } `}
-        >
-          {task.title}
-        </p>
-      )}
+      }
       {activeHover && (
         <img
           src="icon-cross.svg"
           alt="close-button"
-          className="ml-auto transition-all duration-300 h-4 max-[375px]:hidden cursor-pointer"
+          className="ml-auto transition-all duration-300 h-4 max-[875px]:hidden cursor-pointer"
           onClick={handleDeleteTodo}
         />
       )}
       <img
         src="icon-cross.svg"
         alt="close-button"
-        className="ml-auto transition-all duration-300 h-4 min-[375px]:hidden cursor-pointer"
+        className="ml-auto transition-all duration-300 h-4 min-[875px]:hidden cursor-pointer"
         onClick={handleDeleteTodo}
       />
     </li>

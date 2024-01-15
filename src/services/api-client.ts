@@ -42,16 +42,13 @@ export class Client {
       async (error: AxiosError<Error>) => {
         if (error.config && error?.response?.status === 401) {
           // const data = await this.refreshToken();
-
           // this.storageClass.setItem(ACCESS_TOKEN_KEY, data.access_token);
           // this.storageClass.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
-
           // this.axiosClient.defaults.headers.common[
           //   "Authorization"
           // ] = `Bearer ${data.accessToken}`;
-
           // return this.axiosClient(error.config);
-          this.redirectToLogin();
+          // this.redirectToLogin();
         }
         return Promise.reject(error);
       }

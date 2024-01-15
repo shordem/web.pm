@@ -6,26 +6,17 @@ import SpinnerMini from "./SpinnerMini.jsx";
 
 function CreateNewTodo() {
   const ref = useRef();
-  const { handleAddTask, darkMode } = useTodo();
+  const { darkMode } = useTodo();
   const { isAdding, addTodo } = useAddTodo();
   const [newTask, setNewTask] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
-    const randomId = Math.ceil(Math.random() * 10000);
     if (!newTask) return;
-    // handleAddTask({
-    //   task: newTask,
-    //   completed: false,
-    //   id: newTask.split(" ").at(0) + randomId,
-    // });
+
     addTodo({
       title: newTask,
     });
-    console.log({
-      task: newTask,
-      completed: false,
-      id: newTask.split(" ").at(0) + randomId,
-    });
+
     setNewTask("");
   }
   function handleClick() {
@@ -42,7 +33,7 @@ function CreateNewTodo() {
       <CircularDiv onClick={handleClick} />
       <input
         type="text"
-        className="bg-transparent focus:outline-none grow max-[375px]:text-red-500 "
+        className="bg-transparent focus:outline-none grow  "
         placeholder="Create a new todo..."
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}

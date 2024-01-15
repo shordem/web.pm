@@ -1,12 +1,13 @@
 // import LoginForm from "../ui/LoginForm";
 
 import LoginForm from "../ui/LoginForm";
+import PageCenter from "../ui/PageCenter";
 
 function LoginPage() {
   return (
-    <div className="grid min-h-screen items-center justify-center grid-cols-[30rem]">
+    <PageCenter>
       <LoginForm />
-    </div>
+    </PageCenter>
   );
 }
 

@@ -21,12 +21,10 @@ function LoginForm() {
       }
     );
   }
-  function onError(error) {
-    console.log(error);
-  }
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit, onError)}
+      onSubmit={handleSubmit(onSubmit)}
       className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md"
     >
       <div>

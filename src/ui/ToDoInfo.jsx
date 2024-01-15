@@ -24,7 +24,7 @@ function ToDoInfo() {
           ? "1 item left"
           : `${taskLEft} items left`}
       </p>
-      <ActiveTab className={"space-x-2 max-[375px]:hidden text-[#9394a5]"} />
+      <ActiveTab className={"space-x-2 max-[560px]:hidden text-[#9394a5]"} />
       <button
         className="text-[#9394a5] hover:text-inherit transition-all duration-300"
         onClick={() => {

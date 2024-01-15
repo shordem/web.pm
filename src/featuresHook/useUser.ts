@@ -4,16 +4,15 @@ import { getUser } from "../services/apiAuth";
 
 const auth = new AuthService();
 
-// export default function useUser() {
-//   const { isLoading, data: user } = useQuery({
-//     queryKey: ["user"],
-//     queryFn: auth.user,
-//   });
 export default function useUser() {
   const { isLoading, data: user } = useQuery({
     queryKey: ["user"],
-    queryFn: getUser,
+    queryFn: async () => {
+      const res = await auth.user();
+
+      return res.data;
+    },
   });
-  // console.log(user);
+
   return { isLoading, user };
 }

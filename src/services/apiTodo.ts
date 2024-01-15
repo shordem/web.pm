@@ -8,7 +8,6 @@ import {
 const apiClient = new Client();
 export async function getTodo() {
   const data = await apiClient.get("todos");
-  // console.log(data.data);
   return data.data;
 }
 
