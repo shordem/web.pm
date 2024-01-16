@@ -25,7 +25,7 @@ function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md"
+      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md  max-[600px]:p-4"
     >
       <div>
         <h3 className="text-center font-bold">Login Into Your Account</h3>
