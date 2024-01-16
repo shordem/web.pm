@@ -12,7 +12,7 @@ function TodoApp() {
 
   return (
     <div className={`${darkMode ? "text-[#777a92]" : "text-#9394a5"} `}>
-      <main className="mt-16 mx-auto max-w-2xl max-[675px]:w-4/5">
+      <main className="mt-16 mx-auto max-w-2xl max-[675px]:w-4/5 max-[400px]:w-[90%]">
         <User />
         <div className="shadow-md">
           <Header />
