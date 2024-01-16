@@ -23,7 +23,7 @@ function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md"
+      className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md  max-[600px]:p-4"
     >
       <h3 className="text-center">Create your Account</h3>
       <FormRow label="Fullname" error={errors?.fullname?.message}>
