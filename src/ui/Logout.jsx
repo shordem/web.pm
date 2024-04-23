@@ -2,6 +2,8 @@ import { HiArrowRightOnRectangle } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { Storage } from "../utilities/storage";
 import { ACCESS_TOKEN_KEY } from "../constants/auth";
+import LogoutIcon from "./icons/logout";
+import ButtonIcon from "./ButtonIcon";
 
 function Logout() {
   const navigate = useNavigate();
@@ -14,7 +16,10 @@ function Logout() {
         storage.deleteItem(ACCESS_TOKEN_KEY);
       }}
     >
-      <HiArrowRightOnRectangle />
+      <ButtonIcon>
+        {" "}
+        <LogoutIcon />
+      </ButtonIcon>
     </button>
   );
 }
