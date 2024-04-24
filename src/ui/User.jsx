@@ -1,5 +1,6 @@
 import useUser from "../featuresHook/useUser";
 import Logout from "./Logout";
+import SettingsIcon from "./icons/settings";
 
 function User() {
   const { isLoading, user } = useUser();
@@ -22,7 +23,7 @@ function User() {
       <p>
         {timeString}, {username || "User"}
       </p>
-      <Logout />
+      <SettingsIcon />
     </div>
   );
 }
