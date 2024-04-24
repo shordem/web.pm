@@ -13,7 +13,7 @@ function Settings() {
   return (
     <Modal>
       <div className="mt-16 w-9/12 mx-auto ">
-        <Heading as="h2">Settings</Heading>
+        <Heading as="h4">Settings</Heading>
         <ul
           className={`${
             darkMode ? "bg-[#25273c] divide-[#4d5066]" : "bg-white"
