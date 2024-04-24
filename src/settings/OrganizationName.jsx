@@ -34,9 +34,9 @@ function OrganizationName({ name }) {
             </ButtonIcon>
           </Menus.Toggle>
           <Menus.List id={name}>
-            <div className="flex flex-col w-fit bg-stone-100 justify-between absolute top-2 right-6 rounded-md shadow-md z-10">
+            <div className="flex flex-col w-fit bg-purple-50 justify-between absolute top-2 right-6 rounded-md shadow-md z-10 overflow-hidden">
               <Menus.Button>
-                <button className=" cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-gray-400">
+                <button className=" cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-purple-100">
                   {" "}
                   <span className="mt-1"> Switch </span> <IoIosSwitch />{" "}
                 </button>
@@ -44,7 +44,7 @@ function OrganizationName({ name }) {
               <Menus.Button onClick={() => setEditText(true)}>
                 <button
                   className={
-                    " cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-gray-400"
+                    " cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-purple-100"
                   }
                 >
                   {" "}
@@ -54,7 +54,7 @@ function OrganizationName({ name }) {
               <Menus.Button>
                 <button
                   className={
-                    " cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-gray-400"
+                    " cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-purple-100"
                   }
                 >
                   {" "}
