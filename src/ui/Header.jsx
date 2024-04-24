@@ -5,7 +5,10 @@ function Header() {
   const { toggleMode, darkMode } = useTodo();
   return (
     <header className="flex items-center justify-between mb-6">
-      <HeadingTag> TODO</HeadingTag>
+      <div>
+        <HeadingTag as="h5"> {`OrganizationName <<  Category`}</HeadingTag>
+      </div>
+
       <img
         src={`/icon-${!darkMode ? "moon" : "sun"}.svg`}
         alt="Mode-icon"
