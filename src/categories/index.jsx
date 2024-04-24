@@ -9,7 +9,7 @@ function Categories() {
   return (
     <Modal>
       <div className="mt-16 w-9/12 mx-auto ">
-        <Heading as="h2">Categories</Heading>
+        <Heading as="h4">Categories</Heading>
 
         <ul
           className={`${
