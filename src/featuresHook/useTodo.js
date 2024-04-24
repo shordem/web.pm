@@ -6,7 +6,6 @@ import {
   updateTodo as updateTodoApi,
   deleteTodo as deleteTodoApi,
 } from "../services/apiTodo";
-import { addTodoType, updateTodoType } from "../services/todos/todo.interface";
 
 export function useGetTodos() {
   const {
@@ -25,7 +24,7 @@ export function useGetTodos() {
 export function useAddTodo() {
   const queryClient = useQueryClient();
   const { isPending: isAdding, mutate: addTodo } = useMutation({
-    mutationFn: (title: addTodoType) => addTodoApi(title),
+    mutationFn: (title) => addTodoApi(title),
     onSuccess: (data) => {
       toast.success("Succesfully added task");
       queryClient.invalidateQueries({ queryKey: ["todos"] });
@@ -39,8 +38,7 @@ export function useAddTodo() {
 export function useUpdateTodo() {
   const queryClient = useQueryClient();
   const { isPending: isUpdating, mutate: updateTodo } = useMutation({
-    mutationFn: ({ id, completed }: updateTodoType) =>
-      updateTodoApi({ id, completed }),
+    mutationFn: ({ id, completed }) => updateTodoApi({ id, completed }),
     onSuccess: (data) => {
       toast.success("Succesfully updated task");
       queryClient.invalidateQueries({ queryKey: ["todos"] });
