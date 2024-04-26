@@ -12,7 +12,7 @@ function Header() {
       <img
         src={`/icon-${!darkMode ? "moon" : "sun"}.svg`}
         alt="Mode-icon"
-        className="h-8 cursor-pointer"
+        className="h-8 max-[500px]:h-4 cursor-pointer"
         onClick={toggleMode}
       />
     </header>
