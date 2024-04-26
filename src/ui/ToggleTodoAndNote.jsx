@@ -32,7 +32,7 @@ function ToggleTodoAndNote({ activeTab, setActiveTab }) {
         } w-fit flex   mb-6 rounded-full overflow-hidden   `}
       >
         <p
-          className={`px-6 py-4 border-r ${
+          className={`px-6 py-4  max-[1024px]:px-3 max-[1024px]:py-2 border-r ${
             activeTab ? `${darkMode ? "bg-[#1e1f30]" : "bg-[#e1e1e1]"}` : ""
           } `}
           role="button"
@@ -42,7 +42,7 @@ function ToggleTodoAndNote({ activeTab, setActiveTab }) {
           Todo
         </p>
         <p
-          className={`px-6 py-4  ${
+          className={`px-6 py-4 max-[1024px]:px-3 max-[1024px]:py-2  ${
             !activeTab ? `${darkMode ? "bg-[#1e1f30]" : "bg-[#e1e1e1]"}` : ""
           } `}
           role="button"
