@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useTodo } from "../TodoContext.jsx";
-import CircularDiv from "./CircularDiv";
-import { useDeleteTodo, useUpdateTodo } from "../featuresHook/useTodo";
-import SpinnerMini from "./SpinnerMini.jsx";
+import CircularDiv from "../ui/CircularDiv.jsx";
+import { useDeleteTodo, useUpdateTodo } from "../featuresHook/useTodo.js";
+import SpinnerMini from "../ui/SpinnerMini.jsx";
 
 function ToDoItem({ task, provided, innerRef, id }) {
   const [activeHover, setActiveHover] = useState(false);
@@ -33,7 +33,7 @@ function ToDoItem({ task, provided, innerRef, id }) {
     <li
       className={`${
         darkMode ? "bg-[#25273c]" : ""
-      } grid grid-cols-[auto,1fr,auto]  items-center gap-6 py-6 px-6 cursor-pointer transition-all duration-300`}
+      } grid grid-cols-[auto,1fr,auto]  items-center gap-6 py-6 px-6 cursor-pointer  transition-all duration-300`}
       onMouseEnter={handleHover}
       onMouseLeave={hanleLeave}
       ref={innerRef}
@@ -66,7 +66,7 @@ function ToDoItem({ task, provided, innerRef, id }) {
         <img
           src="icon-cross.svg"
           alt="close-button"
-          className="ml-auto transition-all duration-300 h-4 max-[875px]:hidden cursor-pointer"
+          className="ml-auto transition-all duration-300 h-4 max-[875px]:hidden pointer-events-auto cursor-pointer"
           onClick={handleDeleteTodo}
         />
       )}

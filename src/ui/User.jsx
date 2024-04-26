@@ -1,8 +1,15 @@
 import useUser from "../featuresHook/useUser";
-import Logout from "./Logout";
+import ButtonIcon from "./ButtonIcon";
+import SettingsIcon from "./icons/settings";
+import { motion } from "framer-motion";
 
-function User() {
+function User({ setShowSettings }) {
   const { isLoading, user } = useUser();
+
+  function handleShowSettings(e) {
+    e.stopPropagation();
+    setShowSettings((sh) => !sh);
+  }
 
   const hours = new Date().getHours();
   let timeString = `${
@@ -18,12 +25,20 @@ function User() {
   if (isLoading) return <p>Loading User</p>;
   const { username } = user;
   return (
-    <div className="flex gap-3 text-white ml-auto text-base lg:text-2xl md:text-1xl w-fit">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "tween", delay: 1 }}
+      className="flex gap-3 text-white ml-auto text-base lg:text-2xl md:text-1xl w-fit"
+    >
       <p>
         {timeString}, {username || "User"}
       </p>
-      <Logout />
-    </div>
+      <ButtonIcon onClick={handleShowSettings}>
+        {" "}
+        <SettingsIcon />{" "}
+      </ButtonIcon>
+    </motion.div>
   );
 }
 

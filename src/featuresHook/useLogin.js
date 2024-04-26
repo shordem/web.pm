@@ -11,7 +11,8 @@ const storage = new Storage();
 export default function useLogin() {
   const navigate = useNavigate();
   const { isLoading: isLoggingIn, mutate: login } = useMutation({
-    mutationFn: ({ username, password }) => auth.login({ username, password }),
+    mutationFn: async ({ username, password }) =>
+      await auth.login({ username, password }),
     onSuccess: (data) => {
       toast.success("Successfully Logged In");
       storage.setItem(ACCESS_TOKEN_KEY, data.data.token);

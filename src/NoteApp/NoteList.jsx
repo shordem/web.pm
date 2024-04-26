@@ -1,13 +1,14 @@
+import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTodo } from "../TodoContext.jsx";
-import ToDoInfo from "./ToDoInfo";
-import ToDoItem from "./ToDoItem";
-import { useEffect, useState } from "react";
-import { useGetTodos } from "../featuresHook/useTodo";
-import SpinnerMini from "./SpinnerMini.jsx";
+import { useGetTodos } from "../featuresHook/useTodo.js";
+import SpinnerMini from "../ui/SpinnerMini.jsx";
+import NoteInfo from "./NoteInfo.jsx";
+import { useEffect } from "react";
+import NoteItem from "./NoteItem.jsx";
 
-function ToDoList() {
-  const { activeIndex, darkMode } = useTodo();
+function NoteList() {
+  const { darkMode } = useTodo();
 
   const { isLoading, todos: totalTasks } = useGetTodos();
 
@@ -15,17 +16,12 @@ function ToDoList() {
 
   useEffect(
     function () {
-      if (!totalTasks) return;
-      if (activeIndex === 0) setTasks(totalTasks.reverse());
-      if (activeIndex === 1)
-        setTasks(totalTasks.filter((el) => !el.completed).reverse());
-      if (activeIndex === 2)
-        setTasks(totalTasks.filter((el) => el.completed).reverse());
+      setTasks(totalTasks);
     },
-    [activeIndex, totalTasks]
+    [totalTasks]
   );
 
-  if (isLoading) return <SpinnerMini text={"Loading todos..."} />;
+  if (isLoading) return <SpinnerMini text={"Loading Notes..."} />;
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -52,18 +48,15 @@ function ToDoList() {
               {tasks.length === 0 ? (
                 <li className="py-4 px-6">
                   {" "}
-                  No Task{" "}
-                  {activeIndex === 0
-                    ? "available, create a new todo to get started👆"
-                    : "completed"}
+                  No note available, create a new note to get started👆"
                 </li>
               ) : (
                 tasks.map((task, i) => (
                   <Draggable key={task.id} draggableId={task.id} index={i}>
                     {(provided) => (
-                      <ToDoItem
+                      <NoteItem
                         provided={provided}
-                        task={task}
+                        note={task}
                         key={i}
                         innerRef={provided.innerRef}
                         id={task.id}
@@ -77,9 +70,9 @@ function ToDoList() {
           )}
         </Droppable>
       </DragDropContext>
-      <ToDoInfo />
+      <NoteInfo />
     </>
   );
 }
 
-export default ToDoList;
+export default NoteList;

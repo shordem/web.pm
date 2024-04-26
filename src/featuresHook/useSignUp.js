@@ -8,8 +8,8 @@ const auth = new AuthService();
 export default function useSignUp() {
   const navigate = useNavigate();
   const { isPending: isSigningUp, mutate: signup } = useMutation({
-    mutationFn: ({ fullname, email, username, password }) =>
-      auth.register({ fullname, email, username, password }),
+    mutationFn: async ({ fullname, email, username, password }) =>
+      await auth.register({ fullname, email, username, password }),
     onSuccess: (data) => {
       toast.success("Successfully Signed up");
       navigate("/", { replace: true });

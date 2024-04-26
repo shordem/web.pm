@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import { useTodo } from "../TodoContext.jsx";
-import CircularDiv from "./CircularDiv";
-import { useAddTodo } from "../featuresHook/useTodo";
-import SpinnerMini from "./SpinnerMini.jsx";
+import CircularDiv from "../ui/CircularDiv.jsx";
+import SpinnerMini from "../ui/SpinnerMini.jsx";
+import { useAddTodo } from "../featuresHook/useTodo.js";
 
-function CreateNewTodo() {
+function CreateNewNote() {
   const ref = useRef();
   const { darkMode } = useTodo();
   const { isAdding, addTodo } = useAddTodo();
@@ -34,7 +34,7 @@ function CreateNewTodo() {
       <input
         type="text"
         className="bg-transparent focus:outline-none grow  "
-        placeholder="Create a new todo..."
+        placeholder="Create a new note"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         ref={ref}
@@ -43,4 +43,4 @@ function CreateNewTodo() {
   );
 }
 
-export default CreateNewTodo;
+export default CreateNewNote;
