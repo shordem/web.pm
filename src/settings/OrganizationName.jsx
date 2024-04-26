@@ -5,6 +5,7 @@ import EditIcon from "../ui/icons/edit";
 import MoreIcon from "../ui/icons/more";
 import ButtonIcon from "../ui/ButtonIcon";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 function OrganizationName({ name }) {
   const [editText, setEditText] = useState(false);
@@ -13,7 +14,7 @@ function OrganizationName({ name }) {
     setText(e.target.value);
   }
   return (
-    <li className="flex items-center justify-between relative">
+    <motion.li className="flex items-center justify-between relative">
       {" "}
       {editText ? (
         <input
@@ -66,7 +67,7 @@ function OrganizationName({ name }) {
           </Menus.List>
         </Menus>
       </div>
-    </li>
+    </motion.li>
   );
 }
 

@@ -11,9 +11,16 @@ function SignupForm() {
   const { errors } = formState;
   const { isSigningUp, signup } = useSignUp();
 
-  function onSubmit({ fullname, email, username, password }) {
+  function onSubmit({ firstname, lastname, email, username, password }) {
+    console.log({
+      first_name: firstname,
+      last_name: lastname,
+      email,
+      username,
+      password,
+    });
     signup(
-      { fullname, email, username, password },
+      { first_name: firstname, last_name: lastname, email, username, password },
       {
         onSuccess: () => reset(),
       }
@@ -26,13 +33,22 @@ function SignupForm() {
       className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md  max-[600px]:p-4"
     >
       <h3 className="text-center">Create your Account</h3>
-      <FormRow label="Fullname" error={errors?.fullname?.message}>
+      <FormRow label="Firstname" error={errors?.firstname?.message}>
         <input
           type="text"
-          id="fullname"
+          id="firstname"
           className="py-2 px-4 rounded-sm border-grey-100"
           disabled={isSigningUp}
-          {...register("fullname", { required: "Input your fullname" })}
+          {...register("firstname", { required: "Input your firstname" })}
+        />
+      </FormRow>
+      <FormRow label="Lastname" error={errors?.lastname?.message}>
+        <input
+          type="text"
+          id="lastname"
+          className="py-2 px-4 rounded-sm border-grey-100"
+          disabled={isSigningUp}
+          {...register("lastname", { required: "Input your lastname" })}
         />
       </FormRow>
       <FormRow label="Username" error={errors?.username?.message}>

@@ -12,7 +12,7 @@ export class AuthService {
 
   login(data: LoginRequestPayload) {
     return this.apiClient.post<LoginRequestPayload, LoginResponsePayload>(
-      "login",
+      "auth/login",
       data
     );
   }
@@ -21,7 +21,7 @@ export class AuthService {
     return this.apiClient.post<
       RegistrationRequestPayload,
       RegistrationResponsePayload
-    >("register", data);
+    >("auth/register", data);
   }
 
   user() {
