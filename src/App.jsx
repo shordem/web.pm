@@ -1,13 +1,13 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { TodoProvider } from "./TodoContext.jsx";
 
-import TodoApp from "./pages/TodoApp";
-import SignUpPage from "./pages/SignUpPage";
 import { Toaster } from "react-hot-toast";
+import Home from "./pages/Home.jsx";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 import ProtectedRoute from "./ui/ProtectedRoute";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   {" "}
-                  <TodoApp />{" "}
+                  <Home />{" "}
                 </ProtectedRoute>
               }
             />
