@@ -1,17 +1,12 @@
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./styles/globals.scss";
 
-import Home from "./pages/Home";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
 import QueryClientProvider from "./providers/query-client";
 import TodoProvider from "./providers/todo";
+import Router from "./router";
 import ErrorFallback from "./ui/ErrorFallback";
-import ProtectedRoute from "./ui/ProtectedRoute";
 
 function App() {
   return (
@@ -21,21 +16,8 @@ function App() {
     >
       <TodoProvider>
         <QueryClientProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    {" "}
-                    <Home />{" "}
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="signup" element={<SignUpPage />} />
-            </Routes>
-          </BrowserRouter>
+          <Router />
+
           <Toaster
             position="bottom-left"
             gutter={12}
