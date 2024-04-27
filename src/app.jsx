@@ -1,27 +1,25 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { TodoProvider } from "./TodoContext.jsx";
+import './styles/globals.scss';
 
-import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home.jsx";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import ProtectedRoute from "./ui/ProtectedRoute";
+import LoginPage from "./pages/LoginPage.jsx";
+import SignUpPage from "./pages/SignUpPage.jsx";
+import TodoProvider from "./providers/todo.jsx";
+import ErrorFallback from "./ui/ErrorFallback.jsx";
+import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 
 function App() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 0,
-      },
-    },
-  });
   return (
+    <ErrorBoundary
+    FallbackComponent={ErrorFallback}
+    onReset={() => window.location.replace("/")}
+  >
     <TodoProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
+      <QueryClientProvider>
 
         <BrowserRouter>
           <Routes>
@@ -59,6 +57,7 @@ function App() {
         />
       </QueryClientProvider>
     </TodoProvider>
+  </ErrorBoundary>
   );
 }
 
