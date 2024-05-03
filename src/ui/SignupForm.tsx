@@ -1,15 +1,18 @@
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Field, FieldValue, useForm } from "react-hook-form";
 
+import { useState } from "react";
 import useSignUp from "../featuresHook/useSignUp";
+import { SignUpProps } from "../services/auth/auth.interface";
 import FormRow from "./FormRow";
 import LoginButton from "./LoginButton";
-import { SignUpProps } from "../services/auth/auth.interface";
+import VerifyOTP from "./VerifyOTP";
 
 function SignupForm() {
   const navigate = useNavigate();
   const { register, handleSubmit, getValues, formState, watch, reset } =
     useForm<SignUpProps>();
+  const [verifyUsername, setVerifyUsername] = useState("");
   const { errors } = formState;
   const { isSigningUp, signup } = useSignUp();
   const [password, passwordConfirm] = watch(["password", "passwordConfirm"]);
@@ -26,12 +29,17 @@ function SignupForm() {
     signup(
       { first_name, last_name, email, username, password },
       {
-        onSuccess: () => reset(),
+        onSuccess: () => {
+          setVerifyUsername(username);
+          reset();
+        },
       }
     );
   }
 
-  return (
+  return verifyUsername !== "" ? (
+    <VerifyOTP username={verifyUsername} />
+  ) : (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md  max-[600px]:p-4"
