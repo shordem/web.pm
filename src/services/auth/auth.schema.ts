@@ -1,8 +1,8 @@
 import { userSchema } from "../user/user.schema";
 
 export const loginSchema = userSchema.omit([
-  "firstName",
-  "lastName",
-  "username",
+  "first_name",
+  "last_name",
+  "email",
 ]);
 export const registerSchema = userSchema;
