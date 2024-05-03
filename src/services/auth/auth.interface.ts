@@ -30,3 +30,10 @@ export interface RegistrationResponsePayload {
 export interface SignUpProps extends RegistrationRequestPayload {
   passwordConfirm: string;
 }
+export interface OTPRequestPayload {
+  email: string;
+  code: string;
+}
+export interface OTPResponsePayload {
+  message: string;
+}
