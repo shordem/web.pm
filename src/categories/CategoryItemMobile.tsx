@@ -1,7 +1,7 @@
 import { useTodo } from "../TodoContext";
 
-function CategoryItemMobile({ children }) {
-  const { darkMode } = useTodo();
+function CategoryItemMobile({ children }: { children: React.ReactNode }) {
+  const { darkMode } = useTodo()!;
   return (
     <span
       className={`${

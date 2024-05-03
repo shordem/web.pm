@@ -14,8 +14,8 @@ const settingsVariant = {
   hidden: { opacity: 0, x: "100px", transition: { type: "tween" } },
   visible: { opacity: 1, x: 0, transition: { type: "tween" } },
 };
-function Settings({ close }) {
-  const { darkMode } = useTodo();
+function Settings({ close }: { close: () => void }) {
+  const { darkMode } = useTodo()!;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(function () {
     window.addEventListener("resize", () => setWindowWidth(window.innerWidth));

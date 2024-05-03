@@ -6,12 +6,26 @@ import MoreIcon from "../ui/icons/more";
 import ButtonIcon from "../ui/ButtonIcon";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { OrganizationDetails } from "../services/organization/organization.interface";
+import { useTodo } from "../TodoContext";
 
-function OrganizationName({ name }) {
+function OrganizationName({
+  organization,
+}: {
+  organization: OrganizationDetails;
+}) {
+  const { setCurrentOrganisationDetails } = useTodo()!;
   const [editText, setEditText] = useState(false);
-  const [text, setText] = useState(name);
-  function handleOnChange(e) {
+  const [text, setText] = useState(organization.name);
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setText(e.target.value);
+  }
+  function toggleCurrentOrganization() {
+    setCurrentOrganisationDetails({
+      currentOrganisationId: organization.id,
+      currentOrganizationName: organization.name,
+    });
+    console.log("clicked");
   }
   return (
     <motion.li className="flex items-center justify-between relative">
@@ -25,18 +39,18 @@ function OrganizationName({ name }) {
           autoFocus={editText}
         />
       ) : (
-        <p>{name}</p>
+        <p>{organization.name}</p>
       )}{" "}
       <div className="relative">
         <Menus>
-          <Menus.Toggle id={name}>
+          <Menus.Toggle id={organization.name}>
             <ButtonIcon>
               <MoreIcon />
             </ButtonIcon>
           </Menus.Toggle>
-          <Menus.List id={name}>
+          <Menus.List id={organization.name}>
             <div className="flex flex-col w-fit bg-purple-50 justify-between absolute top-2 right-6 rounded-md shadow-md z-10 overflow-hidden">
-              <Menus.Button>
+              <Menus.Button onClick={toggleCurrentOrganization}>
                 <button className=" cursor-pointer flex p-1 gap-4 items-center justify-between hover:bg-purple-100">
                   {" "}
                   <span className="mt-1"> Switch </span> <IoIosSwitch />{" "}

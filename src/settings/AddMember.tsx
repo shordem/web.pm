@@ -1,18 +1,31 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useTodo } from "../TodoContext";
-import Modal from "../ui/Modal";
-import AddIcon from "../ui/icons/add";
+import { useAddMember } from "../featuresHook/useOrganization";
 import ButtonIcon from "../ui/ButtonIcon";
 import Heading from "../ui/HeadingTag";
-import LoginButton from "../ui/LoginButton";
-import { useState } from "react";
+import Modal from "../ui/Modal";
+import AddIcon from "../ui/icons/add";
 
 function AddMember() {
-  const { darkMode } = useTodo();
-  const [selectValue, setSelectValue] = useState("user");
+  const { darkMode, currentOrganisationDetails } = useTodo()!;
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(true);
+  const { isAddingMember, addMember } = useAddMember();
 
-  const { register, formState } = useForm();
-  const { errors } = formState;
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    addMember(
+      {
+        orgId: currentOrganisationDetails.currentOrganisationId,
+        email: userEmail,
+      },
+      {
+        onSuccess: () => {
+          setOpen(false);
+        },
+      }
+    );
+  }
   return (
     <li className=" flex items-center py-4 px-6 justify-between">
       {" "}
@@ -25,39 +38,34 @@ function AddMember() {
           <AddIcon />
         </ButtonIcon>
       </Modal.Open>
-      <Modal.Window name={"addMember"}>
-        <div className="w-80">
-          <Heading as="h4" className={" text-stone-800"}>
-            Input Users Details
-          </Heading>
-          <div className="flex flex-col gap-1">
-            <label className="font-semibold text-gray-600">Email</label>
-            <input
-              type="text"
-              id="username"
-              className="py-2 px-4 rounded-lg border-grey-100 focus:outline-none "
-              {...register("email", {
-                required: "Input member email",
-              })}
-            />
-            {errors?.email?.message && (
-              <p className="text-red-500">{errors?.email?.message}</p>
-            )}
-          </div>
+      {open && (
+        <Modal.Window name={"addMember"}>
+          <form onSubmit={handleSubmit} className="w-80 flex flex-col gap-1">
+            <h3 className="text-md font-semibold text-stone-800">
+              Add Member Email
+            </h3>
 
-          <select
+            <input
+              type="mail"
+              id="email"
+              className="py-2 px-4 rounded-lg border-grey-100 focus:outline-none "
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              disabled={isAddingMember}
+              required
+            />
+
+            {/* <select
             className="focus:outline-none w-full p-2 mt-6"
             value={selectValue}
             onChange={(e) => setSelectValue(e.target.value)}
           >
             <option value={"user"}>SET AS USER</option>
             <option value={"admin"}>SET AS ADMIN</option>
-          </select>
-          <div className=" flex justify-end mt-4">
-            <LoginButton>Add User</LoginButton>
-          </div>
-        </div>
-      </Modal.Window>
+          </select> */}
+          </form>
+        </Modal.Window>
+      )}
     </li>
   );
 }

@@ -16,9 +16,9 @@ import ToggleTodoAndNote from "../ui/ToggleTodoAndNote.jsx";
 import User from "../ui/User";
 
 function Home() {
-  const { darkMode } = useTodo();
+  const { darkMode } = useTodo()!;
   const [activeTab, setActiveTab] = useState(true);
-  const [showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState(true);
 
   function closeSettings() {
     setShowSettings(false);
@@ -48,12 +48,17 @@ function Home() {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
               />
-              <div className="shadow-md">
-                {" "}
-                <AnimatePresence mode="wait">
-                  {activeTab ? <TodoApp /> : <NoteApp />}{" "}
-                </AnimatePresence>
-              </div>
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => window.location.replace("/")}
+              >
+                <div className="shadow-md">
+                  {" "}
+                  <AnimatePresence mode="wait">
+                    {activeTab ? <TodoApp /> : <NoteApp />}{" "}
+                  </AnimatePresence>
+                </div>
+              </ErrorBoundary>
             </div>
             <ActiveTab
               className={`${

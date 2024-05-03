@@ -4,8 +4,27 @@ import Modal from "../ui/Modal";
 import CategoryItem from "./CategoryItem";
 
 function Categories() {
-  const categories = ["codingq", "WRIITING", "READING"];
-  const { darkMode } = useTodo();
+  const categories = [
+    {
+      id: 1,
+      name: "Category 1",
+      description: "This is category 1",
+      createdAt: new Date(),
+    },
+    {
+      id: 2,
+      name: "Category 2",
+      description: "This is category 2",
+      createdAt: new Date(),
+    },
+    {
+      id: 3,
+      name: "Category 3",
+      description: "This is category 3",
+      createdAt: new Date(),
+    },
+  ];
+  const { darkMode } = useTodo()!;
   return (
     <Modal>
       <div className="mt-16 w-9/12 mx-auto ">
@@ -20,7 +39,7 @@ function Categories() {
             <li className="py-4 px-6"> No Category yet add one to start 👇</li>
           ) : (
             categories.map((category) => (
-              <CategoryItem category={category} key={category} />
+              <CategoryItem category={category} key={category.name} />
             ))
           )}
         </ul>

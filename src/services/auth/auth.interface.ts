@@ -10,7 +10,7 @@ interface Tokens {
 export interface LoginRequestPayload extends InferType<typeof loginSchema> {}
 
 export interface LoginResponsePayload {
-  tokens: Tokens;
+  access_token: string;
 }
 
 export interface RegistrationRequestPayload
@@ -25,4 +25,8 @@ export interface RegistrationResponsePayload {
   email: string;
   roles: string[];
   tokens: Tokens;
+}
+
+export interface SignUpProps extends RegistrationRequestPayload {
+  passwordConfirm: string;
 }

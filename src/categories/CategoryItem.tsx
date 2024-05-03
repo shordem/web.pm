@@ -1,8 +1,9 @@
 import { FaFolder } from "react-icons/fa";
 import { useTodo } from "../TodoContext";
+import { CategoryType } from "./category.interface";
 
-function CategoryItem({ category }) {
-  const { darkMode } = useTodo();
+function CategoryItem({ category }: { category: CategoryType }) {
+  const { darkMode } = useTodo()!;
   return (
     <li
       className={`flex items-center gap-6 py-6 px-6 cursor-pointer transition-all duration-300 ${
@@ -14,7 +15,7 @@ function CategoryItem({ category }) {
         {" "}
         <FaFolder />{" "}
       </span>{" "}
-      <span> {category} </span>
+      <span> {category.name} </span>
     </li>
   );
 }

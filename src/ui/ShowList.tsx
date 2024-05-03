@@ -13,7 +13,13 @@ const ulVariant = {
   },
 };
 
-function ShowList({ ListTitle, children }) {
+function ShowList({
+  ListTitle,
+  children,
+}: {
+  ListTitle: string;
+  children: any;
+}) {
   const [showList, setShowList] = useState(false);
 
   function handleShowList() {
@@ -68,7 +74,7 @@ function ShowList({ ListTitle, children }) {
             animate={"visible"}
             variants={ulVariant}
             exit={"hidden"}
-            className="flex flex-col gap-2 py-4"
+            className="flex flex-col gap-2 pt-4"
           >
             {children}
           </motion.ul>

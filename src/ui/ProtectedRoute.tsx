@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN_KEY } from "../constants/auth";
+import { ACCESS_TOKEN_KEY } from "../../constants/auth";
 import { Storage } from "../utilities/storage";
 
 function ProtectedRoute({ children }) {

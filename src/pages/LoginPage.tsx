@@ -1,5 +1,3 @@
-// import LoginForm from "../ui/LoginForm";
-
 import LoginForm from "../ui/LoginForm";
 import PageCenter from "../ui/PageCenter";
 

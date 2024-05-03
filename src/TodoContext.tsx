@@ -1,7 +1,26 @@
 import { createContext, useContext } from "react";
 // import { useAddTodo, useGetTodos } from "./featuresHook/useTodo";
 
-export const TodoContext = createContext();
+interface TodoContextType {
+  darkMode: boolean;
+  activeIndex: number;
+  toggleMode: () => void;
+  showAll: () => void;
+  showCompletedTask: () => void;
+  showActiveTask: () => void;
+  currentOrganisationDetails: {
+    currentOrganisationId: string;
+    currentOrganizationName: string;
+  };
+  setCurrentOrganisationDetails: (details: {
+    currentOrganisationId: string;
+    currentOrganizationName: string;
+  }) => void;
+}
+
+export const TodoContext = createContext<TodoContextType | undefined>(
+  undefined
+);
 
 function useTodo() {
   const todo = useContext(TodoContext);
@@ -12,4 +31,3 @@ function useTodo() {
 }
 
 export { useTodo };
-

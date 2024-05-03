@@ -1,29 +1,89 @@
+import { useEffect, useState } from "react";
+import {
+  useCreateOrganization,
+  useGetAllMyOrganizations,
+} from "../featuresHook/useOrganization";
+import LoginButton from "../ui/LoginButton";
+import Modal from "../ui/Modal";
 import ShowList from "../ui/ShowList";
 import OrganizationName from "./OrganizationName";
-
-// const organizationNameVariant = {
-//   open: {
-//     opacity: 1,
-//     y: 0,
-//     transition: { type: "spring", stiffness: 300, damping: 24 },
-//   },
-//   closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
-// };
+import { LoaderIcon } from "react-hot-toast";
+import { useTodo } from "../TodoContext";
+import Heading from "../ui/HeadingTag";
 
 function Organizations() {
-  // variants={{
-  //   open: { rotate: 180 },
-  //   closed: { rotate: 0 }
-  // }}
-  // transition={{ duration: 0.2 }}
-  // style={{ originY: 0.55 }}
+  const { setCurrentOrganisationDetails } = useTodo()!;
+  const [organizationName, setOrganizationName] = useState("");
+  const [open, setOpen] = useState(true);
+  const { isGettingAllOrganizations, allOrganizations } =
+    useGetAllMyOrganizations();
+  const { isCreatingOrganization, createOrganization } =
+    useCreateOrganization();
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    createOrganization(
+      { name: organizationName },
+      {
+        onSuccess: () => {
+          console.log("success");
+          setOpen(false);
+        },
+      }
+    );
+  }
 
+  useEffect(
+    function () {
+      setCurrentOrganisationDetails({
+        currentOrganisationId: allOrganizations?.data[0].id || "",
+        currentOrganizationName: allOrganizations?.data[0].name || "",
+      });
+    },
+    [allOrganizations?.data, setCurrentOrganisationDetails]
+  );
   return (
     <ShowList ListTitle={"Organizations"}>
-      <OrganizationName name={"Organization 1"} />
-      <OrganizationName name={"Organization 2"} />
-      <OrganizationName name={"Organization 3"} />
-      <OrganizationName name={"Organization 3"} />
+      {isGettingAllOrganizations ? (
+        <p>Loading ...</p>
+      ) : (
+        <>
+          {" "}
+          {allOrganizations?.data.map((organization) => (
+            <OrganizationName
+              key={organization.id}
+              organization={organization}
+            />
+          ))}
+          <Modal>
+            <div className="flex justify-end">
+              <Modal.Open opens={"addOrganization"}>
+                <LoginButton>Add Organization</LoginButton>
+              </Modal.Open>
+            </div>
+            {open && (
+              <Modal.Window name={"addOrganization"}>
+                <form onSubmit={handleSubmit} className=" w-80 ">
+                  {isCreatingOrganization ? (
+                    <LoaderIcon />
+                  ) : (
+                    <>
+                      <h3 className="text-md font-semibold text-stone-800">
+                        Organization Name
+                      </h3>
+                      <input
+                        type="text"
+                        className="w-full rounded-md outline-none focus:outline-none px-4 py-2 "
+                        value={organizationName}
+                        onChange={(e) => setOrganizationName(e.target.value)}
+                      />
+                    </>
+                  )}
+                </form>
+              </Modal.Window>
+            )}
+          </Modal>
+        </>
+      )}
     </ShowList>
   );
 }

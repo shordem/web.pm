@@ -7,9 +7,15 @@ import {
 } from "react";
 import useOutsideClick from "../hooks/outside-click";
 
-const MenusContext = createContext();
+interface MenuContextType {
+  openId: string;
+  close: () => void;
+  open: (id: string) => void;
+}
 
-function Menus({ children }) {
+const MenusContext = createContext<MenuContextType | undefined>(undefined);
+
+function Menus({ children }: { children: React.ReactNode }) {
   const [openId, setOpenId] = useState("");
 
   const close = () => setOpenId("");
@@ -22,8 +28,8 @@ function Menus({ children }) {
   );
 }
 
-function Toggle({ children, id }) {
-  const { openId, close, open } = useContext(MenusContext);
+function Toggle({ children, id }: { children: any; id: string }) {
+  const { openId, close, open } = useContext(MenusContext)!;
   //   const [toggleCount, setToggleCount] = useState(0);
 
   //   useEffect(
@@ -47,8 +53,8 @@ function Toggle({ children, id }) {
   });
 }
 
-function List({ id, children }) {
-  const { openId, close } = useContext(MenusContext);
+function List({ id, children }: { id: string; children: any }) {
+  const { openId, close } = useContext(MenusContext)!;
   const { ref } = useOutsideClick(() => {
     console.log("Outside Click");
     close();
@@ -59,8 +65,14 @@ function List({ id, children }) {
   return cloneElement(children, { ref });
 }
 
-function Button({ children, onClick }) {
-  const { close } = useContext(MenusContext);
+function Button({
+  children,
+  onClick,
+}: {
+  children: any;
+  onClick?: () => void;
+}) {
+  const { close } = useContext(MenusContext)!;
 
   function handleClick() {
     onClick?.();

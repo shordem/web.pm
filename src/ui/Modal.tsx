@@ -6,9 +6,15 @@ import useOutsideClick from "../hooks/outside-click";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 
-const ModalContext = createContext(undefined);
+interface ModalContextProp {
+  openName: string;
+  close: () => void;
+  open: (name: string) => void;
+}
 
-function Modal({ children }) {
+const ModalContext = createContext<ModalContextProp | undefined>(undefined);
+
+function Modal({ children }: { children: any }) {
   const [openName, setOpenName] = useState("");
 
   const close = () => setOpenName("");
@@ -22,8 +28,14 @@ function Modal({ children }) {
   );
 }
 
-function Open({ children, opens: openWindowsName }) {
-  const { open } = useContext(ModalContext);
+function Open({
+  children,
+  opens: openWindowsName,
+}: {
+  children: any;
+  opens: string;
+}) {
+  const { open } = useContext(ModalContext)!;
   return cloneElement(children, {
     onClick: () => {
       console.log("clicked");
@@ -32,8 +44,8 @@ function Open({ children, opens: openWindowsName }) {
   });
 }
 
-function Window({ children, name }) {
-  const { openName, close } = useContext(ModalContext);
+function Window({ children, name }: { children: any; name: string }) {
+  const { openName, close } = useContext(ModalContext)!;
   const { ref } = useOutsideClick(close);
 
   return createPortal(
@@ -53,7 +65,7 @@ function Window({ children, name }) {
             <LoginButton onClick={close} className={" absolute top-5 right-8"}>
               <HiXMark />
             </LoginButton>
-            <div>{cloneElement(children, { onCloseModal: close })}</div>
+            <div>{children}</div>
           </div>{" "}
         </motion.div>
       )}

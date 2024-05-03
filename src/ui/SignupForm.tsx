@@ -1,26 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Field, FieldValue, useForm } from "react-hook-form";
 
 import useSignUp from "../featuresHook/useSignUp";
 import FormRow from "./FormRow";
 import LoginButton from "./LoginButton";
+import { SignUpProps } from "../services/auth/auth.interface";
 
 function SignupForm() {
   const navigate = useNavigate();
-  const { register, handleSubmit, getValues, formState, reset } = useForm();
+  const { register, handleSubmit, getValues, formState, watch, reset } =
+    useForm<SignUpProps>();
   const { errors } = formState;
   const { isSigningUp, signup } = useSignUp();
+  const [password, passwordConfirm] = watch(["password", "passwordConfirm"]);
 
-  function onSubmit({ firstname, lastname, email, username, password }) {
+  function onSubmit(data: SignUpProps) {
+    const { first_name, last_name, email, username, password } = data;
     console.log({
-      first_name: firstname,
-      last_name: lastname,
+      first_name,
+      last_name,
       email,
       username,
       password,
     });
     signup(
-      { first_name: firstname, last_name: lastname, email, username, password },
+      { first_name, last_name, email, username, password },
       {
         onSuccess: () => reset(),
       }
@@ -33,22 +37,22 @@ function SignupForm() {
       className="shadow-md p-8 flex flex-col gap-4 bg-gray-100 rounded-md  max-[600px]:p-4"
     >
       <h3 className="text-center">Create your Account</h3>
-      <FormRow label="Firstname" error={errors?.firstname?.message}>
+      <FormRow label="Firstname" error={errors?.first_name?.message}>
         <input
           type="text"
           id="firstname"
           className="py-2 px-4 rounded-sm border-grey-100"
           disabled={isSigningUp}
-          {...register("firstname", { required: "Input your firstname" })}
+          {...register("first_name", { required: "Input your firstname" })}
         />
       </FormRow>
-      <FormRow label="Lastname" error={errors?.lastname?.message}>
+      <FormRow label="Lastname" error={errors?.last_name?.message}>
         <input
           type="text"
           id="lastname"
           className="py-2 px-4 rounded-sm border-grey-100"
           disabled={isSigningUp}
-          {...register("lastname", { required: "Input your lastname" })}
+          {...register("last_name", { required: "Input your lastname" })}
         />
       </FormRow>
       <FormRow label="Username" error={errors?.username?.message}>
@@ -103,17 +107,18 @@ function SignupForm() {
           {...register("passwordConfirm", {
             required: "Input required",
             validate: (value) =>
-              value === getValues().password || "Passowrds need to match",
+              value === getValues().password || "Password does not match",
           })}
         />
       </FormRow>
-      <LoginButton>Sign Up Now!</LoginButton>
+      <LoginButton disabled={password !== passwordConfirm}>
+        Sign Up Now!
+      </LoginButton>
       <p className="border-t-2 border-gray-600 pt-4">
         Already have an account{" "}
       </p>
       <LoginButton
-        onClick={(e) => {
-          e.preventDefault();
+        onClick={() => {
           navigate("/login");
         }}
       >

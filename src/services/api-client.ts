@@ -5,8 +5,8 @@ import axios, {
   AxiosResponse,
 } from "axios";
 
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../constants/auth";
-import { API_BASE_URL } from "../constants/env-vars";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../../constants/auth";
+import { API_BASE_URL } from "../../constants/env-vars";
 import { Storage } from "../utilities/storage";
 
 export class Client {

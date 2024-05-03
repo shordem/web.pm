@@ -1,6 +1,14 @@
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
-function ButtonIcon({ children, className, onClick }) {
+function ButtonIcon({
+  children,
+  className,
+  onClick,
+}: {
+  children: any;
+  className?: string;
+  onClick?: () => void;
+}) {
   const baseClassName = twMerge("p-2  rounded-full", className);
   return (
     <motion.button

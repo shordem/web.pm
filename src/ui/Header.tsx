@@ -2,11 +2,14 @@ import { useTodo } from "../TodoContext.jsx";
 import HeadingTag from "./HeadingTag.jsx";
 
 function Header() {
-  const { toggleMode, darkMode } = useTodo();
+  const { toggleMode, darkMode, currentOrganisationDetails } = useTodo()!;
   return (
     <header className="flex items-center justify-between mb-6">
       <div>
-        <HeadingTag as="h5"> {`OrganizationName <<  Category`}</HeadingTag>
+        <HeadingTag as="h5">
+          {" "}
+          {`${currentOrganisationDetails.currentOrganizationName} <<  Category`}
+        </HeadingTag>
       </div>
 
       <img

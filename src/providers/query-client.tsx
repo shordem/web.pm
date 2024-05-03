@@ -1,9 +1,8 @@
 import {
   QueryClient,
-  QueryClientProvider as QueryClientProvider_,
+  QueryClientProvider as QueryClientProvider1,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import React from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,10 +14,10 @@ const queryClient = new QueryClient({
 
 function QueryClientProvider({ children }) {
   return (
-    <QueryClientProvider_ client={queryClient}>
+    <QueryClientProvider1 client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       {children}
-    </QueryClientProvider_>
+    </QueryClientProvider1>
   );
 }
 
