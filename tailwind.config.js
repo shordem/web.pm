@@ -8,6 +8,7 @@ module.exports = {
       },
       colors: {
         vlg: "hsl(0, 0%, 98%)",
+        primary: 'hsl(0, 0%, 10%)',
       },
     },
   },

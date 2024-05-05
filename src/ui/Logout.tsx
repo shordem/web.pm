@@ -1,9 +1,8 @@
-import { HiArrowRightOnRectangle } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN_KEY } from "../constants/auth";
 import { Storage } from "../utilities/storage";
-import { ACCESS_TOKEN_KEY } from "../../constants/auth";
-import LogoutIcon from "./icons/logout";
 import ButtonIcon from "./ButtonIcon";
+import LogoutIcon from "./icons/logout";
 
 function Logout() {
   const navigate = useNavigate();
