@@ -1,21 +1,25 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { useTodo } from "../TodoContext.jsx";
-import Categories from "../categories/index.jsx";
-import Settings from "../settings/index.jsx";
+import { useTodo } from "../TodoContext.js";
+import Categories from "../categories/index.js";
+import Settings from "../settings/index.js";
 
+import { useAuthRedirect } from "@/hooks/auth.js";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import NoteApp from "../NoteApp/index.jsx";
-import TodoApp from "../TodoApp/index.jsx";
-import CategoriesMobile from "../categories/CategoriesMobile.jsx";
-import ActiveTab from "../ui/ActiveTab";
-import ErrorFallback from "../ui/ErrorFallback.jsx";
-import Footer from "../ui/Footer";
-import Header from "../ui/Header";
-import ToggleTodoAndNote from "../ui/ToggleTodoAndNote.jsx";
-import User from "../ui/User";
+import NoteApp from "../NoteApp/index.js";
+import TodoApp from "../TodoApp/index.js";
+import CategoriesMobile from "../categories/CategoriesMobile.js";
+import ActiveTab from "../ui/ActiveTab.js";
+import ErrorFallback from "../ui/ErrorFallback.js";
+import Footer from "../ui/Footer.js";
+import Header from "../ui/Header.js";
+import ToggleTodoAndNote from "../ui/ToggleTodoAndNote.js";
+import User from "../ui/User.js";
 
-function Home() {
+function HomePage() {
+  // for redirecting to login page if not authenticated
+  useAuthRedirect();
+
   const { darkMode } = useTodo()!;
   const [activeTab, setActiveTab] = useState(true);
   const [showSettings, setShowSettings] = useState(true);
@@ -77,4 +81,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
