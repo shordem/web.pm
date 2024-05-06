@@ -6,7 +6,7 @@ import { LiaTimesSolid as CloseIcon } from "react-icons/lia";
 import { modalOverlayVariants, modalVariants } from "./modal.constant";
 import { ModalProps } from "./modal.interface";
 
-export function Modal(props: ModalProps) {
+function Modal(props: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
@@ -58,3 +58,5 @@ export function Modal(props: ModalProps) {
     </AnimatePresence>
   );
 }
+
+export default Modal;
