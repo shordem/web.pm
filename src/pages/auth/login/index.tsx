@@ -13,14 +13,19 @@ function LoginPage() {
         <Button className="flex justify-center">Login</Button>
       </form>
 
-      <section>
+      <section className="text-center">
         <p>
-          <span>
-            Don&#39;t have an account?{" "}
-            <Link to="/register" className="text-purple-600">
-              register
-            </Link>
-          </span>
+          Don&#39;t have an account?&nbsp;
+          <Link to="/register" className="text-purple-600">
+            register
+          </Link>
+        </p>
+
+        <p className="mt-4">
+          Forgot your password?&nbsp;
+          <Link to="/register" className="text-purple-600">
+            reset password
+          </Link>
         </p>
       </section>
     </section>
