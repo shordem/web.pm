@@ -1,11 +1,17 @@
-import useUser from "../featuresHook/useUser";
+import { motion } from "framer-motion";
 import ButtonIcon from "./ButtonIcon";
+<<<<<<< HEAD
 import SettingsIcon from "../components/icons/settings";
 import { motion } from "framer-motion";
 
 function User({ setShowSettings }: { setShowSettings: Function }) {
   const { isLoading, user } = useUser();
 
+=======
+import SettingsIcon from "./icons/settings";
+
+function User({ setShowSettings }) {
+>>>>>>> d097d808884255f0cbf8b3b8ee8f004b45ef5a39
   function handleShowSettings(e) {
     e.stopPropagation();
     setShowSettings((sh: boolean) => !sh);
@@ -22,8 +28,12 @@ function User({ setShowSettings }: { setShowSettings: Function }) {
       : "Good Night"
   }`;
 
+<<<<<<< HEAD
   if (isLoading) return <p>Loading User</p>;
   const { username } = user!;
+=======
+  // if (isLoading) return <p>Loading User</p>;
+>>>>>>> d097d808884255f0cbf8b3b8ee8f004b45ef5a39
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
@@ -32,7 +42,7 @@ function User({ setShowSettings }: { setShowSettings: Function }) {
       className="flex gap-3 text-white ml-auto text-base lg:text-2xl md:text-1xl w-fit"
     >
       <p>
-        {timeString}, {username || "User"}
+        {timeString}, {"User"}
       </p>
       <ButtonIcon onClick={handleShowSettings}>
         {" "}

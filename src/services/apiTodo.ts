@@ -1,4 +1,4 @@
-import { Client } from "./api-client";
+import { Client } from "./http-client";
 import {
   addTodoType,
   deleteTodoType,

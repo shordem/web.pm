@@ -1,6 +1,6 @@
 import { IconProps } from "./interface";
 
-export function SpinnerIcon({ size = 20, color = "#222" }: IconProps) {
+export function SpinnerIcon({ size = 20, color = "#ddd" }: IconProps) {
   return (
     <svg
       fill={color}

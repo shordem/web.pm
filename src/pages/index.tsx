@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import TodoApp from "@/TodoApp";
 import { useTodo } from "@/TodoContext";
 import Categories from "@/categories";
@@ -27,57 +28,21 @@ function HomePage() {
     setShowSettings(false);
     console.log("clicked");
   }
+=======
+import { Link } from "react-router-dom";
+>>>>>>> d097d808884255f0cbf8b3b8ee8f004b45ef5a39
 
+const HomePage = () => {
   return (
-    <div
-      className={`${
-        darkMode ? "text-[#777a92]" : "text-#9394a5"
-      } grid grid-cols-3 max-[1024px]:grid-cols-1 relative `}
-    >
-      <div className="max-[1024px]:hidden">
-        <Categories />
-      </div>
-      <ErrorBoundary
-        FallbackComponent={ErrorFallback}
-        onReset={() => window.location.replace("/")}
-      >
-        <div>
-          <main className="mt-12 mx-auto max-w-2xl max-[675px]:w-4/5 max-[400px]:w-[90%]">
-            <User setShowSettings={setShowSettings} />
-            <div>
-              <Header />
-              <CategoriesMobile />
-              <ToggleTodoAndNote
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
-              <ErrorBoundary
-                FallbackComponent={ErrorFallback}
-                onReset={() => window.location.replace("/")}
-              >
-                <div className="shadow-md">
-                  {" "}
-                  <AnimatePresence mode="wait">
-                    {activeTab ? <TodoApp /> : <NoteApp />}{" "}
-                  </AnimatePresence>
-                </div>
-              </ErrorBoundary>
-            </div>
-            <ActiveTab
-              className={`${
-                darkMode ? "bg-[#25273c]" : "bg-white"
-              } flex items-center justify-center gap-4 px-4 py-4 shadow-max-lg min-[560px]:hidden mt-4 text-[#9394a5] hover:text-inherit rounded-md`}
-            />
-          </main>
-          <Footer />
-        </div>
-      </ErrorBoundary>
-      {/* <AnimatePresence>{showSettings && <Settings />}</AnimatePresence> */}{" "}
-      <AnimatePresence>
-        {showSettings && <Settings close={closeSettings} />}
-      </AnimatePresence>
-    </div>
+    <main className="w-screen h-screen flex items-center justify-center">
+      <section className="text-center">
+        <h1 className="text-3xl">Home Page</h1>
+        <Link to="/dashboard" className="text-secondary">
+          Go to Dashboard
+        </Link>
+      </section>
+    </main>
   );
-}
+};
 
 export default HomePage;
