@@ -1,4 +1,4 @@
-import LoginButton from "./LoginButton";
+import { Button } from "@/components/ui/button";
 import PageCenter from "./PageCenter";
 
 function ErrorFallback({
@@ -12,7 +12,7 @@ function ErrorFallback({
     <PageCenter>
       <div className="bg-white p-4 flex flex-col items-center rounded-lg">
         <h1>Something went wrong🥲</h1>
-        <LoginButton onClick={resetErrorBoundary}>Go Back Home</LoginButton>
+        <Button onClick={resetErrorBoundary}>Go Back Home</Button>
       </div>
     </PageCenter>
   );
