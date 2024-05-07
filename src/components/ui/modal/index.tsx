@@ -36,7 +36,7 @@ function Modal(props: ModalProps) {
           ref={modalRef}
         >
           <motion.div
-            className="shadow-lg w-fit mx-auto relative bg-white rounded-lg border border-dashboard-bg"
+            className="shadow-lg w-fit mx-auto relative bg-[#121212] rounded-lg"
             initial="hidden"
             animate="visible"
             exit="exit"
