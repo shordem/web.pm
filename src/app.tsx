@@ -15,8 +15,10 @@ function App() {
     >
       {/* <TodoProvider> */}
       <QueryClientProvider>
-        <div className="bg-[#1a1a1a] text-compliment min-h-screen">
-          <Router />
+        <div className="bg-[#1a1a1a] text-compliment">
+          <div className="min-h-screen max-w-screen-2xl mx-auto">
+            <Router />
+          </div>
         </div>
 
         <Toaster
