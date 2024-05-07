@@ -14,7 +14,7 @@ function Input(props: InputProps) {
         type={props.type ?? "text"}
         id={replaceWith(props.label)}
         name={props.name}
-        className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5"
+        className="bg-bg-accent text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5"
         placeholder={props.placeholder ?? `Enter ${props.label}`}
         required={props.required}
         onChange={props.onChange}
