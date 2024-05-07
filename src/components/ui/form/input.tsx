@@ -22,11 +22,12 @@ function Input(props: InputProps) {
           type={showPassword ? "text" : props.type ?? "text"}
           id={replaceWith(props.label)}
           name={props.name}
-          className="bg-bg-accent text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5"
+          className="bg-bg-accent text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5 disabled:text-[#777] disabled:cursor-not-allowed"
           placeholder={props.placeholder ?? `Enter ${props.label}`}
           required={props.required}
           onChange={props.onChange}
           value={props.value}
+          disabled={props.disabled}
         />
 
         {props.type == "password" && (
