@@ -1,11 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 import { ACCESS_TOKEN_KEY } from "@/constants/auth";
 import { Storage } from "@/utilities/storage";
-import { AxiosError } from "axios";
 import {
   LoginRequestPayload,
   RegistrationRequestPayload,
@@ -13,17 +12,20 @@ import {
 } from "./auth.interface";
 import { AuthService } from "./auth.service";
 
-export function useAuthRedirect() {
-  const navigate = useNavigate();
+export function useAuth() {
   const storage = new Storage();
   const isAuthenticated = storage.checkItem(ACCESS_TOKEN_KEY);
+  const navigate = useNavigate();
 
-  useEffect(
-    function () {
-      if (!isAuthenticated) navigate("/login");
-    },
-    [isAuthenticated]
-  );
+  function logout() {
+    storage.deleteItem(ACCESS_TOKEN_KEY);
+    navigate("/");
+  }
+
+  return {
+    isAuthenticated,
+    logout,
+  };
 }
 
 export function useLogin() {
