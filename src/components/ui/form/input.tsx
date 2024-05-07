@@ -1,7 +1,14 @@
+import { useState } from "react";
+
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+
 import { replaceWith } from "@/utilities/common";
+import { Button } from "../button";
 import { InputProps } from "./form.interface";
 
 function Input(props: InputProps) {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div>
       <label
@@ -10,16 +17,30 @@ function Input(props: InputProps) {
       >
         {props.label}
       </label>
-      <input
-        type={props.type ?? "text"}
-        id={replaceWith(props.label)}
-        name={props.name}
-        className="bg-bg-accent text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5"
-        placeholder={props.placeholder ?? `Enter ${props.label}`}
-        required={props.required}
-        onChange={props.onChange}
-        value={props.value}
-      />
+      <div className="relative">
+        <input
+          type={showPassword ? "text" : props.type ?? "text"}
+          id={replaceWith(props.label)}
+          name={props.name}
+          className="bg-bg-accent text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5"
+          placeholder={props.placeholder ?? `Enter ${props.label}`}
+          required={props.required}
+          onChange={props.onChange}
+          value={props.value}
+        />
+
+        {props.type == "password" && (
+          <Button
+            variant="ghost"
+            colorScheme="gray"
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <IoIosEyeOff size={24} /> : <IoIosEye size={24} />}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
