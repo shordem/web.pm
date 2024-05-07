@@ -15,7 +15,9 @@ function App() {
     >
       {/* <TodoProvider> */}
       <QueryClientProvider>
-        <Router />
+        <div className="bg-[#1a1a1a] text-[#ddd]">
+          <Router />
+        </div>
 
         <Toaster
           position="bottom-left"
