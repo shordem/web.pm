@@ -21,7 +21,7 @@ function LoginPage() {
         email={email}
       />
 
-      <section className="w-96 bg-gray-200 px-10 py-8 gap-4 flex flex-col items-center rounded-md">
+      <section className="w-96 px-10 py-8 gap-4 flex flex-col items-center">
         <h2 className="text-3xl font-semibold">Sign In</h2>
 
         <form
@@ -55,14 +55,14 @@ function LoginPage() {
         <section className="text-center">
           <p>
             Don&#39;t have an account?&nbsp;
-            <Link to="/register" className="text-purple-600">
+            <Link to="/register" className="text-secondary">
               register
             </Link>
           </p>
 
           <p className="mt-4">
             Forgot your password?&nbsp;
-            <Link to="/register" className="text-purple-600">
+            <Link to="/register" className="text-secondary">
               reset password
             </Link>
           </p>
