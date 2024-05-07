@@ -14,6 +14,7 @@ module.exports = {
         danger: '#e74c3c',
         success: '#2ecc71',
         warning: '#f39c12',
+        compliment:"#ddd"
       },
     },
   },
