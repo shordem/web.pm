@@ -1,4 +1,4 @@
-import { Client } from "../../services/http-client";
+import { Client } from "@/services/http-client";
 import {
   LoginRequestPayload,
   LoginResponsePayload,
