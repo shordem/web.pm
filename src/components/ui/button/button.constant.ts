@@ -7,6 +7,8 @@ export const colorSchemeSolidClasses: Record<ColorScheme, string> = {
   warning: "bg-warning",
   info: "bg-info",
   gray: "bg-gray-500",
+  secondary: "bg-secondary",
+  none: "bg-compliment",
 };
 
 export const colorSchemeOutlineClasses: Record<ColorScheme, string> = {
@@ -16,6 +18,8 @@ export const colorSchemeOutlineClasses: Record<ColorScheme, string> = {
   warning: "text-warning border-warning",
   info: "text-info border-info",
   gray: "text-gray-500 border-gray-500",
+  secondary: "text-secondary border-secondary",
+  none: "text-compliment border-compliment",
 };
 
 export const sizeClasses: Record<string, string> = {
