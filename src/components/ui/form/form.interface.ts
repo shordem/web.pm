@@ -32,6 +32,7 @@ export interface BaseProps {
   name?: string;
   onChange?: (e: React.ChangeEvent<HTMLFormElements>) => void;
   required?: boolean;
+  disabled?: boolean;
 }
 
 export interface InputProps extends BaseProps {

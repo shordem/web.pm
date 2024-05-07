@@ -1,10 +1,9 @@
+import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import LoginButton from "./LoginButton";
 import useOutsideClick from "../hooks/outside-click";
-import { AnimatePresence } from "framer-motion";
-import { motion } from "framer-motion";
 
 interface ModalContextProp {
   openName: string;
@@ -62,9 +61,9 @@ function Window({ children, name }: { children: any; name: string }) {
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-300 rounded-md shadow-md px-12 py-16 transition-all"
             ref={ref}
           >
-            <LoginButton onClick={close} className={" absolute top-5 right-8"}>
+            <Button onClick={close} className={" absolute top-5 right-8"}>
               <HiXMark />
-            </LoginButton>
+            </Button>
             <div>{children}</div>
           </div>{" "}
         </motion.div>

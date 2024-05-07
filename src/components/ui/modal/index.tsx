@@ -6,7 +6,7 @@ import { LiaTimesSolid as CloseIcon } from "react-icons/lia";
 import { modalOverlayVariants, modalVariants } from "./modal.constant";
 import { ModalProps } from "./modal.interface";
 
-export function Modal(props: ModalProps) {
+function Modal(props: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
@@ -36,7 +36,7 @@ export function Modal(props: ModalProps) {
           ref={modalRef}
         >
           <motion.div
-            className="shadow-lg w-fit mx-auto relative bg-white rounded-lg border border-dashboard-bg"
+            className="shadow-lg w-fit mx-auto relative bg-[#121212] rounded-lg"
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -58,3 +58,5 @@ export function Modal(props: ModalProps) {
     </AnimatePresence>
   );
 }
+
+export default Modal;

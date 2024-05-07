@@ -1,23 +1,26 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
+import { useAuth } from "@/hooks/auth";
 import { useRouter } from "@/router/router.hook";
-import { useAuth } from "./auth.hook";
+import DashboardHeader from "./header";
 
-function AuthLayout() {
+const DashboardLayout = () => {
   const auth = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      router.goTo("/dashboard");
+    if (!auth.isAuthenticated) {
+      router.goTo("/login");
     }
   }, [auth.isAuthenticated]);
+
   return (
-    <main className="w-full h-screen flex items-center justify-center">
+    <main>
+      <DashboardHeader />
       <Outlet />
     </main>
   );
-}
+};
 
-export default AuthLayout;
+export default DashboardLayout;

@@ -1,11 +1,13 @@
 export type Variant = "ghost" | "outline" | "solid" | "link";
 export type ColorScheme =
   | "primary"
+  | "secondary"
   | "success"
   | "danger"
   | "warning"
   | "info"
-  | "gray";
+  | "gray"
+  | "none";
 export type Size = "sm" | "md" | "lg";
 
 export type BaseButtonProps = {

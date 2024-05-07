@@ -1,16 +1,19 @@
-// import { Client } from "../services/api-client";
-import { Client } from "../api-client";
+import { Client } from "@/services/http-client";
 import {
   LoginRequestPayload,
   LoginResponsePayload,
-  OTPRequestPayload,
-  OTPResponsePayload,
   RegistrationRequestPayload,
   RegistrationResponsePayload,
+  VerifyEmailRequestPayload,
+  VerifyEmailResponsePayload,
 } from "./auth.interface";
 
 export class AuthService {
-  private apiClient = new Client();
+  private readonly apiClient: Client;
+
+  constructor() {
+    this.apiClient = new Client();
+  }
 
   login(data: LoginRequestPayload) {
     return this.apiClient.post<LoginRequestPayload, LoginResponsePayload>(
@@ -25,14 +28,11 @@ export class AuthService {
       RegistrationResponsePayload
     >("auth/register", data);
   }
-  async verifyOTP(data: OTPRequestPayload) {
-    return await this.apiClient.post<OTPRequestPayload, OTPResponsePayload>(
-      "auth/verify-email/",
-      data
-    );
-  }
 
-  user() {
-    return this.apiClient.get("user");
+  verifyEmail(data: VerifyEmailRequestPayload) {
+    return this.apiClient.post<
+      VerifyEmailRequestPayload,
+      VerifyEmailResponsePayload
+    >("auth/verify-email", data);
   }
 }

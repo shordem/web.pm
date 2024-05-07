@@ -1,5 +1,5 @@
 // import { Client } from "../services/api-client";
-import { Client } from "../api-client";
+import { Client } from "../http-client";
 import {
   AddMemberRequestPayload,
   CreateNewOrganizationRequestPayload,
