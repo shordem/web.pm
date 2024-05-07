@@ -1,5 +1,5 @@
-import CreateNewNote from "./CreateNewNote";
-import NoteList from "./NoteList";
+import CreateNewNote from "./create-new-note";
+import NoteList from "./note-list";
 import { motion } from "framer-motion";
 
 const noteAppVariant = {
@@ -7,7 +7,7 @@ const noteAppVariant = {
   visible: { opacity: 1, x: 0 },
 };
 
-function index() {
+function NoteApp() {
   return (
     <motion.div
       initial={"hidden"}
@@ -21,4 +21,4 @@ function index() {
   );
 }
 
-export default index;
+export default NoteApp;

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN_KEY } from "../constants/auth";
 import { Storage } from "../utilities/storage";
 import ButtonIcon from "./ButtonIcon";
-import LogoutIcon from "./icons/logout";
+import { LogoutIcon } from "@/components/icons";
 
 function Logout() {
   const navigate = useNavigate();

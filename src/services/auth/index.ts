@@ -7,6 +7,7 @@ import {
   OTPResponsePayload,
   RegistrationRequestPayload,
   RegistrationResponsePayload,
+  User,
 } from "./auth.interface";
 
 export class AuthService {
@@ -33,6 +34,6 @@ export class AuthService {
   }
 
   user() {
-    return this.apiClient.get("user");
+    return this.apiClient.get<User>("user");
   }
 }

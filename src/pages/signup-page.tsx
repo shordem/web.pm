@@ -1,5 +1,5 @@
-import PageCenter from "../ui/PageCenter";
-import SignupForm from "../ui/SignupForm";
+import PageCenter from "@/ui/PageCenter";
+import SignupForm from "@/ui/SignupForm";
 
 function SignUpPage() {
   return (

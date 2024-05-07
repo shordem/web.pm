@@ -1,20 +1,19 @@
-import { ErrorBoundary } from "react-error-boundary";
-import { useTodo } from "../TodoContext.js";
-import Categories from "../categories/index.js";
-import Settings from "../settings/index.js";
-
-import { useAuthRedirect } from "@/hooks/auth.js";
+import TodoApp from "@/TodoApp";
+import { useTodo } from "@/TodoContext";
+import Categories from "@/categories";
+import CategoriesMobile from "@/categories/CategoriesMobile";
+import { useAuthRedirect } from "@/hooks/auth";
+import NoteApp from "@/noteapp";
+import Settings from "@/settings";
+import ActiveTab from "@/ui/ActiveTab";
+import ErrorFallback from "@/ui/ErrorFallback";
+import Footer from "@/ui/Footer";
+import Header from "@/ui/Header";
+import ToggleTodoAndNote from "@/ui/ToggleTodoAndNote";
+import User from "@/ui/User";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import NoteApp from "../NoteApp/index.js";
-import TodoApp from "../TodoApp/index.js";
-import CategoriesMobile from "../categories/CategoriesMobile.js";
-import ActiveTab from "../ui/ActiveTab.js";
-import ErrorFallback from "../ui/ErrorFallback.js";
-import Footer from "../ui/Footer.js";
-import Header from "../ui/Header.js";
-import ToggleTodoAndNote from "../ui/ToggleTodoAndNote.js";
-import User from "../ui/User.js";
+import { ErrorBoundary } from "react-error-boundary";
 
 function HomePage() {
   // for redirecting to login page if not authenticated

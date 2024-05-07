@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { useTodo } from "../TodoContext.jsx";
-import CircularDiv from "../ui/CircularDiv.jsx";
-import SpinnerMini from "../ui/SpinnerMini.jsx";
+import { useTodo } from "../TodoContext.js";
+import CircularDiv from "../ui/CircularDiv.js";
+import SpinnerMini from "../ui/SpinnerMini.js";
 import { useAddTodo } from "../featuresHook/useTodo.js";
 
 function CreateNewNote() {

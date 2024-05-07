@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useTodo } from "../TodoContext.jsx";
+import { useTodo } from "../TodoContext.js";
 import { useDeleteTodo } from "../featuresHook/useTodo.js";
-import SpinnerMini from "../ui/SpinnerMini.jsx";
+import SpinnerMini from "../ui/SpinnerMini.js";
 
 function NoteItem({ note, provided, innerRef, id }) {
   const [activeHover, setActiveHover] = useState(false);

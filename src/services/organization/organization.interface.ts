@@ -1,3 +1,9 @@
+export interface getAllMyOrganizationsResponsePayload {
+  id: string;
+  name: string;
+  image_url: null;
+}
+
 export interface OrganizationDetails {
   image_url: null;
   description: string;
@@ -6,6 +12,14 @@ export interface OrganizationDetails {
   name: string;
   owner_id: string;
   updated_at: string;
+}
+export interface getMembersPayload {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  id: string;
+  role: string;
 }
 export interface CreateNewOrganizationRequestPayload {
   name: string;

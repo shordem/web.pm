@@ -1,14 +1,14 @@
 import useUser from "../featuresHook/useUser";
 import ButtonIcon from "./ButtonIcon";
-import SettingsIcon from "./icons/settings";
+import SettingsIcon from "../components/icons/settings";
 import { motion } from "framer-motion";
 
-function User({ setShowSettings }) {
+function User({ setShowSettings }: { setShowSettings: Function }) {
   const { isLoading, user } = useUser();
 
   function handleShowSettings(e) {
     e.stopPropagation();
-    setShowSettings((sh) => !sh);
+    setShowSettings((sh: boolean) => !sh);
   }
 
   const hours = new Date().getHours();
@@ -23,7 +23,7 @@ function User({ setShowSettings }) {
   }`;
 
   if (isLoading) return <p>Loading User</p>;
-  const { username } = user;
+  const { username } = user!;
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}

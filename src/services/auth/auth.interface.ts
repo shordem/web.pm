@@ -27,6 +27,14 @@ export interface RegistrationResponsePayload {
   tokens: Tokens;
 }
 
+export interface User {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  id: string;
+}
+
 export interface SignUpProps extends RegistrationRequestPayload {
   passwordConfirm: string;
 }

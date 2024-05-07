@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useTodo } from "../TodoContext.jsx";
+import { useTodo } from "../TodoContext.js";
 import { useGetTodos } from "../featuresHook/useTodo.js";
-import SpinnerMini from "../ui/SpinnerMini.jsx";
-import NoteInfo from "./NoteInfo.jsx";
+import SpinnerMini from "../ui/SpinnerMini.js";
+import NoteInfo from "./note-info.js";
 import { useEffect } from "react";
-import NoteItem from "./NoteItem.jsx";
+import NoteItem from "./note-item.js";
 
 function NoteList() {
   const { darkMode } = useTodo();

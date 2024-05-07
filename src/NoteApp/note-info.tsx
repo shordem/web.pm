@@ -1,6 +1,6 @@
 import { useDeleteTodo, useGetTodos } from "../featuresHook/useTodo.js";
-import ActiveTab from "../ui/ActiveTab.jsx";
-import SpinnerMini from "../ui/SpinnerMini.jsx";
+import ActiveTab from "../ui/ActiveTab.js";
+import SpinnerMini from "../ui/SpinnerMini.js";
 
 function NoteInfo() {
   const { isLoading, todos: tasks } = useGetTodos();

@@ -43,7 +43,7 @@ function VerifyOTP({ username }: { username: string }) {
   // console.log(errors);
 
   return (
-    <div className="grid min-h-screen items-center justify-center grid-cols-[35rem]">
+    <div className="grid min-h-screen items-center justify-center -mt-10 grid-cols-[25rem] md:grid-cols-[35rem]">
       <div className="bg-white p-8 rounded-lg">
         <Heading as="h4" className=" text-stone-600 text-center">
           Input your OTP
@@ -57,9 +57,9 @@ function VerifyOTP({ username }: { username: string }) {
         >
           <input
             type="number"
-            className={`[&::-webkit-inner-spin-button]:appearance-none w-16 text-3xl font-bold bg-stone-100 border ${
+            className={`[&::-webkit-inner-spin-button]:appearance-none w-10 md:w-16 text-3xl font-bold bg-stone-100 border ${
               wrongOTP ? "border-red-500" : "border-gray-300"
-            } rounded-md py-4 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500`}
+            } rounded-md p-2 md:p-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500`}
             style={{ MozAppearance: "textfield" }}
             {...register("number1", {
               required: "number cannot be empty",
@@ -71,8 +71,8 @@ function VerifyOTP({ username }: { username: string }) {
           <input
             type="number"
             // prettier-ignore
-            className={`[&::-webkit-inner-spin-button]:appearance-none w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
-            } rounded-md py-4 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
+            className={`[&::-webkit-inner-spin-button]:appearance-none w-10 md:w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
+            } rounded-md p-2 md:p-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
             style={{ MozAppearance: "textfield" }}
             {...register("number2", { required: "number cannot be empty" })}
             max={9}
@@ -81,8 +81,8 @@ function VerifyOTP({ username }: { username: string }) {
           <input
             type="number"
             // prettier-ignore
-            className={`[&::-webkit-inner-spin-button]:appearance-none w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
-            } rounded-md py-4 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
+            className={`[&::-webkit-inner-spin-button]:appearance-none w-10 md:w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
+            } rounded-md p-2 md:p-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
             style={{ MozAppearance: "textfield" }}
             {...register("number3", { required: "number cannot be empty" })}
             max={9}
@@ -91,8 +91,8 @@ function VerifyOTP({ username }: { username: string }) {
           <input
             type="number"
             // prettier-ignore
-            className={`[&::-webkit-inner-spin-button]:appearance-none w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
-            } rounded-md py-4 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
+            className={`[&::-webkit-inner-spin-button]:appearance-none w-10 md:w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
+            } rounded-md p-2 md:p-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
             style={{ MozAppearance: "textfield" }}
             {...register("number4", { required: "number cannot be empty" })}
             max={9}
@@ -101,8 +101,8 @@ function VerifyOTP({ username }: { username: string }) {
           <input
             type="number"
             // prettier-ignore
-            className={`[&::-webkit-inner-spin-button]:appearance-none w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
-            } rounded-md py-4 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
+            className={`[&::-webkit-inner-spin-button]:appearance-none w-10 md:w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
+            } rounded-md p-2 md:p-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
             style={{ MozAppearance: "textfield" }}
             {...register("number5", { required: "number cannot be empty" })}
             max={9}
@@ -111,8 +111,8 @@ function VerifyOTP({ username }: { username: string }) {
           <input
             type="number"
             // prettier-ignore
-            className={`[&::-webkit-inner-spin-button]:appearance-none w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
-            } rounded-md py-4 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
+            className={`[&::-webkit-inner-spin-button]:appearance-none w-10 md:w-16 text-3xl font-bold bg-stone-100 border ${wrongOTP ? "border-red-500" : "border-gray-300"
+            } rounded-md p-2 md:p-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500 transition-all`}
             style={{ MozAppearance: "textfield" }}
             {...register("number6", { required: "number cannot be empty" })}
             max={9}

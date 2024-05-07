@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import ButtonIcon from "../ui/ButtonIcon";
-import { ArrowUp } from "../ui/icons/arrow";
 import SettingsText from "../settings/SettingsText";
+import { ChevronDownIcon } from "@/components/icons";
 
 const ulVariant = {
   hidden: { opacity: 0, x: "50px", transition: { type: "tween" } },
@@ -62,7 +62,7 @@ function ShowList({
               style={{ originY: 0.55 }}
             >
               {" "}
-              <ArrowUp />{" "}
+              <ChevronDownIcon />{" "}
             </motion.div>
           }
         </ButtonIcon>

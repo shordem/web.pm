@@ -1,10 +1,9 @@
+import { useTodo } from "@/TodoContext";
+import { AddIcon } from "@/components/icons";
+import { useAddMember } from "@/featuresHook/useOrganization";
+import ButtonIcon from "@/ui/ButtonIcon";
+import Modal from "@/ui/Modal";
 import { useState } from "react";
-import { useTodo } from "../TodoContext";
-import { useAddMember } from "../featuresHook/useOrganization";
-import ButtonIcon from "../ui/ButtonIcon";
-import Heading from "../ui/HeadingTag";
-import Modal from "../ui/Modal";
-import AddIcon from "../ui/icons/add";
 
 function AddMember() {
   const { darkMode, currentOrganisationDetails } = useTodo()!;
