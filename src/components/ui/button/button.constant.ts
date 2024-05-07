@@ -8,7 +8,7 @@ export const colorSchemeSolidClasses: Record<ColorScheme, string> = {
   info: "bg-info",
   gray: "bg-gray-500",
   secondary: "bg-secondary",
-  none: "bg-compliment",
+  none: "bg-compliment !text-[#111]",
 };
 
 export const colorSchemeOutlineClasses: Record<ColorScheme, string> = {
