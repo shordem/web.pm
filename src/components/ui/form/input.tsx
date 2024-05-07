@@ -10,7 +10,7 @@ function Input(props: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div>
+    <div className={props.className}>
       <label
         htmlFor={replaceWith(props.label)}
         className="block mb-2 text-sm font-medium"
