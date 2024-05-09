@@ -7,7 +7,14 @@ module.exports = {
         sans: ["Josefin Sans", "sans-serif"],
       },
       colors: {
-        vlg: "hsl(0, 0%, 98%)",
+        'bg-accent': '#262626',
+        primary: '#4caf50',
+        secondary: '#ffa500',
+        info: '#3498db',
+        danger: '#e74c3c',
+        success: '#2ecc71',
+        warning: '#f39c12',
+        compliment:"#ddd"
       },
     },
   },

@@ -23,6 +23,14 @@ export function useGetAllMyOrganizations() {
   return { isGettingAllOrganizations, allOrganizations, error };
 }
 
+export function useGetOrganizationDetails(orgId: string) {
+  const { isLoading: isGettingOrganization, data } = useQuery({
+    queryKey: ["organizationDetails", orgId],
+    queryFn: async () => await Organization.getOrganizationDetails(orgId),
+  });
+  return { isGettingOrganization, organization: data?.data };
+}
+
 export function useCreateOrganization() {
   const queryClient = useQueryClient();
   const { isPending: isCreatingOrganization, mutate: createOrganization } =

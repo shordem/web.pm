@@ -1,27 +1,26 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import Home from "../pages/Home";
-import LoginPage from "../pages/LoginPage";
-import SignUpPage from "../pages/SignUpPage";
-import ProtectedRoute from "../ui/ProtectedRoute";
+import AuthLayout from "@/pages/auth/layout";
+import DashboardLayout from "@/pages/dashboard/layout";
+import BaseLayout from "@/pages/layout";
+import { authRoutes } from "./auth.route";
+import { dashboardRoutes } from "./dashboard.route";
+import { layoutRoutes } from "./layout.route";
+
+export const routes = [
+  { path: "/", element: <BaseLayout />, children: layoutRoutes },
+  { path: "/", element: <AuthLayout />, children: authRoutes },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: dashboardRoutes,
+  },
+];
+
+const router = createBrowserRouter(routes);
 
 function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="signup" element={<SignUpPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default Router;

@@ -1,8 +1,8 @@
 import { IoIosSwitch } from "react-icons/io";
 import Menus from "../ui/Menu";
-import DeleteIcon from "../ui/icons/delete";
-import EditIcon from "../ui/icons/edit";
-import MoreIcon from "../ui/icons/more";
+import DeleteIcon from "../components/icons/delete";
+import EditIcon from "../components/icons/edit";
+import MoreIcon from "../components/icons/more";
 import ButtonIcon from "../ui/ButtonIcon";
 import { useState } from "react";
 import { motion } from "framer-motion";

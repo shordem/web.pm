@@ -1,15 +1,14 @@
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { LoaderIcon } from "react-hot-toast";
+import { useTodo } from "../TodoContext";
 import {
   useCreateOrganization,
   useGetAllMyOrganizations,
 } from "../featuresHook/useOrganization";
-import LoginButton from "../ui/LoginButton";
 import Modal from "../ui/Modal";
 import ShowList from "../ui/ShowList";
 import OrganizationName from "./OrganizationName";
-import { LoaderIcon } from "react-hot-toast";
-import { useTodo } from "../TodoContext";
-import Heading from "../ui/HeadingTag";
 
 function Organizations() {
   const { setCurrentOrganisationDetails } = useTodo()!;
@@ -57,7 +56,7 @@ function Organizations() {
           <Modal>
             <div className="flex justify-end">
               <Modal.Open opens={"addOrganization"}>
-                <LoginButton>Add Organization</LoginButton>
+                <Button>Add Organization</Button>
               </Modal.Open>
             </div>
             {open && (
