@@ -1,25 +1,22 @@
-import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { useAuth } from "@/hooks/auth";
-import { useRouter } from "@/router/router.hook";
+import { useAuthRedirect } from "@/hooks/auth";
 import DashboardHeader from "./header";
+import DashboardProvider from "@/providers/dashboard-provider";
 
 const DashboardLayout = () => {
-  const auth = useAuth();
-  const router = useRouter();
+  const isLoading = useAuthRedirect();
 
-  useEffect(() => {
-    if (!auth.isAuthenticated) {
-      router.goTo("/login");
-    }
-  }, [auth.isAuthenticated]);
-
+  if (isLoading) {
+    return <p>Kilode</p>;
+  }
   return (
-    <main>
-      <DashboardHeader />
-      <Outlet />
-    </main>
+    <DashboardProvider>
+      <main>
+        <DashboardHeader />
+        <Outlet />
+      </main>
+    </DashboardProvider>
   );
 };
 
