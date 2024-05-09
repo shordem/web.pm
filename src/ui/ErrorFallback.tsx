@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import PageCenter from "./PageCenter";
 
 function ErrorFallback({
   error,
@@ -9,12 +8,12 @@ function ErrorFallback({
   resetErrorBoundary: () => void;
 }) {
   return (
-    <PageCenter>
+    <div className="h-screen w-screen grid items-center justify-center">
       <div className="bg-white p-4 flex flex-col items-center rounded-lg">
         <h1>Something went wrong🥲</h1>
         <Button onClick={resetErrorBoundary}>Go Back Home</Button>
       </div>
-    </PageCenter>
+    </div>
   );
 }
 
