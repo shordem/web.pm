@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import { FiFolderPlus } from "react-icons/fi";
 import { MdDelete, MdEdit, MdFolder, MdOutlineFolder } from "react-icons/md";
@@ -7,15 +7,33 @@ import { MdDelete, MdEdit, MdFolder, MdOutlineFolder } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
 import Modal from "@/components/ui/modal";
+import {
+  useCreateFolder,
+  useDeleteFolder,
+  useGetFolders,
+  useUpdateFolder,
+} from "./dashboard.hook";
+import { useDashboardContext } from "./dashboard-context";
 
 function Sidebar() {
+  const { currentOrganisationDetails, setCurrentOrganisationDetails } =
+    useDashboardContext();
+
+  // Check if folder is not part of the current Organisation
+
+  // Use state hook
   const [hoveredItem, setHoveredItem] = useState<null | number>(null);
-  const [selected, setSelected] = useState("All");
   const [folderName, setFolderName] = useState("");
-  const [id, setId] = useState(0);
+  const [id, setId] = useState("");
   const [visibility, setVisibility] = useState(false);
   const [editVisibility, setEditVisibility] = useState(false);
   const [deleteVisibility, setDeleteVisibility] = useState(false);
+
+  // Folder hooks
+  const folders = useGetFolders(currentOrganisationDetails.id);
+  const createFolder = useCreateFolder(currentOrganisationDetails.id);
+  const updateFolder = useUpdateFolder(currentOrganisationDetails.id);
+  const deleteFolder = useDeleteFolder(currentOrganisationDetails.id);
 
   return (
     <>
@@ -26,13 +44,30 @@ function Sidebar() {
       >
         <div className="grid justify-center gap-4 p-12">
           <h4 className="text-2xl">Update Folder</h4>
-          <form className="flex flex-col items-center">
+          <form
+            className="flex flex-col items-center"
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateFolder
+                .mutateAsync({
+                  name: folderName,
+                  folderId: id,
+                })
+                .then(() => {
+                  setEditVisibility(false);
+                });
+            }}
+          >
             <Input
               label="Folder Name"
               value={folderName}
               onChange={(e) => setFolderName(e.target.value)}
             />
-            <Button colorScheme="warning" className="mt-4">
+            <Button
+              isLoading={updateFolder.isPending}
+              colorScheme="warning"
+              className="mt-4"
+            >
               Update Folder
             </Button>
           </form>
@@ -61,7 +96,16 @@ function Sidebar() {
             >
               Cancel
             </Button>
-            <Button colorScheme="danger" className="mt-4">
+            <Button
+              colorScheme="danger"
+              className="mt-4"
+              isLoading={deleteFolder.isPending}
+              onClick={() => {
+                deleteFolder.mutateAsync(id).then(() => {
+                  setDeleteVisibility(false);
+                });
+              }}
+            >
               Delete Folder
             </Button>
           </div>
@@ -72,9 +116,22 @@ function Sidebar() {
       <Modal visibility={visibility} setVisibility={() => setVisibility(false)}>
         <div className="grid justify-center gap-4 p-12">
           <h4 className="text-2xl">Add New Folder</h4>
-          <form className="flex flex-col items-center">
+          <form
+            className="flex flex-col items-center"
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault();
+              const target = e.target as HTMLFormElement;
+              const folderName = (target[0] as HTMLInputElement).value;
+              console.log(folderName);
+              createFolder.mutateAsync({ name: folderName }).then(() => {
+                setVisibility(false);
+              });
+            }}
+          >
             <Input label="Folder Name" />
-            <Button className="mt-4">Create Folder</Button>
+            <Button isLoading={createFolder.isPending} className="mt-4">
+              Create Folder
+            </Button>
           </form>
         </div>
       </Modal>
@@ -82,12 +139,7 @@ function Sidebar() {
       {/* folder list */}
       <aside className="w-1/5 px-4 mt-16">
         <ul className="grid gap-4">
-          {[
-            { name: "All", isDefault: true },
-            { name: "Project", isDefault: false },
-            { name: "Work", isDefault: false },
-            { name: "Personal", isDefault: false },
-          ].map((item, i) => (
+          {folders.data?.data.map((item, i) => (
             // folder list item
             <li
               key={i}
@@ -103,18 +155,19 @@ function Sidebar() {
                     onClick={() => {
                       setEditVisibility(true);
                       setFolderName(item.name);
+                      setId(item.id!);
                     }}
                   >
                     <MdEdit size={20} />
                   </Button>
-                  {!item.isDefault && (
+                  {!item.is_default && (
                     <Button
                       variant="ghost"
                       colorScheme="danger"
                       onClick={() => {
                         setDeleteVisibility(true);
                         setFolderName(item.name);
-                        setId(i);
+                        setId(item.id!);
                       }}
                     >
                       <MdDelete size={20} />
@@ -124,19 +177,21 @@ function Sidebar() {
               )}
               <Button
                 colorScheme="none"
-                variant={selected == item.name ? "solid" : "outline"}
-                icon={
-                  selected == item.name ? (
-                    <MdFolder size={20} />
-                  ) : (
-                    <MdOutlineFolder size={20} />
-                  )
-                }
+                // If currentFolderNotPartOfCurrentOrganization set the first folder as current, else set based on currentFolder.name === item.name ? "solid" : "outline"
+                // prettier-ignore
+                variant={  currentOrganisationDetails.folder?.name === item.name ? "solid" : "outline"}
+                // prettier-ignore
+                icon={  currentOrganisationDetails.folder?.name === item.name ?  <MdFolder size={20} /> :   <MdOutlineFolder size={20} />}
                 iconPos="right"
                 className={classNames("w-full justify-between z-[1]", {
-                  "!text-primary": item.isDefault,
+                  "!text-primary": item.is_default,
                 })}
-                onClick={() => setSelected(item.name)}
+                onClick={() =>
+                  setCurrentOrganisationDetails({
+                    ...currentOrganisationDetails,
+                    folder: item,
+                  })
+                }
               >
                 {item.name}
               </Button>
