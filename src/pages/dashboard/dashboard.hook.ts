@@ -8,9 +8,18 @@ import {
   deleteOrganizationMemberType,
   CreateTodoRequestPayload,
   CreateNoteRequestPayload,
+  UpdateTodoRequestPayload,
 } from "./dashboard.interface";
 
 const Dashboard = new DashboardService();
+
+// User hooks
+export function useUser() {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: async () => await Dashboard.getUserDetails(),
+  });
+}
 
 // Organization hooks
 export function useGetAllMyOrganizations() {
@@ -139,7 +148,7 @@ export function useUpdateFolder(orgId: string) {
 // Todo hooks
 export function useGetTodos(orgId: string, folderId: string) {
   const todos = useQuery({
-    queryKey: ["todos", orgId],
+    queryKey: ["todos", orgId, folderId],
     queryFn: async () => await Dashboard.getAllTodos(orgId, folderId),
   });
   return todos;
@@ -183,7 +192,7 @@ export function useDeleteTodo(orgId: string) {
 export function useUpdateTodo(orgId: string, todoId: string) {
   const queryClient = useQueryClient();
   const updateTodo = useMutation({
-    mutationFn: async (data: CreateTodoRequestPayload) =>
+    mutationFn: async (data: UpdateTodoRequestPayload) =>
       await Dashboard.updateTodo(orgId, todoId, data),
     onSuccess: () => {
       toast.success("Succesfully updated todo");
@@ -198,7 +207,7 @@ export function useUpdateTodo(orgId: string, todoId: string) {
 
 export function useGetNotes(orgId: string, folderId: string) {
   const notes = useQuery({
-    queryKey: ["notes", orgId],
+    queryKey: ["notes", orgId, folderId],
     queryFn: async () => await Dashboard.getAllNotes(orgId, folderId),
   });
   return notes;
