@@ -62,3 +62,14 @@ export function popKeys<T extends AnyObject, K extends keyof T>(
 
   return poppedValues;
 }
+
+export function createDueDate() {
+  const date = new Date();
+  date.setDate(date.getDate() + 7);
+
+  let formattedDate = date.toISOString();
+  formattedDate = formattedDate.replace("T", " ");
+  formattedDate = formattedDate.replace("Z", "");
+
+  return formattedDate;
+}
