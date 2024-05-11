@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { FiFolderPlus } from "react-icons/fi";
 import { MdDelete, MdEdit, MdFolder, MdOutlineFolder } from "react-icons/md";
@@ -14,13 +14,31 @@ import {
   useUpdateFolder,
 } from "./dashboard.hook";
 import { useDashboardContext } from "./dashboard-context";
+import Loader from "@/components/ui/loading";
 
 function Sidebar() {
-  const { currentOrganisationDetails, setCurrentOrganisationDetails } =
+  const { currentFolder, setCurrentFolder, currentOrganisationDetails } =
     useDashboardContext();
 
-  // Check if folder is not part of the current Organisation
+  // Folder hooks
+  const folders = useGetFolders(currentOrganisationDetails.id);
+  const createFolder = useCreateFolder(currentOrganisationDetails.id);
+  const updateFolder = useUpdateFolder(currentOrganisationDetails.id);
+  const deleteFolder = useDeleteFolder(currentOrganisationDetails.id);
 
+  useEffect(() => {
+    console.log(currentFolder.id);
+    if (currentFolder.id === "") {
+      console.log(true);
+      setCurrentFolder({
+        id: folders.data?.data[0]!.id!,
+        name: folders.data?.data[0]!.name!,
+      });
+    }
+  }, [currentFolder, folders.data?.data, setCurrentFolder]);
+
+  // If not, set the first folder as current
+  console.log(currentFolder);
   // Use state hook
   const [hoveredItem, setHoveredItem] = useState<null | number>(null);
   const [folderName, setFolderName] = useState("");
@@ -28,12 +46,6 @@ function Sidebar() {
   const [visibility, setVisibility] = useState(false);
   const [editVisibility, setEditVisibility] = useState(false);
   const [deleteVisibility, setDeleteVisibility] = useState(false);
-
-  // Folder hooks
-  const folders = useGetFolders(currentOrganisationDetails.id);
-  const createFolder = useCreateFolder(currentOrganisationDetails.id);
-  const updateFolder = useUpdateFolder(currentOrganisationDetails.id);
-  const deleteFolder = useDeleteFolder(currentOrganisationDetails.id);
 
   return (
     <>
@@ -138,7 +150,9 @@ function Sidebar() {
 
       {/* folder list */}
       <aside className="w-1/5 px-4 mt-16">
+        {}
         <ul className="grid gap-4">
+          {folders.isPending && <Loader />}
           {folders.data?.data.map((item, i) => (
             // folder list item
             <li
@@ -179,18 +193,15 @@ function Sidebar() {
                 colorScheme="none"
                 // If currentFolderNotPartOfCurrentOrganization set the first folder as current, else set based on currentFolder.name === item.name ? "solid" : "outline"
                 // prettier-ignore
-                variant={  currentOrganisationDetails.folder?.name === item.name ? "solid" : "outline"}
+                variant={  currentFolder.name === item.name ? "solid" : "outline"}
                 // prettier-ignore
-                icon={  currentOrganisationDetails.folder?.name === item.name ?  <MdFolder size={20} /> :   <MdOutlineFolder size={20} />}
+                icon={  currentFolder.name === item.name ?  <MdFolder size={20} /> :   <MdOutlineFolder size={20} />}
                 iconPos="right"
                 className={classNames("w-full justify-between z-[1]", {
                   "!text-primary": item.is_default,
                 })}
                 onClick={() =>
-                  setCurrentOrganisationDetails({
-                    ...currentOrganisationDetails,
-                    folder: item,
-                  })
+                  setCurrentFolder({ id: item.id!, name: item.name })
                 }
               >
                 {item.name}

@@ -5,44 +5,47 @@ import { VscDiffAdded } from "react-icons/vsc";
 import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
 import TextArea from "@/components/ui/form/textarea";
+import Loader from "@/components/ui/loading";
 import Modal from "@/components/ui/modal";
+import toast from "react-hot-toast";
 import { useDashboardContext } from "./dashboard-context";
-import { useCreateTodo, useGetTodos } from "./dashboard.hook";
+import {
+  useCreateTodo as createTodosQuery,
+  useGetTodos as getTodosQuery,
+  useDeleteTodo,
+  useUpdateTodo,
+} from "./dashboard.hook";
+import { createDueDate } from "@/utilities/common";
 
 function Todos() {
   // Context hook
-  const { currentOrganisationDetails } = useDashboardContext();
+  const { currentOrganisationDetails, currentFolder } = useDashboardContext();
 
-  // Use state hook
+  // Use state hooks
   const [createTaskVisibility, setCreateTaskVisibility] = useState(false);
   const [updateTaskVisibility, setUpdateTaskVisibility] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [todoId, setTodoId] = useState("");
 
   // todo hooks
-  const todos = useGetTodos(
-    currentOrganisationDetails.id,
-    currentOrganisationDetails.folder?.id || ""
-  );
-  console.log(todos.data?.data);
 
-  const createTodo = useCreateTodo(
-    currentOrganisationDetails.id,
-    currentOrganisationDetails.folder?.id || ""
+  const todos = getTodosQuery(
+    currentOrganisationDetails.id || "",
+    currentFolder.id
   );
+
+  const createTodo = createTodosQuery(
+    currentOrganisationDetails.id || "",
+    currentFolder.id
+  );
+
+  const updateTodo = useUpdateTodo(currentOrganisationDetails.id, todoId);
+  const deleteTodo = useDeleteTodo(currentOrganisationDetails.id);
 
   // create a date in 7 days time
-  function createDueDate() {
-    const date = new Date();
-    date.setDate(date.getDate() + 7);
 
-    let formattedDate = date.toISOString();
-    formattedDate = formattedDate.replace("T", " ");
-    formattedDate = formattedDate.replace("Z", "");
-
-    return formattedDate;
-  }
-
+  if (todos.isLoading || !currentFolder.id) return <Loader />;
   return (
     <>
       <Modal
@@ -55,6 +58,8 @@ function Todos() {
             className="w-96 flex flex-col items-center gap-4"
             onSubmit={(e) => {
               e.preventDefault();
+              if (!title || !description)
+                return toast.error("All fields are required");
               createTodo
                 .mutateAsync({
                   title,
@@ -105,8 +110,37 @@ function Todos() {
               onChange={(e) => setDescription(e.target.value)}
             />
             <div className="flex gap-4">
-              <Button colorScheme="danger">Delete todo</Button>
-              <Button colorScheme="warning">Update todo</Button>
+              <Button
+                colorScheme="danger"
+                isLoading={deleteTodo.isPending}
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteTodo.mutateAsync(todoId).then(() => {
+                    setUpdateTaskVisibility(false);
+                  });
+                }}
+              >
+                Delete todo
+              </Button>
+              <Button
+                colorScheme="warning"
+                isLoading={updateTodo.isPending}
+                onClick={(e) => {
+                  e.preventDefault();
+                  updateTodo
+                    .mutateAsync({
+                      title,
+                      description,
+                      due_date: createDueDate(),
+                      completed: false,
+                    })
+                    .then(() => {
+                      setUpdateTaskVisibility(false);
+                    });
+                }}
+              >
+                Update todo
+              </Button>
             </div>
           </form>
         </div>
@@ -125,23 +159,25 @@ function Todos() {
           <span className="text-gray-400">Add new task</span>
         </li>
 
-        {[...new Array(6)].map(() => (
+        {todos.data?.data.length === 0 && (
+          <li className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer">
+            <span className="text-gray-400">No tasks available</span>
+          </li>
+        )}
+
+        {todos.data?.data.map((todo) => (
           <li
             onClick={() => {
               setUpdateTaskVisibility(true);
-              setTitle(
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-              );
-              setDescription(
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-              );
+              setTitle(todo.title || "No title available");
+              setDescription(todo.description || "No description available");
+              setTodoId(todo.id);
             }}
             className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
+            key={todo.id}
           >
             <div className="border border-compliment w-4 h-4 rounded-full"></div>
-            <span>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            </span>
+            <span>{todo.title || "No title available"}</span>
           </li>
         ))}
       </ul>
