@@ -1,10 +1,30 @@
 export interface currentOrgType extends getAllMyOrganizationsResponsePayload {
-  folder: Folder;
+  // folder: Folder;
+}
+
+export interface Identifier {
+  id: string;
+  name: string;
 }
 
 export interface DashboardContextType {
-  currentOrganisationDetails: currentOrgType;
-  setCurrentOrganisationDetails: (currentOrg: currentOrgType) => void;
+  currentFolder: Identifier;
+  setCurrentFolder: (folder: Identifier) => void;
+  currentOrganisationDetails: Identifier;
+  setCurrentOrganisationDetails: (currentOrg: Identifier) => void;
+}
+
+// user interface
+export interface User {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  id: string;
+  created_at: string;
+  updated_at: string;
+  is_email_verified: boolean;
+  password: string;
 }
 
 // organization interface
