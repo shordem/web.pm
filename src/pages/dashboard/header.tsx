@@ -25,9 +25,11 @@ function DashboardHeader() {
   const router = useRouter();
 
   // Context hook
-  const { currentOrganisationDetails, setCurrentOrganisationDetails } =
-    useDashboardContext();
-  const getFolder = useGetFolders(currentOrganisationDetails.id);
+  const {
+    currentOrganisationDetails,
+    setCurrentFolder,
+    setCurrentOrganisationDetails,
+  } = useDashboardContext();
 
   // Use state hook
   const [addVisibility, setAddVisibility] = useState(false);
@@ -44,10 +46,8 @@ function DashboardHeader() {
   });
 
   function handleOrganizationClick(org: getAllMyOrganizationsResponsePayload) {
-    setCurrentOrganisationDetails({
-      ...org,
-      folder: getFolder.data?.data[0]!,
-    });
+    setCurrentOrganisationDetails(org);
+    setCurrentFolder({ id: "", name: "" });
   }
   return (
     <>
