@@ -15,10 +15,18 @@ import {
   TodoResponsePayload,
   CreateTodoRequestPayload,
   CreateNoteRequestPayload,
+  UpdateTodoRequestPayload,
+  NoteResponsePayload,
+  User,
 } from "./dashboard.interface";
 
 export class DashboardService {
   private apiClient = new Client();
+
+  // User Services
+  getUserDetails() {
+    return this.apiClient.get<User>("user");
+  }
 
   // Organization services
   getAllMyOrganizations() {
@@ -86,17 +94,17 @@ export class DashboardService {
   deleteTodo(orgId: string, todoId: string) {
     return this.apiClient.delete(`todos/${orgId}/${todoId}`);
   }
-  updateTodo(orgId: string, todoId: string, data: CreateTodoRequestPayload) {
+  updateTodo(orgId: string, todoId: string, data: UpdateTodoRequestPayload) {
     return this.apiClient.patch(`todos/${orgId}/${todoId}`, data);
   }
   // note services
   getAllNotes(orgId: string, folderId: string) {
-    return this.apiClient.get<TodoResponsePayload[]>(
+    return this.apiClient.get<NoteResponsePayload[]>(
       `notes/${orgId}/${folderId}`
     );
   }
   getNoteDetails(orgId: string, noteId: string) {
-    return this.apiClient.get<TodoResponsePayload>(
+    return this.apiClient.get<NoteResponsePayload>(
       `notes/${orgId}/${noteId}/view`
     );
   }
