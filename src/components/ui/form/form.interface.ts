@@ -39,6 +39,7 @@ export interface InputProps extends BaseProps {
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
   loading?: boolean;
+  errorMsg?: string;
 }
 
 export interface TextAreaProps extends BaseProps {
