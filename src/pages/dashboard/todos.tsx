@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 
 import { VscDiffAdded } from "react-icons/vsc";
 
@@ -16,6 +16,8 @@ import {
   useUpdateTodo,
 } from "./dashboard.hook";
 import { createDueDate } from "@/utilities/common";
+import { TodoResponsePayload } from "./dashboard.interface";
+import classNames from "classnames";
 
 function Todos() {
   // Context hook
@@ -26,6 +28,7 @@ function Todos() {
   const [updateTaskVisibility, setUpdateTaskVisibility] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [todoId, setTodoId] = useState("");
 
   // todo hooks
@@ -42,6 +45,29 @@ function Todos() {
 
   const updateTodo = useUpdateTodo(currentOrganisationDetails.id, todoId);
   const deleteTodo = useDeleteTodo(currentOrganisationDetails.id);
+
+  // handle COmpleted
+  function handleTodoClick(
+    e: MouseEvent<HTMLLIElement>,
+    todo: TodoResponsePayload
+  ) {
+    setTodoId(todo.id);
+    if ((e.target as HTMLElement).tagName === "DIV") return;
+
+    setUpdateTaskVisibility(true);
+    setTitle(todo.title || "No title available");
+    setDescription(todo.description || "No description available");
+  }
+
+  function handleCompleted(todo: TodoResponsePayload) {
+    updateTodo.mutateAsync({
+      title,
+      description,
+      due_date: createDueDate(),
+      completed: !todo.completed,
+    });
+    console.log("completed");
+  }
 
   // create a date in 7 days time
 
@@ -109,6 +135,13 @@ function Todos() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            <Input
+              label="Due date"
+              className="w-full"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
             <div className="flex gap-4">
               <Button
                 colorScheme="danger"
@@ -131,7 +164,7 @@ function Todos() {
                     .mutateAsync({
                       title,
                       description,
-                      due_date: createDueDate(),
+                      due_date: dueDate,
                       completed: false,
                     })
                     .then(() => {
@@ -167,16 +200,19 @@ function Todos() {
 
         {todos.data?.data.map((todo) => (
           <li
-            onClick={() => {
-              setUpdateTaskVisibility(true);
-              setTitle(todo.title || "No title available");
-              setDescription(todo.description || "No description available");
-              setTodoId(todo.id);
-            }}
+            onClick={(e) => handleTodoClick(e, todo)}
             className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
             key={todo.id}
           >
-            <div className="border border-compliment w-4 h-4 rounded-full"></div>
+            <div
+              className={classNames(
+                "border border-compliment w-4 h-4 rounded-full",
+                { "bg-compliment": todo.completed }
+              )}
+              onClick={() => handleCompleted(todo)}
+            >
+              {todo.completed && <abbr title="completed"></abbr>}{" "}
+            </div>
             <span>{todo.title || "No title available"}</span>
           </li>
         ))}

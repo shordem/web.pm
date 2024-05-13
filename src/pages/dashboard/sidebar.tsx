@@ -29,7 +29,6 @@ function Sidebar() {
   useEffect(() => {
     console.log(currentFolder.id);
     if (currentFolder.id === "") {
-      console.log(true);
       setCurrentFolder({
         id: folders.data?.data[0]!.id!,
         name: folders.data?.data[0]!.name!,
@@ -37,8 +36,6 @@ function Sidebar() {
     }
   }, [currentFolder, folders.data?.data, setCurrentFolder]);
 
-  // If not, set the first folder as current
-  console.log(currentFolder);
   // Use state hook
   const [hoveredItem, setHoveredItem] = useState<null | number>(null);
   const [folderName, setFolderName] = useState("");

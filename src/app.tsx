@@ -5,7 +5,7 @@ import "./styles/globals.scss";
 
 import QueryClientProvider from "./providers/query-client";
 import Router from "./router";
-import ErrorFallback from "./ui/ErrorFallback";
+import ErrorFallback from "./components/ui/error-fallback";
 
 function App() {
   return (

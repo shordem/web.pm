@@ -116,6 +116,9 @@ export default function DashboardProvider({
       </div>
     );
 
+  console.log(allOrganizations.data?.data);
+  console.log(getFolders.data?.data);
+
   return (
     <DashboardContext.Provider
       value={{

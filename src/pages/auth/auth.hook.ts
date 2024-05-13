@@ -42,7 +42,10 @@ export function useLogin() {
       toast.success("Login successful");
     },
     onError: (err: AxiosError<any>) => {
-      toast.error(err.response?.data.detail ?? err.response?.data.message);
+      console.log(err.message);
+      toast.error(
+        err.response?.data.detail || err.response?.data.message || err.message
+      );
     },
   });
 
