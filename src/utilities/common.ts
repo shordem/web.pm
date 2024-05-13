@@ -1,3 +1,5 @@
+import { formatDistance, parseISO } from "date-fns";
+
 export function convertToCamelCase(str: string): string {
   return str
     .replace(/([-_][a-z])/gi, ($1) => {
@@ -63,13 +65,36 @@ export function popKeys<T extends AnyObject, K extends keyof T>(
   return poppedValues;
 }
 
-export function createDueDate() {
-  const date = new Date();
-  date.setDate(date.getDate() + 7);
+export function createDueDate(ddmmyy: string, time: string) {
+  const dateString = `${ddmmyy} ${time}:00`;
+  const date = new Date(dateString).getTime(); // Convert date to number using getTime()
 
-  let formattedDate = date.toISOString();
-  formattedDate = formattedDate.replace("T", " ");
-  formattedDate = formattedDate.replace("Z", "");
+  const tzoffset = new Date().getTimezoneOffset() * 60000; // offset in milliseconds
+  const localISOTime = new Date(date - tzoffset).toISOString().slice(0, -1);
+
+  const formattedDate = localISOTime.split(".")[0].replace("T", " ");
 
   return formattedDate;
 }
+
+export function validateDate(date: string, time: string) {
+  const inputDate = new Date(`${date} ${time}`);
+  const currentDate = new Date();
+
+  return inputDate >= currentDate;
+}
+
+export function checkDue(date: string) {
+  const inputDate = new Date(date);
+  const currentDate = new Date();
+
+  return inputDate < currentDate;
+}
+
+export const formatDistanceFromNow = (dateStr: string) =>
+  formatDistance(parseISO(dateStr), new Date(), {
+    addSuffix: true,
+  })
+    .replace("in", "")
+    .replace("about", "")
+    .replace("less than a minute", "a moment");
