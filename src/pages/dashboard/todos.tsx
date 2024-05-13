@@ -7,6 +7,13 @@ import Input from "@/components/ui/form/input";
 import TextArea from "@/components/ui/form/textarea";
 import Loader from "@/components/ui/loading";
 import Modal from "@/components/ui/modal";
+import {
+  checkDue,
+  createDueDate,
+  formatDistanceFromNow,
+  validateDate,
+} from "@/utilities/common";
+import classNames from "classnames";
 import toast from "react-hot-toast";
 import { useDashboardContext } from "./dashboard-context";
 import {
@@ -15,9 +22,7 @@ import {
   useDeleteTodo,
   useUpdateTodo,
 } from "./dashboard.hook";
-import { createDueDate } from "@/utilities/common";
 import { TodoResponsePayload } from "./dashboard.interface";
-import classNames from "classnames";
 
 function Todos() {
   // Context hook
@@ -29,7 +34,9 @@ function Todos() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [dueTime, setDueTime] = useState("");
   const [todoId, setTodoId] = useState("");
+  const [error, setError] = useState("");
 
   // todo hooks
 
@@ -46,6 +53,14 @@ function Todos() {
   const updateTodo = useUpdateTodo(currentOrganisationDetails.id, todoId);
   const deleteTodo = useDeleteTodo(currentOrganisationDetails.id);
 
+  function handleReset() {
+    setTitle("");
+    setDescription("");
+    setDueDate("");
+    setDueTime("");
+    setError("");
+  }
+
   // handle COmpleted
   function handleTodoClick(
     e: MouseEvent<HTMLLIElement>,
@@ -57,16 +72,18 @@ function Todos() {
     setUpdateTaskVisibility(true);
     setTitle(todo.title || "No title available");
     setDescription(todo.description || "No description available");
+    setDueDate(todo.due_date.split("T")[0]);
+    setDueTime(todo.due_date.split("T")[1]);
   }
 
   function handleCompleted(todo: TodoResponsePayload) {
+    setTodoId(todo.id);
     updateTodo.mutateAsync({
-      title,
-      description,
-      due_date: createDueDate(),
+      title: todo.title,
+      description: todo.description,
+      due_date: todo.due_date,
       completed: !todo.completed,
     });
-    console.log("completed");
   }
 
   // create a date in 7 days time
@@ -84,16 +101,20 @@ function Todos() {
             className="w-96 flex flex-col items-center gap-4"
             onSubmit={(e) => {
               e.preventDefault();
-              if (!title || !description)
+              if (!title || !description || !dueDate || !dueTime)
                 return toast.error("All fields are required");
+              if (!validateDate(dueDate, dueTime))
+                return setError("You can only schedule tasks to the future");
+
               createTodo
                 .mutateAsync({
                   title,
                   description,
-                  due_date: createDueDate(),
+                  due_date: createDueDate(dueDate, dueTime),
                 })
                 .then(() => {
                   setCreateTaskVisibility(false);
+                  handleReset();
                 });
             }}
           >
@@ -109,6 +130,25 @@ function Todos() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            <div className="flex w-full gap-2 justify-between">
+              <Input
+                label="Due date"
+                className="w-full"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                errorMsg={error}
+              />
+
+              <Input
+                label="Due time"
+                type="time"
+                value={dueTime}
+                onChange={(e) => setDueTime(e.target.value)}
+                className="w-2/5"
+              />
+            </div>
+
             <Button className="mt-4" isLoading={createTodo.isPending}>
               Add todo
             </Button>
@@ -135,13 +175,25 @@ function Todos() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <Input
-              label="Due date"
-              className="w-full"
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-            />
+            <div className="flex w-full gap-2 justify-between">
+              <Input
+                label="Due date"
+                className="w-full"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                errorMsg={error}
+              />
+
+              <Input
+                label="Due time"
+                type="time"
+                value={dueTime}
+                onChange={(e) => setDueTime(e.target.value)}
+                className="w-2/5"
+              />
+            </div>
+
             <div className="flex gap-4">
               <Button
                 colorScheme="danger"
@@ -160,11 +212,18 @@ function Todos() {
                 isLoading={updateTodo.isPending}
                 onClick={(e) => {
                   e.preventDefault();
+                  if (!title || !description)
+                    return toast.error("All fields are required");
+                  if (!validateDate(dueDate, dueTime))
+                    return setError(
+                      "You can only schedule tasks to the future"
+                    );
+
                   updateTodo
                     .mutateAsync({
                       title,
                       description,
-                      due_date: dueDate,
+                      due_date: createDueDate(dueDate, dueTime),
                       completed: false,
                     })
                     .then(() => {
@@ -201,19 +260,40 @@ function Todos() {
         {todos.data?.data.map((todo) => (
           <li
             onClick={(e) => handleTodoClick(e, todo)}
-            className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
+            className="w-full text-ellipsis bg-[#222] flex justify-between items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
             key={todo.id}
           >
-            <div
-              className={classNames(
-                "border border-compliment w-4 h-4 rounded-full",
-                { "bg-compliment": todo.completed }
-              )}
-              onClick={() => handleCompleted(todo)}
-            >
-              {todo.completed && <abbr title="completed"></abbr>}{" "}
+            <div className="flex items-center gap-4">
+              <div
+                className={classNames(
+                  "border border-compliment w-4 h-4 rounded-full",
+                  { "bg-primary": todo.completed }
+                )}
+                onClick={() => handleCompleted(todo)}
+              >
+                {todo.completed && <abbr title="completed"></abbr>}{" "}
+              </div>
+              <span
+                className={classNames({
+                  "line-through": todo.completed,
+                  "text-red-400": checkDue(todo.due_date),
+                })}
+              >
+                {todo.title || "No title available"}
+              </span>
             </div>
-            <span>{todo.title || "No title available"}</span>
+            <div className="flex gap-4 items-center">
+              <span>
+                {checkDue(todo.due_date)
+                  ? `task was due ${formatDistanceFromNow(todo.due_date)}`
+                  : formatDistanceFromNow(todo.due_date).concat(" left")}
+              </span>
+              <img
+                src={`https://ui-avatars.com/api/?name=${todo.created_by.first_name}+${todo.created_by.last_name}}&background=random&rounded=true`}
+                alt="user"
+                className="w-10 h-10 rounded-full"
+              />
+            </div>
           </li>
         ))}
       </ul>
