@@ -1,22 +1,25 @@
-import { HiChevronUpDown } from "react-icons/hi2";
-import { IoIosLogOut } from "react-icons/io";
-import { SiAwsorganizations } from "react-icons/si";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
-import Input from "@/components/ui/form/input";
-import Modal from "@/components/ui/modal";
+import { useAuth } from "../auth/auth.hook";
 import useOutsideClick from "@/hooks/outside-click";
 import { useRouter } from "@/router/router.hook";
-import classNames from "classnames";
-import { useState } from "react";
-import { useAuth } from "../auth/auth.hook";
+
 import { useDashboardContext } from "./dashboard-context";
+import { getAllMyOrganizationsResponsePayload } from "./dashboard.interface";
 import {
   useCreateOrganization,
   useGetAllMyOrganizations,
 } from "./dashboard.hook";
-import { getAllMyOrganizationsResponsePayload } from "./dashboard.interface";
+
+import { HiChevronUpDown } from "react-icons/hi2";
+import { IoIosLogOut } from "react-icons/io";
+import { SiAwsorganizations } from "react-icons/si";
+
+import { Button } from "@/components/ui/button";
+import Input from "@/components/ui/form/input";
+import Modal from "@/components/ui/modal";
+import classNames from "classnames";
 
 function DashboardHeader() {
   //Router hook
