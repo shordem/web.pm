@@ -8,10 +8,13 @@ import Loader from "@/components/ui/loading";
 const DashboardLayout = () => {
   const isLoading = useAuthRedirect();
 
-  if (isLoading)
-    <div className="w-full h-full flex justify-center items-center">
-      <Loader />
-    </div>;
+  if (isLoading) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <DashboardProvider>
       <main>
