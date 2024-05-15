@@ -89,7 +89,17 @@ export function useRemoveMember() {
       toast.success("Succesfully removed member");
       queryClient.invalidateQueries({ queryKey: ["organizationMembers"] });
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err) => {
+      if (
+        err.response.data.detail ===
+        "403: User does not have the required permission"
+      ) {
+        return toast.error(
+          "You do not have the required permission to remove this member"
+        );
+      }
+      return toast.error(err.response.data.detail);
+    },
   });
   return removeMember;
 }
