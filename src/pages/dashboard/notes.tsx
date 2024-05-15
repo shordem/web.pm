@@ -166,6 +166,7 @@ function Notes() {
               setNoteId(note.id);
             }}
             className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
+            key={note.id}
           >
             <CgNotes size={18} />
             <span>
