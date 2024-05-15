@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loading";
+import Modal from "@/components/ui/modal";
 import { DashboardContext } from "@/pages/dashboard/dashboard-context";
 import {
   useGetFolders as getFoldersquery,
@@ -22,6 +24,7 @@ export default function DashboardProvider({
   });
   const [currentOrganisationDetails, setCurrentOrganisationDetails] =
     useState<Identifier>({ id: "", name: "" });
+  const [errorVisibility, setErrorVisibility] = useState(true);
 
   const allOrganizations = useGetAllMyOrganizations();
   const getFolders = useCallback(
@@ -116,8 +119,39 @@ export default function DashboardProvider({
       </div>
     );
 
-  console.log(allOrganizations.data?.data);
-  console.log(getFolders.data?.data);
+  if (
+    getFolders.error?.response?.data.detail ===
+    "404: User is not a member of the organization"
+  ) {
+    return (
+      <Modal
+        visibility={errorVisibility}
+        setVisibility={() => setErrorVisibility(false)}
+      >
+        <div className="grid justify-center gap-4 p-12">
+          <h4 className="text-2xl">Ooops!</h4>
+          <p className="text-center text-info">
+            You are no longer a member {currentOrganisationDetails.name}, please
+            contact the organization admin.
+          </p>
+          <div className="grid justify-end">
+            <Button
+              onClick={() => {
+                setErrorVisibility(false);
+                updateBothStorageAndStateOrg({
+                  id: allOrganizations.data?.data[0]!.id!,
+                  name: allOrganizations.data?.data[0]!.name!,
+                });
+                resetCurrentFolder();
+              }}
+            >
+              Return Home
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    );
+  }
 
   return (
     <DashboardContext.Provider
