@@ -6,15 +6,15 @@ import { MdDelete, MdEdit, MdFolder, MdOutlineFolder } from "react-icons/md";
 
 import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
+import Loader from "@/components/ui/loading";
 import Modal from "@/components/ui/modal";
+import { useDashboardContext } from "./dashboard-context";
 import {
   useCreateFolder,
   useDeleteFolder,
   useGetFolders,
   useUpdateFolder,
 } from "./dashboard.hook";
-import { useDashboardContext } from "./dashboard-context";
-import Loader from "@/components/ui/loading";
 
 function Sidebar() {
   const { currentFolder, setCurrentFolder, currentOrganisationDetails } =
@@ -27,7 +27,6 @@ function Sidebar() {
   const deleteFolder = useDeleteFolder(currentOrganisationDetails.id);
 
   useEffect(() => {
-    console.log(currentFolder.id);
     if (currentFolder.id === "") {
       setCurrentFolder({
         id: folders.data?.data[0]!.id!,
