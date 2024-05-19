@@ -8,6 +8,7 @@ import {
 import { useDashboardContext } from "../dashboard-context";
 import { FormEvent, useState } from "react";
 import Modal from "@/components/ui/modal";
+import toast from "react-hot-toast";
 
 function OrganizationSettings() {
   const { currentOrganisationDetails } = useDashboardContext();

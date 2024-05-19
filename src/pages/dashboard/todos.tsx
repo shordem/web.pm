@@ -1,48 +1,94 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 
 import { VscDiffAdded } from "react-icons/vsc";
 
 import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
 import TextArea from "@/components/ui/form/textarea";
+import Loader from "@/components/ui/loading";
 import Modal from "@/components/ui/modal";
+import {
+  checkDue,
+  createDueDate,
+  formatDistanceFromNow,
+  validateDate,
+} from "@/utilities/common";
+import classNames from "classnames";
+import toast from "react-hot-toast";
 import { useDashboardContext } from "./dashboard-context";
-import { useCreateTodo, useGetTodos } from "./dashboard.hook";
+import {
+  useCreateTodo as createTodosQuery,
+  useGetTodos as getTodosQuery,
+  useDeleteTodo,
+  useUpdateTodo,
+} from "./dashboard.hook";
+import { TodoResponsePayload } from "./dashboard.interface";
 
 function Todos() {
   // Context hook
-  const { currentOrganisationDetails } = useDashboardContext();
+  const { currentOrganisationDetails, currentFolder } = useDashboardContext();
 
-  // Use state hook
+  // Use state hooks
   const [createTaskVisibility, setCreateTaskVisibility] = useState(false);
   const [updateTaskVisibility, setUpdateTaskVisibility] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [dueTime, setDueTime] = useState("");
+  const [todoId, setTodoId] = useState("");
+  const [error, setError] = useState("");
 
   // todo hooks
-  const todos = useGetTodos(
-    currentOrganisationDetails.id,
-    currentOrganisationDetails.folder?.id || ""
-  );
-  console.log(todos.data?.data);
 
-  const createTodo = useCreateTodo(
-    currentOrganisationDetails.id,
-    currentOrganisationDetails.folder?.id || ""
+  const todos = getTodosQuery(
+    currentOrganisationDetails.id || "",
+    currentFolder.id
   );
 
-  // create a date in 7 days time
-  function createDueDate() {
-    const date = new Date();
-    date.setDate(date.getDate() + 7);
+  const createTodo = createTodosQuery(
+    currentOrganisationDetails.id || "",
+    currentFolder.id
+  );
 
-    let formattedDate = date.toISOString();
-    formattedDate = formattedDate.replace("T", " ");
-    formattedDate = formattedDate.replace("Z", "");
+  const updateTodo = useUpdateTodo(currentOrganisationDetails.id, todoId);
+  const deleteTodo = useDeleteTodo(currentOrganisationDetails.id);
 
-    return formattedDate;
+  function handleReset() {
+    setTitle("");
+    setDescription("");
+    setDueDate("");
+    setDueTime("");
+    setError("");
   }
 
+  // handle COmpleted
+  function handleTodoClick(
+    e: MouseEvent<HTMLLIElement>,
+    todo: TodoResponsePayload
+  ) {
+    setTodoId(todo.id);
+    if ((e.target as HTMLElement).tagName === "DIV") return;
+
+    setUpdateTaskVisibility(true);
+    setTitle(todo.title || "No title available");
+    setDescription(todo.description || "No description available");
+    setDueDate(todo.due_date.split("T")[0]);
+    setDueTime(todo.due_date.split("T")[1]);
+  }
+
+  function handleCompleted(todo: TodoResponsePayload) {
+    setTodoId(todo.id);
+    updateTodo.mutateAsync({
+      title: todo.title,
+      description: todo.description,
+      due_date: todo.due_date,
+      completed: !todo.completed,
+    });
+  }
+
+  // create a date in 7 days time
+
+  if (todos.isLoading || !currentFolder.id) return <Loader />;
   return (
     <>
       <Modal
@@ -55,14 +101,20 @@ function Todos() {
             className="w-96 flex flex-col items-center gap-4"
             onSubmit={(e) => {
               e.preventDefault();
+              if (!title || !description || !dueDate || !dueTime)
+                return toast.error("All fields are required");
+              if (!validateDate(dueDate, dueTime))
+                return setError("You can only schedule tasks to the future");
+
               createTodo
                 .mutateAsync({
                   title,
                   description,
-                  due_date: createDueDate(),
+                  due_date: createDueDate(dueDate, dueTime),
                 })
                 .then(() => {
                   setCreateTaskVisibility(false);
+                  handleReset();
                 });
             }}
           >
@@ -78,6 +130,25 @@ function Todos() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            <div className="flex w-full gap-2 justify-between">
+              <Input
+                label="Due date"
+                className="w-full"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                errorMsg={error}
+              />
+
+              <Input
+                label="Due time"
+                type="time"
+                value={dueTime}
+                onChange={(e) => setDueTime(e.target.value)}
+                className="w-2/5"
+              />
+            </div>
+
             <Button className="mt-4" isLoading={createTodo.isPending}>
               Add todo
             </Button>
@@ -104,9 +175,64 @@ function Todos() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            <div className="flex w-full gap-2 justify-between">
+              <Input
+                label="Due date"
+                className="w-full"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                errorMsg={error}
+              />
+
+              <Input
+                label="Due time"
+                type="time"
+                value={dueTime}
+                onChange={(e) => setDueTime(e.target.value)}
+                className="w-2/5"
+              />
+            </div>
+
             <div className="flex gap-4">
-              <Button colorScheme="danger">Delete todo</Button>
-              <Button colorScheme="warning">Update todo</Button>
+              <Button
+                colorScheme="danger"
+                isLoading={deleteTodo.isPending}
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteTodo.mutateAsync(todoId).then(() => {
+                    setUpdateTaskVisibility(false);
+                  });
+                }}
+              >
+                Delete todo
+              </Button>
+              <Button
+                colorScheme="warning"
+                isLoading={updateTodo.isPending}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!title || !description)
+                    return toast.error("All fields are required");
+                  if (!validateDate(dueDate, dueTime))
+                    return setError(
+                      "You can only schedule tasks to the future"
+                    );
+
+                  updateTodo
+                    .mutateAsync({
+                      title,
+                      description,
+                      due_date: createDueDate(dueDate, dueTime),
+                      completed: false,
+                    })
+                    .then(() => {
+                      setUpdateTaskVisibility(false);
+                    });
+                }}
+              >
+                Update todo
+              </Button>
             </div>
           </form>
         </div>
@@ -125,23 +251,49 @@ function Todos() {
           <span className="text-gray-400">Add new task</span>
         </li>
 
-        {[...new Array(6)].map(() => (
+        {todos.data?.data.length === 0 && (
+          <li className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer">
+            <span className="text-gray-400">No tasks available</span>
+          </li>
+        )}
+
+        {todos.data?.data.map((todo) => (
           <li
-            onClick={() => {
-              setUpdateTaskVisibility(true);
-              setTitle(
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-              );
-              setDescription(
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-              );
-            }}
-            className="w-full text-ellipsis bg-[#222] flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
+            onClick={(e) => handleTodoClick(e, todo)}
+            className="w-full text-ellipsis bg-[#222] flex justify-between items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
+            key={todo.id}
           >
-            <div className="border border-compliment w-4 h-4 rounded-full"></div>
-            <span>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            </span>
+            <div className="flex items-center gap-4">
+              <div
+                className={classNames(
+                  "border border-compliment w-4 h-4 rounded-full",
+                  { "bg-primary": todo.completed }
+                )}
+                onClick={() => handleCompleted(todo)}
+              >
+                {todo.completed && <abbr title="completed"></abbr>}{" "}
+              </div>
+              <span
+                className={classNames({
+                  "line-through": todo.completed,
+                  "text-red-400": checkDue(todo.due_date),
+                })}
+              >
+                {todo.title || "No title available"}
+              </span>
+            </div>
+            <div className="flex gap-4 items-center">
+              <span>
+                {checkDue(todo.due_date)
+                  ? `task was due ${formatDistanceFromNow(todo.due_date)}`
+                  : formatDistanceFromNow(todo.due_date).concat(" left")}
+              </span>
+              <img
+                src={`https://ui-avatars.com/api/?name=${todo.created_by.first_name}+${todo.created_by.last_name}}&background=random&rounded=true`}
+                alt="user"
+                className="w-10 h-10 rounded-full"
+              />
+            </div>
           </li>
         ))}
       </ul>

@@ -29,7 +29,9 @@ function Input(props: InputProps) {
           value={props.value}
           disabled={props.disabled}
         />
-
+        {props.errorMsg && (
+          <p className=" text-sm text-red-200 italic">{props.errorMsg}</p>
+        )}
         {props.type == "password" && (
           <Button
             variant="ghost"

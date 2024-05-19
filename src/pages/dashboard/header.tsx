@@ -1,23 +1,25 @@
-import { HiChevronUpDown } from "react-icons/hi2";
-import { IoIosLogOut } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { SiAwsorganizations } from "react-icons/si";
-
-import { Button } from "@/components/ui/button";
-import { useRouter } from "@/router/router.hook";
-import classNames from "classnames";
-import { useAuth } from "../auth/auth.hook";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { useAuth } from "../auth/auth.hook";
+import useOutsideClick from "@/hooks/outside-click";
+import { useRouter } from "@/router/router.hook";
+
 import { useDashboardContext } from "./dashboard-context";
+import { getAllMyOrganizationsResponsePayload } from "./dashboard.interface";
 import {
   useCreateOrganization,
   useGetAllMyOrganizations,
-  useGetFolders,
 } from "./dashboard.hook";
-import { getAllMyOrganizationsResponsePayload } from "./dashboard.interface";
+
+import { HiChevronUpDown } from "react-icons/hi2";
+import { IoIosLogOut } from "react-icons/io";
+import { SiAwsorganizations } from "react-icons/si";
+
+import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
 import Modal from "@/components/ui/modal";
-import useOutsideClick from "@/hooks/outside-click";
+import classNames from "classnames";
 
 function DashboardHeader() {
   //Router hook
@@ -25,9 +27,11 @@ function DashboardHeader() {
   const router = useRouter();
 
   // Context hook
-  const { currentOrganisationDetails, setCurrentOrganisationDetails } =
-    useDashboardContext();
-  const getFolder = useGetFolders(currentOrganisationDetails.id);
+  const {
+    currentOrganisationDetails,
+    setCurrentFolder,
+    setCurrentOrganisationDetails,
+  } = useDashboardContext();
 
   // Use state hook
   const [addVisibility, setAddVisibility] = useState(false);
@@ -44,10 +48,8 @@ function DashboardHeader() {
   });
 
   function handleOrganizationClick(org: getAllMyOrganizationsResponsePayload) {
-    setCurrentOrganisationDetails({
-      ...org,
-      folder: getFolder.data?.data[0]!,
-    });
+    setCurrentOrganisationDetails(org);
+    setCurrentFolder({ id: "", name: "" });
   }
   return (
     <>
