@@ -189,9 +189,9 @@ function Sidebar() {
                 colorScheme="none"
                 // If currentFolderNotPartOfCurrentOrganization set the first folder as current, else set based on currentFolder.name === item.name ? "solid" : "outline"
                 // prettier-ignore
-                variant={  currentFolder.name === item.name ? "solid" : "outline"}
+                variant={  currentFolder.id === item.id ? "solid" : "outline"}
                 // prettier-ignore
-                icon={  currentFolder.name === item.name ?  <MdFolder size={20} /> :   <MdOutlineFolder size={20} />}
+                icon={  currentFolder.id === item.id ?  <MdFolder size={20} /> :   <MdOutlineFolder size={20} />}
                 iconPos="right"
                 className={classNames("w-full justify-between z-[1]", {
                   "!text-primary": item.is_default,
