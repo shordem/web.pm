@@ -1,17 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import toast from "react-hot-toast";
-import { DashboardService } from "./dashboard.service";
 import {
   CreateNewOrganizationRequestPayload,
   CreateNewOrganizationResponsePayload,
-  deleteOrganizationMemberType,
-  CreateTodoRequestPayload,
   CreateNoteRequestPayload,
+  CreateTodoRequestPayload,
+  ErrorResponse,
+  ErrorType,
   UpdateTodoRequestPayload,
+  deleteOrganizationMemberType,
 } from "./dashboard.interface";
+import { DashboardService } from "./dashboard.service";
+import { Storage } from "@/utilities/storage";
 
 const Dashboard = new DashboardService();
+const storage = new Storage();
 
 // User hooks
 export function useUser() {
@@ -27,7 +31,14 @@ export function useGetAllMyOrganizations() {
     queryKey: ["allMyOrganizations"],
     queryFn: async () => await Dashboard.getAllMyOrganizations(),
   });
-
+  if (allOrganizations.error) {
+    if (
+      (allOrganizations.error as unknown as ErrorResponse).response?.data
+        ?.detail === "Invalid token"
+    ) {
+      storage.clear();
+    }
+  }
   return allOrganizations;
 }
 
@@ -74,7 +85,8 @@ export function useAddMember(orgId: string) {
     },
     onError: (err: AxiosError) =>
       toast.error(
-        err.response?.data.detail || "An error occured, try again later"
+        (err.response as ErrorType)?.data.detail ||
+          "An error occured, try again later"
       ),
   });
   return addMember;
@@ -89,16 +101,16 @@ export function useRemoveMember() {
       toast.success("Succesfully removed member");
       queryClient.invalidateQueries({ queryKey: ["organizationMembers"] });
     },
-    onError: (err) => {
+    onError: (err: AxiosError) => {
       if (
-        err.response.data.detail ===
+        (err.response as ErrorType)?.data.detail ===
         "403: User does not have the required permission"
       ) {
         return toast.error(
           "You do not have the required permission to remove this member"
         );
       }
-      return toast.error(err.response.data.detail);
+      return toast.error((err.response as ErrorType)?.data.detail);
     },
   });
   return removeMember;
