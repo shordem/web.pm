@@ -118,3 +118,12 @@ export interface CreateNoteRequestPayload {
   content: string;
 }
 export interface UpdateNoteRequestPayload extends CreateNoteRequestPayload {}
+
+export interface ErrorType {
+  data: {
+    detail: string;
+  };
+}
+export interface ErrorResponse {
+  response: ErrorType;
+}
