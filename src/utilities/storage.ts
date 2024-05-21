@@ -5,6 +5,7 @@ interface StorageInterface {
   getItem(key: string): unknown;
   deleteItem(key: string): void;
   checkItem(key: string): boolean;
+  clear(): void;
 }
 
 class CookieStorage implements StorageInterface {
@@ -26,6 +27,11 @@ class CookieStorage implements StorageInterface {
   deleteItem(key: string) {
     Cookies.remove(key);
   }
+  clear() {
+    Object.keys(Cookies.get()).forEach((key) => {
+      Cookies.remove(key);
+    });
+  }
 }
 
 class LocalStorage implements StorageInterface {
@@ -45,6 +51,9 @@ class LocalStorage implements StorageInterface {
 
   deleteItem(key: string) {
     this.isWindow && window.localStorage.removeItem(key);
+  }
+  clear() {
+    this.isWindow && window.localStorage.clear();
   }
 }
 
@@ -76,5 +85,8 @@ export class Storage implements StorageInterface {
 
   deleteItem(key: string) {
     this.storageClass.deleteItem(key);
+  }
+  clear() {
+    this.storageClass.clear();
   }
 }
