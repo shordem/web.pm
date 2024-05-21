@@ -101,8 +101,7 @@ function Todos() {
             className="w-96 flex flex-col items-center gap-4"
             onSubmit={(e) => {
               e.preventDefault();
-              if (!title || !description || !dueDate || !dueTime)
-                return toast.error("All fields are required");
+              if (!title) return toast.error("Input todo title ");
               if (!validateDate(dueDate, dueTime))
                 return setError("You can only schedule tasks to the future");
 
@@ -212,8 +211,7 @@ function Todos() {
                 isLoading={updateTodo.isPending}
                 onClick={(e) => {
                   e.preventDefault();
-                  if (!title || !description)
-                    return toast.error("All fields are required");
+                  if (!title) return toast.error("Title field is required");
                   if (!validateDate(dueDate, dueTime))
                     return setError(
                       "You can only schedule tasks to the future"
