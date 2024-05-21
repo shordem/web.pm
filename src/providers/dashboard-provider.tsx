@@ -6,7 +6,10 @@ import {
   useGetFolders as getFoldersquery,
   useGetAllMyOrganizations,
 } from "@/pages/dashboard/dashboard.hook";
-import { Identifier } from "@/pages/dashboard/dashboard.interface";
+import {
+  ErrorResponse,
+  Identifier,
+} from "@/pages/dashboard/dashboard.interface";
 import { Storage } from "@/utilities/storage";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -27,6 +30,7 @@ export default function DashboardProvider({
   const [errorVisibility, setErrorVisibility] = useState(true);
 
   const allOrganizations = useGetAllMyOrganizations();
+
   const getFolders = useCallback(
     () => getFoldersquery(currentOrganisationDetails.id),
     [currentOrganisationDetails.id]
@@ -120,7 +124,7 @@ export default function DashboardProvider({
     );
 
   if (
-    getFolders.error?.response?.data.detail ===
+    (getFolders.error as unknown as ErrorResponse)?.response?.data.detail ===
     "404: User is not a member of the organization"
   ) {
     return (
