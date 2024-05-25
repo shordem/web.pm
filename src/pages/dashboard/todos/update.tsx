@@ -28,9 +28,9 @@ function UpdateTodo() {
       visibility={updateTaskVisibility}
       setVisibility={() => setUpdateTaskVisibility(false)}
     >
-      <div className="grid justify-center gap-4 p-12">
+      <div className="grid justify-center gap-4 sm:p-12 p-6">
         <h4 className="text-2xl">Update Todo</h4>
-        <form className="w-96 flex flex-col items-center gap-4">
+        <form className="sm:w-96 w-64 flex flex-col items-center gap-4">
           <Input
             label="Title"
             className="w-full"
@@ -66,6 +66,7 @@ function UpdateTodo() {
             <Button
               colorScheme="danger"
               isLoading={deleteTodoMutation.isPending}
+              size="sm"
               onClick={(e) => {
                 e.preventDefault();
                 deleteTodoMutation.mutateAsync(form.id).then(() => {
@@ -78,6 +79,7 @@ function UpdateTodo() {
             <Button
               colorScheme="warning"
               isLoading={updateTodoMutation.isPending}
+              size="sm"
               onClick={(e) => {
                 e.preventDefault();
                 if (!form.title) return toast.error("Title field is required");

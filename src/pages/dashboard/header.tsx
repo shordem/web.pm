@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useAuth } from "../auth/auth.hook";
-import useOutsideClick from "@/hooks/outside-click";
 import { useRouter } from "@/router/router.hook";
+import { useAuth } from "../auth/auth.hook";
 
 import { useDashboardContext } from "./dashboard-context";
-import { getAllMyOrganizationsResponsePayload } from "./dashboard.interface";
 import {
   useCreateOrganization,
   useGetAllMyOrganizations,
 } from "./dashboard.hook";
+import { getAllMyOrganizationsResponsePayload } from "./dashboard.interface";
 
 import { HiChevronUpDown } from "react-icons/hi2";
 import { IoIosLogOut } from "react-icons/io";
@@ -19,6 +18,7 @@ import { SiAwsorganizations } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
 import Modal from "@/components/ui/modal";
+import useOutsideClick from "@/hooks/outside-click";
 import classNames from "classnames";
 
 function DashboardHeader() {
@@ -79,17 +79,18 @@ function DashboardHeader() {
           </form>
         </div>
       </Modal>
-      <header className="w-full px-10 py-4 flex justify-between item-center relative">
-        <h3 className="text-2xl flex items-center">
-          <span>{currentOrganisationDetails?.name || "Personal"}</span>
-          <Button
-            variant="ghost"
-            onClick={() => setShowOrganizations(!showOrganizations)}
-          >
-            {" "}
-            <HiChevronUpDown />{" "}
-          </Button>
-        </h3>
+      <header className="w-full sm:px-10 px-4 py-4 flex justify-between item-center relative">
+        <Button
+          variant="ghost"
+          colorScheme="none"
+          onClick={() => setShowOrganizations(!showOrganizations)}
+        >
+          <h3 className="sm:text-2xl text-lg flex items-center">
+            <span>{currentOrganisationDetails?.name || "Personal"}</span>
+            <HiChevronUpDown />
+          </h3>
+        </Button>
+
         {showOrganizations && (
           <div
             className="absolute z-10 top-12  bg-bg-accent shadow-md px-2 py-4 rounded-md w-fit"
@@ -134,7 +135,7 @@ function DashboardHeader() {
         <div className="flex items-center gap-6">
           <Link
             to="/dashboard/settings"
-            className={classNames("text-lg", {
+            className={classNames("sm:text-lg", {
               "text-primary": router.pathname === "/dashboard/settings",
             })}
           >

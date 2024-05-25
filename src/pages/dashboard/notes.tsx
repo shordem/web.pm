@@ -47,10 +47,10 @@ function Notes() {
         visibility={createNoteVisibility}
         setVisibility={() => setCreateNoteVisibility(false)}
       >
-        <div className="grid justify-center gap-4 p-12">
+        <div className="grid justify-center gap-4 sm:p-12 p-6">
           <h4 className="text-2xl">Add new note</h4>
           <form
-            className="w-96 flex flex-col items-center gap-4"
+            className="sm:w-96 w-64 flex flex-col items-center gap-4"
             onSubmit={(e) => {
               e.preventDefault();
               if (!title || !body)
@@ -88,9 +88,9 @@ function Notes() {
         visibility={updateNoteVisibility}
         setVisibility={() => setUpdateNoteVisibility(false)}
       >
-        <div className="grid justify-center gap-4 p-12">
+        <div className="grid justify-center gap-4 sm:p-12 p-6">
           <h4 className="text-2xl">Update Note</h4>
-          <form className="w-96 flex flex-col items-center gap-4">
+          <form className="sm:w-96 w-64 flex flex-col items-center gap-4">
             <Input
               label="Title"
               className="w-full"
@@ -112,6 +112,7 @@ function Notes() {
                     setUpdateNoteVisibility(false);
                   });
                 }}
+                size="sm"
                 isLoading={deleteNote.isPending}
               >
                 Delete note
@@ -131,6 +132,7 @@ function Notes() {
                       setUpdateNoteVisibility(false);
                     });
                 }}
+                size="sm"
                 isLoading={updateNote.isPending}
               >
                 Update note

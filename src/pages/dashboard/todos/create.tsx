@@ -28,10 +28,10 @@ function CreateTodo() {
       visibility={createTaskVisibility}
       setVisibility={() => setCreateTaskVisibility(false)}
     >
-      <div className="grid justify-center gap-4 p-12">
+      <div className="grid justify-center gap-4 sm:p-12 p-4">
         <h4 className="text-2xl">Add new todo</h4>
         <form
-          className="w-96 flex flex-col items-center gap-4"
+          className="sm:w-96 w-64 flex flex-col items-center gap-4"
           onSubmit={(e) => {
             e.preventDefault();
             if (!form.title) return toast.error("Input todo title ");

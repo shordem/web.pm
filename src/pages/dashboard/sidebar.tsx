@@ -145,9 +145,9 @@ function Sidebar() {
       </Modal>
 
       {/* folder list */}
-      <aside className="w-1/5 px-4 mt-16">
+      <aside className="sm:block hidden sm:w-1/5 px-4 sm:mt-16">
         {}
-        <ul className="grid gap-4">
+        <ul className="sm:grid flex gap-4">
           {folders.isPending && <Loader />}
           {folders.data?.data.map((item, i) => (
             // folder list item
@@ -220,6 +220,10 @@ function Sidebar() {
           </li>
         </ul>
       </aside>
+
+      <p className="text-xs font-medium block sm:hidden">
+        Use a Desktop to manage folders and organizations
+      </p>
     </>
   );
 }

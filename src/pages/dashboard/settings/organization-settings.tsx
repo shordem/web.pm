@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/form/input";
+import Modal from "@/components/ui/modal";
+import { FormEvent, useState } from "react";
+import { useDashboardContext } from "../dashboard-context";
 import {
   useAddMember,
   useGetOrganizationMembers,
   useRemoveMember,
 } from "../dashboard.hook";
-import { useDashboardContext } from "../dashboard-context";
-import { FormEvent, useState } from "react";
-import Modal from "@/components/ui/modal";
-import toast from "react-hot-toast";
 
 function OrganizationSettings() {
   const { currentOrganisationDetails } = useDashboardContext();
@@ -87,11 +86,11 @@ function OrganizationSettings() {
           >
             <Input
               label="User Email"
-              className="w-4/6"
+              className="w-full"
               value={newUserEmail}
               onChange={(e) => setNewUserEmail(e.target.value)}
             />
-            <Button className="w-fit" isLoading={addMember.isPending}>
+            <Button className="sm:w-2/6" isLoading={addMember.isPending}>
               Add Member
             </Button>
           </form>

@@ -7,7 +7,7 @@ import UserDetails from "./user-details";
 function DashboardSettingsPage() {
   const router = useRouter();
   return (
-    <div className="px-16 py-10">
+    <div className="sm:px-16 px-4 py-10">
       <div className="w-full flex justify-start gap-4 mb-10">
         <Button
           variant="ghost"
@@ -19,7 +19,7 @@ function DashboardSettingsPage() {
         </Button>
       </div>
 
-      <section className="w-full flex gap-10">
+      <section className="w-full flex sm:flex-row flex-col gap-10">
         <OrganizationSettings />
 
         <UserDetails />

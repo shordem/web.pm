@@ -9,7 +9,7 @@ const DashboardPage = () => {
   const [tab, setTab] = useState("todos");
 
   return (
-    <div className="w-full flex items-start sm:px-20">
+    <div className="w-full flex sm:flex-row flex-col items-start sm:px-20">
       <Sidebar />
 
       <section className="w-full sm:px-24 flex flex-col items-center justify-center">
