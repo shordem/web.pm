@@ -71,7 +71,11 @@ function TodoItem(props: TodoItemProps) {
         <span
           className={classNames({
             "line-through": props.completed,
-            "text-red-400": props.due_date ? checkDue(props.due_date) : false,
+            "text-red-400": props.due_date
+              ? props.completed
+                ? false
+                : checkDue(props.due_date)
+              : false,
           })}
         >
           {props.title || "No title available"}
