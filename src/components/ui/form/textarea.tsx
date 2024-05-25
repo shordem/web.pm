@@ -12,8 +12,8 @@ function TextArea(props: TextAreaProps) {
       </label>
       <textarea
         id={replaceWith(props.label)}
-        rows={props.rows ?? 4}
-        className="block p-2.5 w-full h-10 text-sm bg-bg-accent rounded-lg focus:outline-none"
+        rows={props.rows ?? 8.5}
+        className="block p-2.5 w-full text-sm bg-transparent border-y border-bg-accent focus:outline-none resize-none"
         placeholder={props.placeholder ?? `Enter ${props.label}`}
         required={props.required}
         onChange={props.onChange}
