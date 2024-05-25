@@ -44,7 +44,7 @@ export class Client {
           //   "Authorization"
           // ] = `Bearer ${data.accessToken}`;
           // return this.axiosClient(error.config);
-          // this.redirectToLogin();
+          this.redirectToLogin();
         }
         return Promise.reject(error);
       }
