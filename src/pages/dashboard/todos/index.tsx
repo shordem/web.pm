@@ -1,11 +1,8 @@
-import { useContext } from "react";
-
 import Loader from "@/components/ui/loading";
 import { useDashboardContext } from "../dashboard-context";
 import AddTodoButtonItem from "./add-button-item";
 import CreateTodo from "./create";
 import TodoItem from "./item";
-import { TodoContext } from "./todos.context";
 import { useGetTodos as getTodosQuery } from "./todos.hook";
 import TodoProvider from "./todos.provider";
 import UpdateTodo from "./update";
@@ -13,12 +10,6 @@ import UpdateTodo from "./update";
 function Todos() {
   // Context hook
   const { currentOrganisationDetails, currentFolder } = useDashboardContext();
-  const {
-    updateTaskVisibility,
-    setUpdateTaskVisibility,
-    createTaskVisibility,
-    setCreateTaskVisibility,
-  } = useContext(TodoContext);
 
   const todos = getTodosQuery(
     currentOrganisationDetails.id || "",
@@ -28,15 +19,9 @@ function Todos() {
   if (todos.isLoading || !currentFolder.id) return <Loader />;
   return (
     <TodoProvider>
-      <CreateTodo
-        visibility={createTaskVisibility}
-        setVisibility={() => setCreateTaskVisibility(false)}
-      />
+      <CreateTodo />
 
-      <UpdateTodo
-        visibility={updateTaskVisibility}
-        setVisibility={() => setUpdateTaskVisibility(false)}
-      />
+      <UpdateTodo />
 
       <ul className="w-full h-full flex flex-col items-center gap-4 py-6">
         <AddTodoButtonItem />

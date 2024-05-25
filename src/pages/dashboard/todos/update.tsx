@@ -9,9 +9,8 @@ import { createDueDate, validateDate } from "@/utilities/common";
 import { useDashboardContext } from "../dashboard-context";
 import { TodoContext } from "./todos.context";
 import { useDeleteTodo, useUpdateTodo } from "./todos.hook";
-import { UpdateTodoProps } from "./todos.interface";
 
-function UpdateTodo(props: UpdateTodoProps) {
+function UpdateTodo() {
   const { currentOrganisationDetails } = useDashboardContext();
 
   const { form, setForm, updateTaskVisibility, setUpdateTaskVisibility } =
@@ -70,7 +69,7 @@ function UpdateTodo(props: UpdateTodoProps) {
               onClick={(e) => {
                 e.preventDefault();
                 deleteTodoMutation.mutateAsync(form.id).then(() => {
-                  props.setVisibility();
+                  setUpdateTaskVisibility(false);
                 });
               }}
             >
@@ -93,7 +92,7 @@ function UpdateTodo(props: UpdateTodoProps) {
                     completed: false,
                   })
                   .then(() => {
-                    props.setVisibility();
+                    setUpdateTaskVisibility(false);
                   });
               }}
             >

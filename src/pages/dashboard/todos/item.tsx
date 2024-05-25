@@ -6,7 +6,7 @@ import { checkDue, formatDistanceFromNow } from "@/utilities/common";
 import { useDashboardContext } from "../dashboard-context";
 import { TodoContext } from "./todos.context";
 import { useGetTodos, useUpdateTodo } from "./todos.hook";
-import { TodoDataT, TodoItemProps } from "./todos.interface";
+import { TodoItemProps } from "./todos.interface";
 
 function TodoItem(props: TodoItemProps) {
   const { form, setForm, setUpdateTaskVisibility } = useContext(TodoContext);
@@ -22,14 +22,14 @@ function TodoItem(props: TodoItemProps) {
     form.id
   );
 
-  function handleTodoClick(e: MouseEvent<HTMLLIElement>, todo: TodoDataT) {
-    setForm({ ...form, id: todo.id });
+  function handleTodoClick(e: MouseEvent<HTMLLIElement>) {
     if ((e.target as HTMLElement).tagName === "DIV") return;
 
     setUpdateTaskVisibility(true);
 
     setForm({
       ...form,
+      id: props.id,
       title: props.title,
       description: props.description,
       dueDate: props.due_date?.split("T")[0] ?? "",
@@ -49,7 +49,7 @@ function TodoItem(props: TodoItemProps) {
 
   return (
     <li
-      onClick={(e) => handleTodoClick(e, form)}
+      onClick={(e) => handleTodoClick(e)}
       className="w-full text-ellipsis bg-[#222] flex justify-between items-center gap-3 px-4 py-2 rounded-lg cursor-pointer"
       key={props.id}
     >

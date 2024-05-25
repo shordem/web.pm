@@ -10,9 +10,8 @@ import { useDashboardContext } from "../dashboard-context";
 import { INITIAL_TODO_DATA } from "./todos.constant";
 import { TodoContext } from "./todos.context";
 import { useCreateTodo as createTodoMutation } from "./todos.hook";
-import { CreateTodoProps } from "./todos.interface";
 
-function CreateTodo(props: CreateTodoProps) {
+function CreateTodo() {
   const { form, setForm, createTaskVisibility, setCreateTaskVisibility } =
     useContext(TodoContext);
   const [error, setError] = useState("");
@@ -53,7 +52,7 @@ function CreateTodo(props: CreateTodoProps) {
                     : createDueDate(form.dueDate, form.dueTime),
               })
               .then(() => {
-                props.setVisibility();
+                setCreateTaskVisibility(false);
                 setForm(INITIAL_TODO_DATA);
               });
           }}

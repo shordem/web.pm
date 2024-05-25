@@ -4,13 +4,6 @@ import { INITIAL_TODO_DATA } from "./todos.constant";
 
 export type TodoDataT = typeof INITIAL_TODO_DATA;
 
-export interface CreateTodoProps {
-  visibility: boolean;
-  setVisibility: () => void;
-}
-
-export interface UpdateTodoProps extends CreateTodoProps {}
-
 export interface TodoItemProps extends Omit<TodoDataT, "dueDate" | "dueTime"> {
   due_date: string | null;
   created_by: User;
