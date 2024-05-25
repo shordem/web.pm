@@ -4,20 +4,17 @@
 
 import { Client } from "@/services/http-client";
 import {
-  getAllMyOrganizationsResponsePayload,
-  OrganizationDetails,
+  AddMemberRequestPayload,
   CreateNewOrganizationRequestPayload,
   CreateNewOrganizationResponsePayload,
-  getMembersPayload,
-  deleteOrganizationMemberType,
-  AddMemberRequestPayload,
-  Folder,
-  TodoResponsePayload,
-  CreateTodoRequestPayload,
   CreateNoteRequestPayload,
-  UpdateTodoRequestPayload,
+  Folder,
   NoteResponsePayload,
+  OrganizationDetails,
   User,
+  deleteOrganizationMemberType,
+  getAllMyOrganizationsResponsePayload,
+  getMembersPayload,
 } from "./dashboard.interface";
 
 export class DashboardService {
@@ -77,26 +74,7 @@ export class DashboardService {
   updateFolder(orgId: string, folderId: string, data: { name: string }) {
     return this.apiClient.patch(`folders/${orgId}/${folderId}`, data);
   }
-  // todo services
-  getAllTodos(orgId: string, folderId: string) {
-    return this.apiClient.get<TodoResponsePayload[]>(
-      `todos/${orgId}/${folderId}`
-    );
-  }
-  getTodoDetails(orgId: string, todoId: string) {
-    return this.apiClient.get<TodoResponsePayload>(
-      `todos/${orgId}/${todoId}/view`
-    );
-  }
-  createTodo(orgId: string, folderId: string, data: CreateTodoRequestPayload) {
-    return this.apiClient.post(`todos/${orgId}/${folderId}`, data);
-  }
-  deleteTodo(orgId: string, todoId: string) {
-    return this.apiClient.delete(`todos/${orgId}/${todoId}`);
-  }
-  updateTodo(orgId: string, todoId: string, data: UpdateTodoRequestPayload) {
-    return this.apiClient.patch(`todos/${orgId}/${todoId}`, data);
-  }
+
   // note services
   getAllNotes(orgId: string, folderId: string) {
     return this.apiClient.get<NoteResponsePayload[]>(

@@ -78,40 +78,13 @@ export interface Folder {
   created_at: string;
 }
 
-// Todo interface
-
-export interface TodoResponsePayload {
-  id: string;
-  title: string;
-  description: string;
-  due_date: string;
-  completed: boolean;
-  created_by: CreatedBy;
-}
-export interface CreatedBy {
-  first_name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  id: string;
-}
-
-export interface CreateTodoRequestPayload {
-  title: string;
-  description: string;
-  due_date: string;
-}
-export interface UpdateTodoRequestPayload extends CreateTodoRequestPayload {
-  completed: boolean;
-}
-
 // Note interface
 
 export interface NoteResponsePayload {
   id: string;
   title: string;
   content: string;
-  created_by: CreatedBy;
+  created_by: User;
 }
 export interface CreateNoteRequestPayload {
   title: string;
